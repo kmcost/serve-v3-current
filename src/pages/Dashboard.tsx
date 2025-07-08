@@ -81,8 +81,8 @@ export default function Dashboard() {
       </div>
 
       {/* Stats Sections */}
-      <div className="grid gap-6 md:grid-cols-2">
-        {/* Recent Activity */}
+      <div className="space-y-6">
+        {/* Active Outreach */}
         <div className="space-y-4 py-[16px] px-[16px] bg-white rounded-xl">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold text-foreground">Active Outreach</h2>
@@ -90,10 +90,12 @@ export default function Dashboard() {
               View all
             </Link>
           </div>
-          <div className="space-y-3">
+          <div className="space-y-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="font-medium text-sm">Should we reopen the community pool?</p>
+                <Link to="/polls/2" className="font-medium text-sm text-primary hover:text-primary/80">
+                  Should we reopen the community pool?
+                </Link>
                 <p className="text-xs text-muted-foreground">2 hours ago</p>
               </div>
               <div className="text-right">
@@ -103,7 +105,9 @@ export default function Dashboard() {
             </div>
             <div className="flex items-center justify-between">
               <div>
-                <p className="font-medium text-sm">Are you in favor of the operation of golf carts on village streets?</p>
+                <Link to="/polls/3" className="font-medium text-sm text-primary hover:text-primary/80">
+                  Are you in favor of the operation of golf carts on village streets?
+                </Link>
                 <p className="text-xs text-muted-foreground">Friday</p>
               </div>
               <div className="text-right">
@@ -113,7 +117,9 @@ export default function Dashboard() {
             </div>
             <div className="flex items-center justify-between">
               <div>
-                <p className="font-medium text-sm">How would you like to receive council updates?</p>
+                <Link to="/polls/4" className="font-medium text-sm text-primary hover:text-primary/80">
+                  How would you like to receive council updates?
+                </Link>
                 <p className="text-xs text-muted-foreground">2 weeks ago</p>
               </div>
               <div className="text-right">
@@ -124,59 +130,24 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Community Insights */}
+        {/* Top Issue Categories */}
         <div className="space-y-4 px-[16px] py-[16px] bg-white rounded-xl">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold text-foreground">Top Issue Categories</h2>
-            <Link to="/polls" className="text-primary hover:text-primary/80 text-sm font-medium">View Issues</Link>
+            <Link to="/issues" className="text-primary hover:text-primary/80 text-sm font-medium">View Issues</Link>
           </div>
-          <div>
-            <p className="text-sm text-muted-foreground mb-3">Top concerns this month</p>
-            <div className="space-y-3">
-              <div className="space-y-1">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium">Infrastructure & Roads</span>
-                  <span className="text-sm font-medium">42%</span>
-                </div>
-                <div className="w-full bg-secondary rounded-full h-2">
-                  <div className="bg-primary h-2 rounded-full" style={{
-                  width: '42%'
-                }}></div>
-                </div>
-              </div>
-              <div className="space-y-1">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium">Public Safety</span>
-                  <span className="text-sm font-medium">28%</span>
-                </div>
-                <div className="w-full bg-secondary rounded-full h-2">
-                  <div className="bg-primary h-2 rounded-full" style={{
-                  width: '28%'
-                }}></div>
-                </div>
-              </div>
-              <div className="space-y-1">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium">Environmental Initiatives</span>
-                  <span className="text-sm font-medium">16%</span>
-                </div>
-                <div className="w-full bg-secondary rounded-full h-2">
-                  <div className="bg-primary h-2 rounded-full" style={{
-                  width: '16%'
-                }}></div>
-                </div>
-              </div>
-              <div className="space-y-1">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium">Community Events</span>
-                  <span className="text-sm font-medium">14%</span>
-                </div>
-                <div className="w-full bg-secondary rounded-full h-2">
-                  <div className="bg-primary h-2 rounded-full" style={{
-                  width: '14%'
-                }}></div>
-                </div>
-              </div>
+          <div className="grid grid-cols-3 gap-4">
+            <div className="text-center p-4 bg-card rounded-lg border">
+              <p className="text-3xl font-bold text-primary">42%</p>
+              <p className="text-sm font-medium text-muted-foreground mt-2">Infrastructure & Roads</p>
+            </div>
+            <div className="text-center p-4 bg-card rounded-lg border">
+              <p className="text-3xl font-bold text-primary">28%</p>
+              <p className="text-sm font-medium text-muted-foreground mt-2">Public Safety</p>
+            </div>
+            <div className="text-center p-4 bg-card rounded-lg border">
+              <p className="text-3xl font-bold text-primary">16%</p>
+              <p className="text-sm font-medium text-muted-foreground mt-2">Environmental Initiatives</p>
             </div>
           </div>
         </div>

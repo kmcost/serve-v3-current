@@ -50,6 +50,97 @@ const pollData = {
         { range: "51+", yes: 21, no: 9 }
       ]
     }
+  },
+  2: {
+    id: 2,
+    title: "Should we reopen the community pool?",
+    type: "Poll",
+    status: "Active",
+    question: "Should we reopen the community pool?",
+    description: "Community input on reopening the local swimming pool facility.",
+    responses: 89,
+    timeLeft: "5 days remaining",
+    createdAt: "2 hours ago",
+    endDate: "January 18, 2024",
+    channels: ["Facebook", "SMS", "Email"],
+    reach: "1,243 residents",
+    responseRate: "18%",
+    results: {
+      yes: { count: 62, percentage: 70 },
+      no: { count: 27, percentage: 30 }
+    },
+    recentResponses: [
+      { name: "Alex P.", response: "Yes", time: "1 hour ago", comment: "Great for families" },
+      { name: "Maria G.", response: "Yes", time: "3 hours ago", comment: "Kids need this" }
+    ],
+    demographics: {
+      byAge: [
+        { range: "18-30", yes: 25, no: 8 },
+        { range: "31-50", yes: 28, no: 12 },
+        { range: "51+", yes: 9, no: 7 }
+      ]
+    }
+  },
+  3: {
+    id: 3,
+    title: "Are you in favor of the operation of golf carts on village streets?",
+    type: "Poll",
+    status: "Active",
+    question: "Are you in favor of the operation of golf carts on village streets?",
+    description: "Survey regarding golf cart usage on public village streets.",
+    responses: 45,
+    timeLeft: "2 days remaining",
+    createdAt: "Friday",
+    endDate: "January 12, 2024",
+    channels: ["Facebook", "SMS", "Email"],
+    reach: "567 residents",
+    responseRate: "22%",
+    results: {
+      yes: { count: 28, percentage: 62 },
+      no: { count: 17, percentage: 38 }
+    },
+    recentResponses: [
+      { name: "Tom W.", response: "Yes", time: "4 hours ago", comment: "Convenient transportation" },
+      { name: "Linda S.", response: "No", time: "6 hours ago", comment: "Safety concerns" }
+    ],
+    demographics: {
+      byAge: [
+        { range: "18-30", yes: 8, no: 5 },
+        { range: "31-50", yes: 12, no: 8 },
+        { range: "51+", yes: 8, no: 4 }
+      ]
+    }
+  },
+  4: {
+    id: 4,
+    title: "How would you like to receive council updates?",
+    type: "Survey",
+    status: "Active",
+    question: "How would you like to receive council updates?",
+    description: "Preference survey for communication methods.",
+    responses: 134,
+    timeLeft: "1 week remaining",
+    createdAt: "2 weeks ago",
+    endDate: "January 20, 2024",
+    channels: ["Facebook"],
+    reach: "982 residents",
+    responseRate: "28%",
+    results: {
+      email: { count: 67, percentage: 50 },
+      sms: { count: 40, percentage: 30 },
+      facebook: { count: 27, percentage: 20 }
+    },
+    recentResponses: [
+      { name: "Jennifer L.", response: "Email", time: "1 day ago", comment: "Most convenient" },
+      { name: "Robert K.", response: "SMS", time: "2 days ago", comment: "Quick updates" }
+    ],
+    demographics: {
+      byAge: [
+        { range: "18-30", yes: 35, no: 15 },
+        { range: "31-50", yes: 45, no: 20 },
+        { range: "51+", yes: 54, no: 10 }
+      ]
+    }
   }
 };
 
@@ -124,25 +215,61 @@ export default function PollDetail() {
               </div>
               
               <div className="space-y-4">
-                <div>
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="font-medium">Yes</span>
-                    <span className="text-sm text-muted-foreground">
-                      {poll.results.yes.count} votes ({poll.results.yes.percentage}%)
-                    </span>
-                  </div>
-                  <Progress value={poll.results.yes.percentage} className="h-3" />
-                </div>
-                
-                <div>
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="font-medium">No</span>
-                    <span className="text-sm text-muted-foreground">
-                      {poll.results.no.count} votes ({poll.results.no.percentage}%)
-                    </span>
-                  </div>
-                  <Progress value={poll.results.no.percentage} className="h-3" />
-                </div>
+                {'yes' in poll.results ? (
+                  <>
+                    <div>
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="font-medium">Yes</span>
+                        <span className="text-sm text-muted-foreground">
+                          {poll.results.yes.count} votes ({poll.results.yes.percentage}%)
+                        </span>
+                      </div>
+                      <Progress value={poll.results.yes.percentage} className="h-3" />
+                    </div>
+                    
+                    <div>
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="font-medium">No</span>
+                        <span className="text-sm text-muted-foreground">
+                          {poll.results.no.count} votes ({poll.results.no.percentage}%)
+                        </span>
+                      </div>
+                      <Progress value={poll.results.no.percentage} className="h-3" />
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div>
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="font-medium">Email</span>
+                        <span className="text-sm text-muted-foreground">
+                          {poll.results.email.count} votes ({poll.results.email.percentage}%)
+                        </span>
+                      </div>
+                      <Progress value={poll.results.email.percentage} className="h-3" />
+                    </div>
+                    
+                    <div>
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="font-medium">SMS</span>
+                        <span className="text-sm text-muted-foreground">
+                          {poll.results.sms.count} votes ({poll.results.sms.percentage}%)
+                        </span>
+                      </div>
+                      <Progress value={poll.results.sms.percentage} className="h-3" />
+                    </div>
+                    
+                    <div>
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="font-medium">Facebook</span>
+                        <span className="text-sm text-muted-foreground">
+                          {poll.results.facebook.count} votes ({poll.results.facebook.percentage}%)
+                        </span>
+                      </div>
+                      <Progress value={poll.results.facebook.percentage} className="h-3" />
+                    </div>
+                  </>
+                )}
               </div>
               
               <div className="grid grid-cols-3 gap-4 pt-4 border-t">
