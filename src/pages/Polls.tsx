@@ -92,7 +92,7 @@ const allPollsData = [
 
 export default function Polls() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [sortField, setSortField] = useState<string>('startDate');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
 
@@ -248,20 +248,20 @@ export default function Polls() {
             className="grid grid-cols-2 gap-0 bg-transparent"
           >
             <ToggleGroupItem 
-              value="list" 
-              aria-label="List view"
-              className="relative flex items-center justify-center gap-2 h-11 px-6 rounded-lg bg-transparent border-0 text-muted-foreground font-medium transition-all duration-200 data-[state=on]:bg-background data-[state=on]:text-foreground data-[state=on]:shadow-sm hover:text-foreground"
-            >
-              <List className="h-4 w-4" />
-              <span className="text-sm font-medium">List</span>
-            </ToggleGroupItem>
-            <ToggleGroupItem 
               value="grid" 
               aria-label="Grid view"
               className="relative flex items-center justify-center gap-2 h-11 px-6 rounded-lg bg-transparent border-0 text-muted-foreground font-medium transition-all duration-200 data-[state=on]:bg-background data-[state=on]:text-foreground data-[state=on]:shadow-sm hover:text-foreground"
             >
               <Grid3X3 className="h-4 w-4" />
               <span className="text-sm font-medium">Grid</span>
+            </ToggleGroupItem>
+            <ToggleGroupItem 
+              value="list" 
+              aria-label="List view"
+              className="relative flex items-center justify-center gap-2 h-11 px-6 rounded-lg bg-transparent border-0 text-muted-foreground font-medium transition-all duration-200 data-[state=on]:bg-background data-[state=on]:text-foreground data-[state=on]:shadow-sm hover:text-foreground"
+            >
+              <List className="h-4 w-4" />
+              <span className="text-sm font-medium">List</span>
             </ToggleGroupItem>
           </ToggleGroup>
         </div>
