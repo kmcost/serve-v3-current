@@ -19,15 +19,6 @@ export function StepNavigation({
       {/* Mobile-First Progress Steps */}
       
 
-      {/* Mobile Step Indicator */}
-      <div className="md:hidden text-center">
-        <p className="text-sm font-medium text-foreground">
-          {STEPS[currentStep - 1]?.name}
-        </p>
-        <p className="text-xs text-muted-foreground">
-          Step {currentStep} of {STEPS.length}
-        </p>
-      </div>
 
       {/* Mobile-First Navigation */}
       <div className="flex justify-between gap-3">

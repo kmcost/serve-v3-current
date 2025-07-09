@@ -95,13 +95,6 @@ export default function CreatePoll() {
         </div>
       </div>
 
-      <StepNavigation
-        currentStep={currentStep}
-        onNext={nextStep}
-        onPrev={prevStep}
-        onLaunch={handleLaunch}
-        isMultipleQuestions={isMultipleQuestions}
-      />
 
       {/* Mobile-First Step Content */}
       <Card>
