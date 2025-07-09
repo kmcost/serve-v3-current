@@ -92,7 +92,7 @@ const allPollsData = [
 
 export default function Polls() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
   const [sortField, setSortField] = useState<string>('startDate');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
 
@@ -101,7 +101,7 @@ export default function Polls() {
       case 'in_progress':
         return <Badge variant="default">In Progress</Badge>;
       case 'not_started':
-        return <Badge variant="secondary">Not Started</Badge>;
+        return <Badge className="bg-gray-100 text-gray-700 hover:bg-gray-100/80">Not Started</Badge>;
       case 'completed':
         return <Badge className="bg-green-600 text-white hover:bg-green-600/80">Completed</Badge>;
       default:
@@ -229,31 +229,25 @@ export default function Polls() {
 
       {/* Search, Filters, and View Toggle */}
       <div className="flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
-        <div className="flex flex-col sm:flex-row gap-4 flex-1">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input
-              placeholder="Search polls and surveys..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
-            />
-          </div>
-          <Button variant="outline" className="gap-2">
-            <Filter className="h-4 w-4" />
-            Filter
-          </Button>
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+          <Input
+            placeholder="Search polls and surveys..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10"
+          />
         </div>
         
         {/* View Toggle */}
         <ToggleGroup type="single" value={viewMode} onValueChange={(value) => value && setViewMode(value as 'grid' | 'list')}>
-          <ToggleGroupItem value="grid" aria-label="Grid view">
-            <Grid3X3 className="h-4 w-4" />
-            <span className="ml-2">Grid</span>
-          </ToggleGroupItem>
           <ToggleGroupItem value="list" aria-label="List view">
             <List className="h-4 w-4" />
             <span className="ml-2">List</span>
+          </ToggleGroupItem>
+          <ToggleGroupItem value="grid" aria-label="Grid view">
+            <Grid3X3 className="h-4 w-4" />
+            <span className="ml-2">Grid</span>
           </ToggleGroupItem>
         </ToggleGroup>
       </div>
@@ -266,10 +260,10 @@ export default function Polls() {
           ))}
         </div>
       ) : (
-        <div className="border rounded-lg">
+        <div className="border rounded-lg bg-white">
           <Table>
             <TableHeader>
-              <TableRow>
+              <TableRow className="hover:bg-transparent">
                 <TableHead>
                   <Button 
                     variant="ghost" 
@@ -304,19 +298,9 @@ export default function Polls() {
                   <Button 
                     variant="ghost" 
                     className="h-auto p-0 font-medium"
-                    onClick={() => handleSort('startDate')}
+                    onClick={() => handleSort('responses')}
                   >
-                    Start Date
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                  </Button>
-                </TableHead>
-                <TableHead>
-                  <Button 
-                    variant="ghost" 
-                    className="h-auto p-0 font-medium"
-                    onClick={() => handleSort('endDate')}
-                  >
-                    End Date
+                    # of Responses
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                   </Button>
                 </TableHead>
@@ -324,8 +308,8 @@ export default function Polls() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {sortedAndFilteredPolls.map((poll) => (
-                <TableRow key={poll.id}>
+              {sortedAndFilteredPolls.map((poll, index) => (
+                <TableRow key={poll.id} className={`hover:bg-transparent ${index % 2 === 1 ? 'bg-gray-50' : 'bg-white'}`}>
                   <TableCell>{getStatusBadge(poll.status)}</TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2">
@@ -341,8 +325,9 @@ export default function Polls() {
                       {poll.title}
                     </Link>
                   </TableCell>
-                  <TableCell>{formatDate(poll.startDate)}</TableCell>
-                  <TableCell>{formatDate(poll.endDate)}</TableCell>
+                  <TableCell>
+                    <span className="text-sm">{poll.responses}</span>
+                  </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2">
                       <Progress 
