@@ -13,9 +13,7 @@ export default function Dashboard() {
           <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
             Welcome back, Sarah
           </h1>
-          <p className="text-lg text-muted-foreground">
-            What would you like to learn?
-          </p>
+          
         </div>
         
         <div className="space-y-4">
@@ -30,55 +28,7 @@ export default function Dashboard() {
       </div>
 
       {/* Main Dashboard Sections */}
-      <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-3">
-        {/* Active Polls & Surveys */}
-        <div className="bg-card rounded-lg border p-6">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 bg-primary/10 rounded-lg">
-              <BarChart3 className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-foreground">Polls & Surveys</h3>
-              <p className="text-sm text-muted-foreground">Track constituent engagement</p>
-            </div>
-          </div>
-          <Link to="/polls" className="text-primary hover:text-primary/80 text-sm font-medium inline-flex items-center gap-1">
-            View all polls →
-          </Link>
-        </div>
-
-        {/* Recent Inbox Activity */}
-        <div className="bg-card rounded-lg border p-6">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 bg-primary/10 rounded-lg">
-              <Inbox className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-foreground">Constituent Inbox</h3>
-              <p className="text-sm text-muted-foreground">Incoming messages from your constituents</p>
-            </div>
-          </div>
-          <Link to="/inbox" className="text-primary hover:text-primary/80 text-sm font-medium inline-flex items-center gap-1">
-            View inbox →
-          </Link>
-        </div>
-
-        {/* Top Issues */}
-        <div className="bg-card rounded-lg border p-6">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 bg-primary/10 rounded-lg">
-              <AlertTriangle className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-foreground">Issue Tracking</h3>
-              <p className="text-sm text-muted-foreground">Monitor and manage community issues</p>
-            </div>
-          </div>
-          <Link to="/issues" className="text-primary hover:text-primary/80 text-sm font-medium inline-flex items-center gap-1">
-            Manage issues →
-          </Link>
-        </div>
-      </div>
+      
 
       {/* Stats Sections */}
       <div className="space-y-6">
