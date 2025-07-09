@@ -88,55 +88,52 @@ export default function Dashboard() {
               View all
             </Link>
           </div>
-          <div className="space-y-6">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-2 md:space-y-0">
-              <div className="order-1 md:order-1">
-                <Link to="/polls/2" className="font-medium text-sm text-primary hover:text-primary/80">
-                  Should we reopen the community pool?
-                </Link>
+          <div className="space-y-4">
+            <Link to="/polls/2" className="block bg-white p-4 rounded-lg hover:bg-gray-50 transition-colors">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-2 md:space-y-0">
+                <div className="order-1 md:order-1">
+                  <h3 className="font-medium text-sm text-primary">
+                    Should we reopen the community pool?
+                  </h3>
+                </div>
+                <div className="order-2 md:order-2 md:text-right">
+                  <p className="text-sm font-medium text-foreground">Facebook, SMS, Email</p>
+                </div>
+                <div className="order-3 md:order-3 md:text-right">
+                  <p className="text-xs text-muted-foreground">1243 recipients</p>
+                </div>
               </div>
-              <div className="order-3 md:order-2 md:text-right">
-                <p className="text-sm font-medium">Facebook, SMS, Email</p>
+            </Link>
+            <Link to="/polls/3" className="block bg-white p-4 rounded-lg hover:bg-gray-50 transition-colors">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-2 md:space-y-0">
+                <div className="order-1 md:order-1">
+                  <h3 className="font-medium text-sm text-primary">
+                    Are you in favor of the operation of golf carts on village streets?
+                  </h3>
+                </div>
+                <div className="order-2 md:order-2 md:text-right">
+                  <p className="text-sm font-medium text-foreground">Facebook, SMS, Email</p>
+                </div>
+                <div className="order-3 md:order-3 md:text-right">
+                  <p className="text-xs text-muted-foreground">567 recipients</p>
+                </div>
               </div>
-              <div className="order-4 md:order-3 md:text-right">
-                <p className="text-xs text-muted-foreground">1243 recipients</p>
+            </Link>
+            <Link to="/polls/4" className="block bg-white p-4 rounded-lg hover:bg-gray-50 transition-colors">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-2 md:space-y-0">
+                <div className="order-1 md:order-1">
+                  <h3 className="font-medium text-sm text-primary">
+                    How would you like to receive council updates?
+                  </h3>
+                </div>
+                <div className="order-2 md:order-2 md:text-right">
+                  <p className="text-sm font-medium text-foreground">Facebook</p>
+                </div>
+                <div className="order-3 md:order-3 md:text-right">
+                  <p className="text-xs text-muted-foreground">982 recipients</p>
+                </div>
               </div>
-              <div className="order-2 md:order-4">
-                <p className="text-xs text-muted-foreground">2 hours ago</p>
-              </div>
-            </div>
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-2 md:space-y-0">
-              <div className="order-1 md:order-1">
-                <Link to="/polls/3" className="font-medium text-sm text-primary hover:text-primary/80">
-                  Are you in favor of the operation of golf carts on village streets?
-                </Link>
-              </div>
-              <div className="order-3 md:order-2 md:text-right">
-                <p className="text-sm font-medium">Facebook, SMS, Email</p>
-              </div>
-              <div className="order-4 md:order-3 md:text-right">
-                <p className="text-xs text-muted-foreground">567 recipients</p>
-              </div>
-              <div className="order-2 md:order-4">
-                <p className="text-xs text-muted-foreground">Friday</p>
-              </div>
-            </div>
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-2 md:space-y-0">
-              <div className="order-1 md:order-1">
-                <Link to="/polls/4" className="font-medium text-sm text-primary hover:text-primary/80">
-                  How would you like to receive council updates?
-                </Link>
-              </div>
-              <div className="order-3 md:order-2 md:text-right">
-                <p className="text-sm font-medium">Facebook</p>
-              </div>
-              <div className="order-4 md:order-3 md:text-right">
-                <p className="text-xs text-muted-foreground">982 recipients</p>
-              </div>
-              <div className="order-2 md:order-4">
-                <p className="text-xs text-muted-foreground">2 weeks ago</p>
-              </div>
-            </div>
+            </Link>
           </div>
         </div>
       </div>
