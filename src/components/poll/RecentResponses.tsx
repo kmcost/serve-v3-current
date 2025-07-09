@@ -12,7 +12,7 @@ export default function RecentResponses({ poll }: RecentResponsesProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Recent Responses</CardTitle>
+        <CardTitle className="text-lg">Recent Responses</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-3">

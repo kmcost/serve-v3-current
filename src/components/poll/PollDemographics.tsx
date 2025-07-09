@@ -10,7 +10,7 @@ export default function PollDemographics({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Demographics</CardTitle>
+        <CardTitle className="text-lg">Demographics</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">

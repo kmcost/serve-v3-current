@@ -1,6 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { BarChart3 } from 'lucide-react';
 import { Poll } from '@/data/pollData';
 
 interface PollResultsProps {
@@ -11,10 +10,7 @@ export default function PollResults({ poll }: PollResultsProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <BarChart3 className="h-5 w-5" />
-          Poll Results
-        </CardTitle>
+        <CardTitle className="text-lg">Poll Results</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         <div>
