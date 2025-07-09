@@ -1,19 +1,59 @@
 // Mock data - in real app this would come from API
+
+// Utility functions for poll status
+export const getPollStatus = (startDate: string, endDate: string): "not_started" | "active" | "completed" | "expired" => {
+  const now = new Date();
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  
+  if (now < start) return "not_started";
+  if (now > end) return "completed";
+  return "active";
+};
+
+export const getDaysLeft = (endDate: string, status: "not_started" | "active" | "completed" | "expired"): string => {
+  if (status === "completed") return "Completed";
+  if (status === "not_started") return "Not Started";
+  
+  const end = new Date(endDate);
+  const now = new Date();
+  const diffTime = end.getTime() - now.getTime();
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  
+  if (diffDays < 0) return "Expired";
+  if (diffDays === 0) return "Ends today";
+  if (diffDays === 1) return "1 day left";
+  return `${diffDays} days left`;
+};
+
+export const getResultsSummary = (poll: Poll): string => {
+  const results = Object.entries(poll.results);
+  const highest = results.reduce((max, [key, value]) => 
+    value.percentage > max.percentage ? { key, ...value } : max, 
+    { key: '', percentage: 0, count: 0 }
+  );
+  
+  if (poll.type === "Poll") {
+    if (highest.key === "yes") return `${highest.percentage}% of constituents support this`;
+    if (highest.key === "no") return `${highest.percentage}% of constituents oppose this`;
+  }
+  
+  return `${highest.percentage}% prefer ${highest.key.replace(/([A-Z])/g, ' $1').toLowerCase()}`;
+};
+
 export const pollData = {
   1: {
     id: 1,
     title: "Should we extend parking meter hours downtown?",
     type: "Poll",
-    status: "Active",
     question: "Do you support extending parking meter hours downtown from 6 PM to 8 PM on weekdays?",
     description: "This poll aims to gather community input on proposed changes to downtown parking meter hours to improve turnover and accessibility.",
     responses: 156,
-    timeLeft: "3 days remaining",
-    createdAt: "5 days ago",
-    endDate: "January 15, 2024",
+    startDate: "2024-01-10",
+    endDate: "2024-01-15",
+    expectedResponses: 250,
     channels: ["Email", "SMS"],
     reach: "2,400 residents",
-    responseRate: "24%",
     results: {
       yes: { count: 104, percentage: 67 },
       no: { count: 52, percentage: 33 }
@@ -36,16 +76,14 @@ export const pollData = {
     id: 2,
     title: "Community Center Improvements",
     type: "Survey",
-    status: "Active",
     question: "What improvements would you like to see at the community center?",
     description: "Survey to gather input on potential community center upgrades and improvements.",
     responses: 89,
-    timeLeft: "5 days remaining",
-    createdAt: "2 hours ago",
-    endDate: "January 20, 2024",
+    startDate: "2024-01-15",
+    endDate: "2024-01-20",
+    expectedResponses: 150,
     channels: ["Email", "SMS"],
     reach: "1,243 residents",
-    responseRate: "18%",
     results: {
       fitness: { count: 35, percentage: 39 },
       programs: { count: 28, percentage: 31 },
@@ -67,16 +105,14 @@ export const pollData = {
     id: 3,
     title: "Should we add new bike lanes on Main Street?",
     type: "Poll",
-    status: "Active",
     question: "Do you support adding new bike lanes on Main Street?",
     description: "Gathering community input on proposed bike lane installation along Main Street corridor.",
     responses: 203,
-    timeLeft: "2 days remaining",
-    createdAt: "Friday",
-    endDate: "January 22, 2024",
+    startDate: "2024-01-18",
+    endDate: "2024-01-22",
+    expectedResponses: 250,
     channels: ["Facebook", "SMS", "Email"],
     reach: "2,100 residents",
-    responseRate: "31%",
     results: {
       yes: { count: 132, percentage: 65 },
       no: { count: 71, percentage: 35 }
@@ -97,16 +133,14 @@ export const pollData = {
     id: 4,
     title: "Reopen Community Pool",
     type: "Survey",
-    status: "Active",
     question: "Should we reopen the community pool this summer?",
     description: "Survey to determine community interest in reopening the pool facility.",
     responses: 219,
-    timeLeft: "1 week remaining",
-    createdAt: "2 weeks ago",
-    endDate: "January 18, 2024",
+    startDate: "2024-01-08",
+    endDate: "2024-01-18",
+    expectedResponses: 200,
     channels: ["Facebook", "Email", "SMS"],
     reach: "1,500 residents",
-    responseRate: "42%",
     results: {
       yes: { count: 154, percentage: 70 },
       no: { count: 65, percentage: 30 }
@@ -127,16 +161,14 @@ export const pollData = {
     id: 5,
     title: "Weekend farmers market location",
     type: "Poll",
-    status: "Active",
     question: "Where should we relocate the weekend farmers market?",
     description: "Poll to determine the best location for the weekend farmers market.",
     responses: 342,
-    timeLeft: "Completed",
-    createdAt: "3 weeks ago",
-    endDate: "January 12, 2024",
+    startDate: "2024-01-01",
+    endDate: "2024-01-12",
+    expectedResponses: 300,
     channels: ["Facebook", "Email"],
     reach: "2,800 residents",
-    responseRate: "38%",
     results: {
       downtown: { count: 189, percentage: 55 },
       park: { count: 103, percentage: 30 },
@@ -158,25 +190,20 @@ export const pollData = {
     id: 6,
     title: "Public Library Hours Survey",
     type: "Survey", 
-    status: "Active",
     question: "What library hours would work best for you?",
     description: "Survey to optimize public library operating hours based on community needs.",
-    responses: 156,
-    timeLeft: "1 week remaining",
-    createdAt: "1 week ago",
-    endDate: "February 5, 2024",
+    responses: 0,
+    startDate: "2024-02-01",
+    endDate: "2024-02-05",
+    expectedResponses: 200,
     channels: ["Email", "Website"],
     reach: "1,200 residents",
-    responseRate: "29%",
     results: {
-      extended: { count: 78, percentage: 50 },
-      current: { count: 47, percentage: 30 },
-      reduced: { count: 31, percentage: 20 }
+      extended: { count: 0, percentage: 0 },
+      current: { count: 0, percentage: 0 },
+      reduced: { count: 0, percentage: 0 }
     },
-    recentResponses: [
-      { name: "David K.", response: "Extended hours", time: "2 days ago", comment: "Need evening access" },
-      { name: "Lisa P.", response: "Current hours", time: "1 day ago", comment: "Current schedule works fine" }
-    ],
+    recentResponses: [],
     demographics: {
       byAge: [
         { range: "18-30", yes: 45, no: 12 },
@@ -191,16 +218,14 @@ export interface Poll {
   id: number;
   title: string;
   type: string;
-  status: string;
   question: string;
   description: string;
   responses: number;
-  timeLeft: string;
-  createdAt: string;
+  startDate: string;
   endDate: string;
+  expectedResponses: number;
   channels: string[];
   reach: string;
-  responseRate: string;
   results: Record<string, { count: number; percentage: number; }>;
   recentResponses: Array<{
     name: string;

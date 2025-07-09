@@ -8,67 +8,20 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Progress } from '@/components/ui/progress';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { Search, Filter, Plus, BarChart3, MessageSquare, Clock, Users, CheckCircle, Grid3X3, List, ArrowUpDown } from 'lucide-react';
-const allPollsData = [{
-  id: 1,
-  title: "Should we extend parking meter hours downtown?",
-  type: "Poll",
-  responses: 156,
-  expectedResponses: 200,
-  startDate: "2024-01-15",
-  endDate: "2024-01-25",
-  status: "in_progress",
-  engagement: "24%"
-}, {
-  id: 2,
-  title: "Community Center Improvements",
-  type: "Survey",
-  responses: 89,
-  expectedResponses: 150,
-  startDate: "2024-01-10",
-  endDate: "2024-01-20",
-  status: "in_progress",
-  engagement: "18%"
-}, {
-  id: 3,
-  title: "Should we add new bike lanes on Main Street?",
-  type: "Poll",
-  responses: 203,
-  expectedResponses: 250,
-  startDate: "2024-01-18",
-  endDate: "2024-01-22",
-  status: "in_progress",
-  engagement: "31%"
-}, {
-  id: 4,
-  title: "Reopen Community Pool",
-  type: "Survey",
-  responses: 219,
-  expectedResponses: 200,
-  startDate: "2024-01-08",
-  endDate: "2024-01-18",
-  status: "completed",
-  engagement: "42%"
-}, {
-  id: 5,
-  title: "Weekend farmers market location",
-  type: "Poll",
-  responses: 342,
-  expectedResponses: 300,
-  startDate: "2024-01-01",
-  endDate: "2024-01-12",
-  status: "completed",
-  engagement: "38%"
-}, {
-  id: 6,
-  title: "Public Library Hours Survey",
-  type: "Survey",
-  responses: 156,
-  expectedResponses: 200,
-  startDate: "2024-01-25",
-  endDate: "2024-02-05",
-  status: "not_started",
-  engagement: "29%"
-}];
+import { pollData, getPollStatus } from '@/data/pollData';
+
+// Convert pollData to array format for the list
+const allPollsData = Object.values(pollData).map(poll => ({
+  id: poll.id,
+  title: poll.title,
+  type: poll.type,
+  responses: poll.responses,
+  expectedResponses: poll.expectedResponses,
+  startDate: poll.startDate,
+  endDate: poll.endDate,
+  status: getPollStatus(poll.startDate, poll.endDate),
+  engagement: Math.round((poll.responses / poll.expectedResponses) * 100) + '%'
+}));
 export default function Polls() {
   const [searchTerm, setSearchTerm] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -76,12 +29,14 @@ export default function Polls() {
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
   const getStatusBadge = (status: string) => {
     switch (status) {
-      case 'in_progress':
-        return <Badge variant="default" className="whitespace-nowrap">In Progress</Badge>;
+      case 'active':
+        return <Badge variant="default" className="whitespace-nowrap">Active</Badge>;
       case 'not_started':
-        return <Badge className="bg-gray-100 text-gray-700 hover:bg-gray-100/80 whitespace-nowrap">Not Started</Badge>;
+        return <Badge variant="outline" className="whitespace-nowrap">Not Started</Badge>;
       case 'completed':
         return <Badge className="bg-green-600 text-white hover:bg-green-600/80 whitespace-nowrap">Completed</Badge>;
+      case 'expired':
+        return <Badge variant="destructive" className="whitespace-nowrap">Expired</Badge>;
       default:
         return <Badge variant="outline" className="whitespace-nowrap">Unknown</Badge>;
     }
