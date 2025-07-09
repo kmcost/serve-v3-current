@@ -166,14 +166,15 @@ export default function Polls() {
   const PollCard = ({ poll }: { poll: typeof allPollsData[0] }) => (
     <Card className="hover:shadow-md transition-shadow">
       <CardHeader className="pb-3">
-        <Link to={`/polls/${poll.id}`} className="hover:text-primary transition-colors">
-          <CardTitle className="text-lg font-semibold leading-6">{poll.title}</CardTitle>
-        </Link>
+        <div className="space-y-3">
+          {getStatusBadge(poll.status)}
+          <Link to={`/polls/${poll.id}`} className="hover:text-primary transition-colors">
+            <CardTitle className="text-lg font-semibold leading-6">{poll.title}</CardTitle>
+          </Link>
+        </div>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-3">
-          {getStatusBadge(poll.status)}
-          
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             {getTypeIcon(poll.type)}
             <span>{poll.type}</span>
