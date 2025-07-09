@@ -1,29 +1,17 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { 
-  ArrowLeft, 
-  Settings,
-  StopCircle,
-  Send
-} from 'lucide-react';
+import { ArrowLeft, Settings, StopCircle, Send } from 'lucide-react';
 import { Poll } from '@/data/pollData';
-
 interface PollHeaderProps {
   poll: Poll;
 }
-
-export default function PollHeader({ poll }: PollHeaderProps) {
+export default function PollHeader({
+  poll
+}: PollHeaderProps) {
   const navigate = useNavigate();
-
-  return (
-    <div className="flex flex-col gap-3">
-      <Button 
-        variant="ghost" 
-        size="sm" 
-        onClick={() => navigate('/polls')}
-        className="gap-2 self-start"
-      >
+  return <div className="flex flex-col gap-3">
+      <Button variant="ghost" size="sm" onClick={() => navigate('/polls')} className="gap-2 self-start">
         <ArrowLeft className="h-4 w-4" />
         Back to Polls
       </Button>
@@ -34,10 +22,6 @@ export default function PollHeader({ poll }: PollHeaderProps) {
       
       <p className="text-muted-foreground">Created {poll.createdAt} • Ends {poll.endDate}</p>
       
-      <Button size="sm" className="gap-2 self-start">
-        <Send className="h-4 w-4" />
-        Send Reminder
-      </Button>
-    </div>
-  );
+      
+    </div>;
 }
