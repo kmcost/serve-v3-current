@@ -37,7 +37,7 @@ export default function RecentResponses({ poll }: RecentResponsesProps) {
           ))}
         </div>
         
-        <div className="mt-4 pt-4 border-t">
+        <div className="mt-4">
           <Link to="/inbox">
             <Button variant="outline" size="sm" className="w-full">
               View All
