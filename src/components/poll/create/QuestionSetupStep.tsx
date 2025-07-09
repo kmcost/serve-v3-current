@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Plus, Lightbulb } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { Question } from './types';
 
 interface QuestionSetupStepProps {
@@ -88,18 +88,6 @@ export function QuestionSetupStep({
         Add Another Question
       </Button>
 
-      {/* AI Suggestion */}
-      <div className="bg-accent/50 border-l-4 border-l-primary p-4 rounded">
-        <div className="flex gap-3">
-          <Lightbulb className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-          <div>
-            <p className="font-medium text-sm">AI Suggestion</p>
-            <p className="text-sm text-muted-foreground mt-1">
-              Based on your question, we recommend phrasing it as: "Do you support extending parking meter hours downtown from 6 PM to 8 PM on weekdays?" This creates clearer expectations and actionable results.
-            </p>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
