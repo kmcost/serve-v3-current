@@ -99,13 +99,13 @@ export default function Polls() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'in_progress':
-        return <Badge variant="default">In Progress</Badge>;
+        return <Badge variant="default" className="whitespace-nowrap">In Progress</Badge>;
       case 'not_started':
-        return <Badge className="bg-gray-100 text-gray-700 hover:bg-gray-100/80">Not Started</Badge>;
+        return <Badge className="bg-gray-100 text-gray-700 hover:bg-gray-100/80 whitespace-nowrap">Not Started</Badge>;
       case 'completed':
-        return <Badge className="bg-green-600 text-white hover:bg-green-600/80">Completed</Badge>;
+        return <Badge className="bg-green-600 text-white hover:bg-green-600/80 whitespace-nowrap">Completed</Badge>;
       default:
-        return <Badge variant="outline">Unknown</Badge>;
+        return <Badge variant="outline" className="whitespace-nowrap">Unknown</Badge>;
     }
   };
 
