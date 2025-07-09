@@ -17,35 +17,40 @@ export default function PollHeader({ poll }: PollHeaderProps) {
   const navigate = useNavigate();
 
   return (
-    <div className="flex items-center gap-4">
-      <Button 
-        variant="ghost" 
-        size="sm" 
-        onClick={() => navigate('/polls')}
-        className="gap-2"
-      >
-        <ArrowLeft className="h-4 w-4" />
-        Back to Polls
-      </Button>
-      <div className="flex-1">
-        <div className="flex items-center gap-3 mb-1">
-          <h1 className="text-2xl font-bold text-foreground">{poll.title}</h1>
-          <Badge variant="default">Active</Badge>
+    <div className="space-y-4">
+      {/* Mobile-first header with back button */}
+      <div className="flex items-center gap-3">
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          onClick={() => navigate('/polls')}
+          className="gap-2 shrink-0"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          <span className="hidden sm:inline">Back to Polls</span>
+        </Button>
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center gap-3 mb-1 flex-wrap">
+            <Badge variant="default" className="order-first sm:order-last">Active</Badge>
+            <h1 className="text-xl sm:text-2xl font-bold text-foreground leading-tight">{poll.title}</h1>
+          </div>
+          <p className="text-sm text-muted-foreground">Created {poll.createdAt} • Ends {poll.endDate}</p>
         </div>
-        <p className="text-muted-foreground">Created {poll.createdAt} • Ends {poll.endDate}</p>
       </div>
-      <div className="flex gap-2">
-        <Button variant="outline" size="sm" className="gap-2">
+
+      {/* Action buttons - responsive layout */}
+      <div className="flex flex-wrap gap-2 sm:justify-end">
+        <Button variant="outline" size="sm" className="gap-2 flex-1 sm:flex-none">
           <Settings className="h-4 w-4" />
-          Settings
+          <span className="hidden sm:inline">Settings</span>
         </Button>
-        <Button variant="outline" size="sm" className="gap-2">
+        <Button variant="outline" size="sm" className="gap-2 flex-1 sm:flex-none">
           <StopCircle className="h-4 w-4" />
-          End Early
+          <span className="hidden sm:inline">End Early</span>
         </Button>
-        <Button size="sm" className="gap-2">
+        <Button size="sm" className="gap-2 flex-1 sm:flex-none">
           <Send className="h-4 w-4" />
-          Send Reminder
+          <span className="hidden sm:inline">Send Reminder</span>
         </Button>
       </div>
     </div>

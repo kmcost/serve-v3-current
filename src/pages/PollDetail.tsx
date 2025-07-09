@@ -25,19 +25,26 @@ export default function PollDetail() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto space-y-6">
+    <div className="max-w-6xl mx-auto space-y-4 sm:space-y-6 px-4 sm:px-6">
       <PollHeader poll={poll} />
 
-      <div className="grid gap-6 lg:grid-cols-3">
+      <div className="grid gap-4 sm:gap-6 md:grid-cols-3">
+        {/* Mobile-first: Key info at top */}
+        <div className="md:hidden">
+          <PollSidebar poll={poll} />
+        </div>
+
         {/* Main Content */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="md:col-span-2 space-y-4 sm:space-y-6">
           <PollResults poll={poll} />
           <PollDemographics poll={poll} />
           <RecentResponses poll={poll} />
         </div>
 
-        {/* Sidebar */}
-        <PollSidebar poll={poll} />
+        {/* Desktop Sidebar */}
+        <div className="hidden md:block">
+          <PollSidebar poll={poll} />
+        </div>
       </div>
     </div>
   );
