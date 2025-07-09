@@ -16,7 +16,7 @@ export default function PollHeader({
   return <div className="flex flex-col gap-3">
       <Button variant="ghost" size="sm" onClick={() => navigate('/polls')} className="gap-2 self-start">
         <ArrowLeft className="h-4 w-4" />
-        Back to Polls
+        Back
       </Button>
       
       <StatusBadge startDate={poll.startDate} endDate={poll.endDate} className="self-start" />
@@ -24,7 +24,7 @@ export default function PollHeader({
       <h1 className="text-2xl font-bold text-foreground">{poll.title}</h1>
       
       <p className="text-muted-foreground">
-        Created {poll.createdAt} • {pollStatus === 'Active' ? `Closes ${poll.endDate}` : `Starts ${poll.startDate}`}
+        {pollStatus === 'Active' ? `Closes ${poll.endDate}` : `Starts ${poll.startDate}`}
       </p>
       
       
