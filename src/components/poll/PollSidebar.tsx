@@ -1,21 +1,15 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { 
-  Calendar,
-  Send,
-  TrendingUp,
-  StopCircle
-} from 'lucide-react';
+import { Calendar, Send, TrendingUp, StopCircle } from 'lucide-react';
 import { Poll } from '@/data/pollData';
-
 interface PollSidebarProps {
   poll: Poll;
 }
-
-export default function PollSidebar({ poll }: PollSidebarProps) {
-  return (
-    <div className="space-y-4">
+export default function PollSidebar({
+  poll
+}: PollSidebarProps) {
+  return <div className="space-y-4">
       <Card>
         <CardHeader>
           <CardTitle className="text-lg">Poll Status</CardTitle>
@@ -27,16 +21,12 @@ export default function PollSidebar({ poll }: PollSidebarProps) {
               <Badge variant="default">Active</Badge>
             </div>
             <div className="flex justify-between">
-              <span className="text-sm text-muted-foreground">Start Date</span>
-              <span className="text-sm font-medium">{poll.startDate}</span>
+              <span className="text-sm text-muted-foreground">Time Left</span>
+              <span className="text-sm font-medium">{poll.timeLeft}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-sm text-muted-foreground">End Date</span>
               <span className="text-sm font-medium">{poll.endDate}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-sm text-muted-foreground">Time Left</span>
-              <span className="text-sm font-medium">{poll.timeLeft}</span>
             </div>
           </div>
         </CardContent>
@@ -57,7 +47,7 @@ export default function PollSidebar({ poll }: PollSidebarProps) {
               <span className="text-sm font-medium">{poll.reach}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-sm text-muted-foreground">Response Rate</span>
+              <span className="text-sm text-muted-foreground">Potential Reach</span>
               <span className="text-sm font-medium text-success">{poll.responseRate}</span>
             </div>
           </div>
@@ -87,6 +77,5 @@ export default function PollSidebar({ poll }: PollSidebarProps) {
           </Button>
         </CardContent>
       </Card>
-    </div>
-  );
+    </div>;
 }
