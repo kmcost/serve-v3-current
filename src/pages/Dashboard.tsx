@@ -90,7 +90,7 @@ export default function Dashboard() {
           </div>
           <div className="space-y-4">
             <Link to="/polls/2" className="block bg-white p-4 rounded-lg hover:bg-gray-50 transition-colors">
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-2 md:space-y-0">
+              <div className="flex flex-col md:flex-row md:items-center md:gap-8 space-y-2 md:space-y-0">
                 <div className="order-1 md:order-1">
                   <h3 className="font-medium text-sm text-primary">
                     Should we reopen the community pool?
@@ -105,7 +105,7 @@ export default function Dashboard() {
               </div>
             </Link>
             <Link to="/polls/3" className="block bg-white p-4 rounded-lg hover:bg-gray-50 transition-colors">
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-2 md:space-y-0">
+              <div className="flex flex-col md:flex-row md:items-center md:gap-8 space-y-2 md:space-y-0">
                 <div className="order-1 md:order-1">
                   <h3 className="font-medium text-sm text-primary">
                     Are you in favor of the operation of golf carts on village streets?
@@ -120,7 +120,7 @@ export default function Dashboard() {
               </div>
             </Link>
             <Link to="/polls/4" className="block bg-white p-4 rounded-lg hover:bg-gray-50 transition-colors">
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-2 md:space-y-0">
+              <div className="flex flex-col md:flex-row md:items-center md:gap-8 space-y-2 md:space-y-0">
                 <div className="order-1 md:order-1">
                   <h3 className="font-medium text-sm text-primary">
                     How would you like to receive council updates?
