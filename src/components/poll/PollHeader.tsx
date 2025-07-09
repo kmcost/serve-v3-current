@@ -23,7 +23,7 @@ export default function PollHeader({
       
       <h1 className="text-2xl font-bold text-foreground">{poll.title}</h1>
       
-      <p className="text-muted-foreground">Created {poll.createdAt} • Ends {poll.endDate}</p>
+      <p className="text-muted-foreground">Created {poll.createdAt} • Starts {poll.startDate}</p>
       
       
     </div>;
