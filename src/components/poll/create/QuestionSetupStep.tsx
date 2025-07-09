@@ -1,0 +1,105 @@
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Plus, Lightbulb } from 'lucide-react';
+import { Question } from './types';
+
+interface QuestionSetupStepProps {
+  questions: Question[];
+  onAddQuestion: () => void;
+  onUpdateQuestion: (id: number, field: string, value: string) => void;
+  onRemoveQuestion: (id: number) => void;
+}
+
+export function QuestionSetupStep({ 
+  questions, 
+  onAddQuestion, 
+  onUpdateQuestion, 
+  onRemoveQuestion 
+}: QuestionSetupStepProps) {
+  return (
+    <div className="space-y-6">
+      <div>
+        <h2 className="text-xl font-semibold mb-2">What do you want to ask?</h2>
+        <p className="text-muted-foreground">
+          Add your questions below. Multiple questions automatically create a survey.
+        </p>
+      </div>
+
+      {questions.map((question, index) => (
+        <div key={question.id} className="space-y-4 p-4 border rounded-lg">
+          <div className="flex items-center justify-between">
+            <Label className="text-base font-medium">
+              Question {index + 1}
+            </Label>
+            {questions.length > 1 && (
+              <Button 
+                variant="ghost" 
+                size="sm"
+                onClick={() => onRemoveQuestion(question.id)}
+              >
+                Remove
+              </Button>
+            )}
+          </div>
+          
+          <Textarea
+            placeholder="Enter your question..."
+            value={question.text}
+            onChange={(e) => onUpdateQuestion(question.id, 'text', e.target.value)}
+            className="min-h-[80px]"
+          />
+
+          <div>
+            <Label className="text-sm">Question Type</Label>
+            <RadioGroup 
+              value={question.type}
+              onValueChange={(value) => onUpdateQuestion(question.id, 'type', value)}
+              className="mt-2"
+            >
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="yes_no" id={`yes_no_${question.id}`} />
+                <Label htmlFor={`yes_no_${question.id}`}>Yes/No</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="multiple_choice" id={`mc_${question.id}`} />
+                <Label htmlFor={`mc_${question.id}`}>Multiple Choice</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="rating" id={`rating_${question.id}`} />
+                <Label htmlFor={`rating_${question.id}`}>Rating Scale (1-5)</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="open_text" id={`text_${question.id}`} />
+                <Label htmlFor={`text_${question.id}`}>Open Text</Label>
+              </div>
+            </RadioGroup>
+          </div>
+        </div>
+      ))}
+
+      <Button 
+        variant="outline" 
+        onClick={onAddQuestion}
+        className="gap-2"
+      >
+        <Plus className="h-4 w-4" />
+        Add Another Question
+      </Button>
+
+      {/* AI Suggestion */}
+      <div className="bg-accent/50 border-l-4 border-l-primary p-4 rounded">
+        <div className="flex gap-3">
+          <Lightbulb className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+          <div>
+            <p className="font-medium text-sm">AI Suggestion</p>
+            <p className="text-sm text-muted-foreground mt-1">
+              Based on your question, we recommend phrasing it as: "Do you support extending parking meter hours downtown from 6 PM to 8 PM on weekdays?" This creates clearer expectations and actionable results.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
