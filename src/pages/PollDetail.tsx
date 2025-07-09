@@ -4,7 +4,6 @@ import { pollData } from '@/data/pollData';
 import PollHeader from '@/components/poll/PollHeader';
 import PollResults from '@/components/poll/PollResults';
 import QuestionsAsked from '@/components/poll/QuestionsAsked';
-import PollDemographics from '@/components/poll/PollDemographics';
 import RecentResponses from '@/components/poll/RecentResponses';
 import PollSidebar from '@/components/poll/PollSidebar';
 
@@ -34,7 +33,6 @@ export default function PollDetail() {
         <div className="lg:col-span-2 space-y-6">
           <PollResults poll={poll} />
           <QuestionsAsked poll={poll} />
-          <PollDemographics poll={poll} />
           <RecentResponses poll={poll} />
         </div>
 
