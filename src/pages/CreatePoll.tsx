@@ -71,18 +71,18 @@ export default function CreatePoll() {
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
-      {/* Header */}
-      <div className="flex items-center gap-4">
+      {/* Header - Mobile-First Layout */}
+      <div className="space-y-3">
         <Button 
           variant="ghost" 
           size="sm" 
           onClick={() => navigate('/polls')}
-          className="gap-2"
+          className="gap-2 self-start"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to Polls
         </Button>
-        <div>
+        <div className="space-y-1">
           <h1 className="text-2xl font-bold text-foreground">
             Create {isMultipleQuestions ? 'Survey' : 'Poll'}
           </h1>
