@@ -1,8 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Calendar, Send, TrendingUp, StopCircle, Edit, Play } from 'lucide-react';
+import { Calendar, Send, TrendingUp, StopCircle, Edit, Play, Copy } from 'lucide-react';
 import { Poll } from '@/data/pollData';
-import { isPollStarted, calculateTimeLeft } from '@/utils/pollUtils';
+import { getPollStatus, calculateTimeLeft } from '@/utils/pollUtils';
 import { StatusBadge } from '@/components/ui/status-badge';
 interface PollSidebarProps {
   poll: Poll;
@@ -10,7 +10,7 @@ interface PollSidebarProps {
 export default function PollSidebar({
   poll
 }: PollSidebarProps) {
-  const pollStarted = isPollStarted(poll.startDate);
+  const pollStatus = getPollStatus(poll.startDate, poll.endDate);
 
   return <div className="space-y-4">
       <Card>
@@ -63,7 +63,18 @@ export default function PollSidebar({
           <CardTitle className="text-lg">Quick Actions</CardTitle>
         </CardHeader>
         <CardContent className="space-y-2">
-          {pollStarted ? (
+          {pollStatus === 'Completed' ? (
+            <>
+              <Button variant="outline" size="sm" className="w-full gap-2">
+                <TrendingUp className="h-4 w-4" />
+                Export Data
+              </Button>
+              <Button variant="outline" size="sm" className="w-full gap-2">
+                <Copy className="h-4 w-4" />
+                Duplicate Poll
+              </Button>
+            </>
+          ) : pollStatus === 'Active' ? (
             <>
               <Button variant="outline" size="sm" className="w-full gap-2">
                 <Calendar className="h-4 w-4" />
