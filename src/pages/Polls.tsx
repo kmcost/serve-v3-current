@@ -174,18 +174,18 @@ export default function Polls() {
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="flex items-center gap-4 text-sm text-muted-foreground">
-          <div className="flex items-center gap-1">
+        <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+          <div className="flex items-center gap-1 shrink-0">
             {getTypeIcon(poll.type)}
             <span>{poll.type}</span>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 shrink-0">
             <Users className="h-4 w-4" />
-            <span>{poll.responses} responses</span>
+            <span className="whitespace-nowrap">{poll.responses} responses</span>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 shrink-0">
             <Clock className="h-4 w-4" />
-            <span>{getDaysLeft(poll.endDate, poll.status)}</span>
+            <span className="whitespace-nowrap">{getDaysLeft(poll.endDate, poll.status)}</span>
           </div>
         </div>
         
@@ -214,13 +214,13 @@ export default function Polls() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="flex flex-col gap-4">
         <div>
           <h1 className="text-2xl font-bold text-foreground">Polls & Surveys</h1>
           <p className="text-muted-foreground">Manage your constituent engagement</p>
         </div>
-        <Link to="/polls/create">
-          <Button className="gap-2">
+        <Link to="/polls/create" className="w-full">
+          <Button className="gap-2 w-full">
             <Plus className="h-4 w-4" />
             Create New
           </Button>
@@ -228,8 +228,8 @@ export default function Polls() {
       </div>
 
       {/* Search, Filters, and View Toggle */}
-      <div className="flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
-        <div className="relative flex-1">
+      <div className="flex flex-col gap-4">
+        <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
           <Input
             placeholder="Search polls and surveys..."
@@ -240,14 +240,27 @@ export default function Polls() {
         </div>
         
         {/* View Toggle */}
-        <ToggleGroup type="single" value={viewMode} onValueChange={(value) => value && setViewMode(value as 'grid' | 'list')}>
-          <ToggleGroupItem value="list" aria-label="List view">
+        <ToggleGroup 
+          type="single" 
+          value={viewMode} 
+          onValueChange={(value) => value && setViewMode(value as 'grid' | 'list')}
+          className="w-full grid grid-cols-2 h-12 bg-muted rounded-lg p-1"
+        >
+          <ToggleGroupItem 
+            value="list" 
+            aria-label="List view"
+            className="flex items-center justify-center gap-2 h-full rounded-md data-[state=on]:bg-background data-[state=on]:shadow-sm data-[state=on]:text-foreground text-muted-foreground font-medium"
+          >
             <List className="h-4 w-4" />
-            <span className="ml-2">List</span>
+            <span>List</span>
           </ToggleGroupItem>
-          <ToggleGroupItem value="grid" aria-label="Grid view">
+          <ToggleGroupItem 
+            value="grid" 
+            aria-label="Grid view"
+            className="flex items-center justify-center gap-2 h-full rounded-md data-[state=on]:bg-background data-[state=on]:shadow-sm data-[state=on]:text-foreground text-muted-foreground font-medium"
+          >
             <Grid3X3 className="h-4 w-4" />
-            <span className="ml-2">Grid</span>
+            <span>Grid</span>
           </ToggleGroupItem>
         </ToggleGroup>
       </div>
