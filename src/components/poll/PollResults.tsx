@@ -22,7 +22,7 @@ export default function PollResults({ poll }: PollResultsProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-lg">Poll Results</CardTitle>
+        <CardTitle className="text-lg">Results</CardTitle>
       </CardHeader>
       <CardContent>
         {!pollStarted && (
