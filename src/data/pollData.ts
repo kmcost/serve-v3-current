@@ -65,7 +65,7 @@ export const pollData = {
   },
   3: {
     id: 3,
-    title: "Support for new bike lanes on Main St?",
+    title: "Should we add new bike lanes on Main Street?",
     type: "Poll",
     status: "Active",
     question: "Do you support adding new bike lanes on Main Street?",

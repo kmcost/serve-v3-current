@@ -30,7 +30,7 @@ const allPollsData = [{
   engagement: "18%"
 }, {
   id: 3,
-  title: "Support for new bike lanes on Main St?",
+  title: "Should we add new bike lanes on Main Street?",
   type: "Poll",
   responses: 203,
   expectedResponses: 250,
@@ -143,10 +143,6 @@ export default function Polls() {
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-3">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            {getTypeIcon(poll.type)}
-            <span>{poll.type}</span>
-          </div>
           
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Users className="h-4 w-4" />
@@ -220,12 +216,6 @@ export default function Polls() {
                   </Button>
                 </TableHead>
                 <TableHead>
-                  <Button variant="ghost" className="h-auto p-0 font-medium" onClick={() => handleSort('type')}>
-                    Type
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                  </Button>
-                </TableHead>
-                <TableHead>
                   <Button variant="ghost" className="h-auto p-0 font-medium" onClick={() => handleSort('title')}>
                     Name
                     <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -243,12 +233,6 @@ export default function Polls() {
             <TableBody>
               {sortedAndFilteredPolls.map((poll, index) => <TableRow key={poll.id} className={`hover:bg-transparent ${index % 2 === 1 ? 'bg-gray-50' : 'bg-white'}`}>
                   <TableCell>{getStatusBadge(poll.status)}</TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      {getTypeIcon(poll.type)}
-                      <span>{poll.type}</span>
-                    </div>
-                  </TableCell>
                   <TableCell>
                     <Link to={`/polls/${poll.id}`} className="font-medium hover:text-primary transition-colors">
                       {poll.title}
