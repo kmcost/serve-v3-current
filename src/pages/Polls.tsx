@@ -166,47 +166,38 @@ export default function Polls() {
   const PollCard = ({ poll }: { poll: typeof allPollsData[0] }) => (
     <Card className="hover:shadow-md transition-shadow">
       <CardHeader className="pb-3">
-        <div className="flex items-start justify-between">
-          <Link to={`/polls/${poll.id}`} className="hover:text-primary transition-colors">
-            <CardTitle className="text-lg font-semibold leading-6">{poll.title}</CardTitle>
-          </Link>
-          {getStatusBadge(poll.status)}
-        </div>
+        <Link to={`/polls/${poll.id}`} className="hover:text-primary transition-colors">
+          <CardTitle className="text-lg font-semibold leading-6">{poll.title}</CardTitle>
+        </Link>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-          <div className="flex items-center gap-1 shrink-0">
+        <div className="space-y-3">
+          {getStatusBadge(poll.status)}
+          
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
             {getTypeIcon(poll.type)}
             <span>{poll.type}</span>
           </div>
-          <div className="flex items-center gap-1 shrink-0">
+          
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Users className="h-4 w-4" />
-            <span className="whitespace-nowrap">{poll.responses} responses</span>
+            <span>{poll.responses} responses</span>
           </div>
-          <div className="flex items-center gap-1 shrink-0">
-            <Clock className="h-4 w-4" />
-            <span className="whitespace-nowrap">{getDaysLeft(poll.endDate, poll.status)}</span>
+          
+          <div className="space-y-2">
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-muted-foreground">Progress</span>
+              <span className="font-semibold">{Math.round(calculateProgress(poll.responses, poll.expectedResponses))}%</span>
+            </div>
+            <Progress value={calculateProgress(poll.responses, poll.expectedResponses)} className="h-2" />
           </div>
         </div>
         
-        <div className="space-y-2">
-          <div className="flex items-center justify-between text-sm">
-            <span className="text-muted-foreground">Progress</span>
-            <span className="font-semibold">{Math.round(calculateProgress(poll.responses, poll.expectedResponses))}%</span>
-          </div>
-          <Progress value={calculateProgress(poll.responses, poll.expectedResponses)} className="h-2" />
-        </div>
-        
-        <div className="flex items-center justify-between pt-2 border-t">
-          <div className="text-sm">
-            <span className="text-muted-foreground">{poll.responses}/{poll.expectedResponses} responses</span>
-          </div>
-          <Link to={`/polls/${poll.id}`}>
-            <Button variant="outline" size="sm">
-              View Details
-            </Button>
-          </Link>
-        </div>
+        <Link to={`/polls/${poll.id}`} className="block">
+          <Button variant="outline" className="w-full">
+            View Details
+          </Button>
+        </Link>
       </CardContent>
     </Card>
   );
