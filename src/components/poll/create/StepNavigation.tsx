@@ -30,16 +30,16 @@ export function StepNavigation({
       </div>
 
       {/* Mobile-First Navigation */}
-      <div className="flex flex-col sm:flex-row gap-3 sm:justify-between">
-        <Button variant="outline" onClick={onPrev} disabled={currentStep === 1} className="gap-2 order-2 sm:order-1" size="lg">
+      <div className="flex justify-between gap-3">
+        <Button variant="outline" onClick={onPrev} disabled={currentStep === 1} className="gap-2" size="lg">
           <ArrowLeft className="h-4 w-4" />
           Previous
         </Button>
         
-        {currentStep < 4 ? <Button onClick={onNext} className="gap-2 order-1 sm:order-2" size="lg">
+        {currentStep < 4 ? <Button onClick={onNext} className="gap-2" size="lg">
             Next
             <ArrowRight className="h-4 w-4" />
-          </Button> : <Button onClick={onLaunch} className="gap-2 order-1 sm:order-2" size="lg">
+          </Button> : <Button onClick={onLaunch} className="gap-2" size="lg">
             Launch {isMultipleQuestions ? 'Survey' : 'Poll'}
             <ArrowRight className="h-4 w-4" />
           </Button>}
