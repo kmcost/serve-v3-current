@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -30,12 +30,27 @@ const STEPS = [
 
 export default function CreatePoll() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [currentStep, setCurrentStep] = useState(1);
   const [questions, setQuestions] = useState([
     { id: 1, text: '', type: 'yes_no', options: [] }
   ]);
   const [audience, setAudience] = useState('all');
   const [channels, setChannels] = useState<string[]>([]);
+
+  // Initialize with AI recommendations if available
+  useEffect(() => {
+    const state = location.state as any;
+    if (state?.question) {
+      setQuestions([{ id: 1, text: state.question, type: 'yes_no', options: [] }]);
+    }
+    if (state?.audience) {
+      setAudience(state.audience);
+    }
+    if (state?.channels) {
+      setChannels(state.channels);
+    }
+  }, [location.state]);
 
   const addQuestion = () => {
     setQuestions([...questions, { 
@@ -88,26 +103,26 @@ export default function CreatePoll() {
         </div>
       </div>
 
-      {/* Progress Steps */}
-      <div className="flex items-center justify-center space-x-4 py-4">
+      {/* Mobile-First Progress Steps */}
+      <div className="flex items-center justify-center space-x-2 py-4">
         {STEPS.map((step, index) => (
           <div key={step.id} className="flex items-center">
-            <div className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium ${
+            <div className={`flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 rounded-full text-xs sm:text-sm font-medium ${
               currentStep >= step.id 
                 ? 'bg-primary text-primary-foreground' 
                 : 'bg-muted text-muted-foreground'
             }`}>
               {step.id}
             </div>
-            <div className="ml-2 hidden sm:block">
-              <p className={`text-sm font-medium ${
+            <div className="ml-1 sm:ml-2 hidden md:block">
+              <p className={`text-xs sm:text-sm font-medium ${
                 currentStep >= step.id ? 'text-foreground' : 'text-muted-foreground'
               }`}>
                 {step.name}
               </p>
             </div>
             {index < STEPS.length - 1 && (
-              <div className={`w-12 h-0.5 mx-4 ${
+              <div className={`w-4 sm:w-8 h-0.5 mx-1 sm:mx-2 ${
                 currentStep > step.id ? 'bg-primary' : 'bg-muted'
               }`} />
             )}
@@ -115,9 +130,19 @@ export default function CreatePoll() {
         ))}
       </div>
 
-      {/* Step Content */}
+      {/* Mobile Step Indicator */}
+      <div className="md:hidden text-center">
+        <p className="text-sm font-medium text-foreground">
+          {STEPS[currentStep - 1]?.name}
+        </p>
+        <p className="text-xs text-muted-foreground">
+          Step {currentStep} of {STEPS.length}
+        </p>
+      </div>
+
+      {/* Mobile-First Step Content */}
       <Card>
-        <CardContent className="p-6">
+        <CardContent className="p-4 sm:p-6">
           {currentStep === 1 && (
             <div className="space-y-6">
               <div>
@@ -424,32 +449,43 @@ export default function CreatePoll() {
         </CardContent>
       </Card>
 
-      {/* Navigation */}
-      <div className="flex justify-between">
+      {/* Mobile-First Navigation */}
+      <div className="flex flex-col sm:flex-row gap-3 sm:justify-between">
         <Button 
           variant="outline" 
           onClick={prevStep}
           disabled={currentStep === 1}
-          className="gap-2"
+          className="gap-2 order-2 sm:order-1"
+          size="lg"
         >
           <ArrowLeft className="h-4 w-4" />
           Previous
         </Button>
         
         {currentStep < 4 ? (
-          <Button onClick={nextStep} className="gap-2">
+          <Button 
+            onClick={nextStep} 
+            className="gap-2 order-1 sm:order-2"
+            size="lg"
+          >
             Next
             <ArrowRight className="h-4 w-4" />
           </Button>
         ) : (
           <Button 
             onClick={() => navigate('/polls')}
-            className="gap-2 bg-success hover:bg-success/90"
+            className="gap-2 order-1 sm:order-2"
+            size="lg"
           >
             Launch {isMultipleQuestions ? 'Survey' : 'Poll'}
             <ArrowRight className="h-4 w-4" />
           </Button>
         )}
+      </div>
+
+      {/* Mobile Alternative Navigation */}
+      <div className="sm:hidden text-center text-xs text-muted-foreground mt-4">
+        Swipe left/right to navigate steps
       </div>
     </div>
   );

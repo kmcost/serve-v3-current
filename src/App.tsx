@@ -7,6 +7,7 @@ import Layout from "./components/Layout";
 import Dashboard from "./pages/Dashboard";
 import Polls from "./pages/Polls";
 import CreatePoll from "./pages/CreatePoll";
+import AIRecommendations from "./pages/AIRecommendations";
 import PollDetail from "./pages/PollDetail";
 import Inbox from "./pages/Inbox";
 import MessageDetail from "./pages/MessageDetail";
@@ -26,6 +27,7 @@ const App = () => (
             <Route path="/" element={<Dashboard />} />
             <Route path="/polls" element={<Polls />} />
             <Route path="/polls/create" element={<CreatePoll />} />
+            <Route path="/polls/ai-recommendations" element={<AIRecommendations />} />
             <Route path="/polls/:id" element={<PollDetail />} />
             <Route path="/inbox" element={<Inbox />} />
             <Route path="/inbox/:id" element={<MessageDetail />} />

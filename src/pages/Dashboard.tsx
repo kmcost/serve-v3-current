@@ -44,12 +44,19 @@ export default function Dashboard() {
             </div>
           </div>
           
-          <Link to="/polls/create">
-            <Button size="lg" className="gap-2 my-[16px] w-full">
-              Get Started
-              <ArrowRight className="h-4 w-4" />
-            </Button>
-          </Link>
+          <Button 
+            size="lg" 
+            className="gap-2 my-[16px] w-full"
+            onClick={() => {
+              if (question.trim()) {
+                window.location.href = `/polls/ai-recommendations?question=${encodeURIComponent(question)}`;
+              }
+            }}
+            disabled={!question.trim()}
+          >
+            Get AI Recommendations
+            <ArrowRight className="h-4 w-4" />
+          </Button>
         </div>
       </div>
 
