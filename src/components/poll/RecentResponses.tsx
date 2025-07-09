@@ -1,5 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 import { Poll } from '@/data/pollData';
 
 interface RecentResponsesProps {
@@ -33,6 +35,14 @@ export default function RecentResponses({ poll }: RecentResponsesProps) {
               )}
             </div>
           ))}
+        </div>
+        
+        <div className="mt-4 pt-4 border-t">
+          <Link to="/inbox">
+            <Button variant="outline" size="sm" className="w-full">
+              View All
+            </Button>
+          </Link>
         </div>
       </CardContent>
     </Card>
