@@ -27,12 +27,16 @@ export default function PollSidebar({ poll }: PollSidebarProps) {
               <Badge variant="default">Active</Badge>
             </div>
             <div className="flex justify-between">
-              <span className="text-sm text-muted-foreground">Time Left</span>
-              <span className="text-sm font-medium">{poll.timeLeft}</span>
+              <span className="text-sm text-muted-foreground">Start Date</span>
+              <span className="text-sm font-medium">{poll.startDate}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-sm text-muted-foreground">End Date</span>
               <span className="text-sm font-medium">{poll.endDate}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-sm text-muted-foreground">Time Left</span>
+              <span className="text-sm font-medium">{poll.timeLeft}</span>
             </div>
           </div>
         </CardContent>

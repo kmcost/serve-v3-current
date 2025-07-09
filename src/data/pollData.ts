@@ -10,6 +10,7 @@ export const pollData = {
     responses: 156,
     timeLeft: "3 days remaining",
     createdAt: "5 days ago",
+    startDate: "January 10, 2024",
     endDate: "January 15, 2024",
     channels: ["Email", "SMS"],
     reach: "2,400 residents",
@@ -42,6 +43,7 @@ export const pollData = {
     responses: 89,
     timeLeft: "5 days remaining",
     createdAt: "2 hours ago",
+    startDate: "January 15, 2024",
     endDate: "January 20, 2024",
     channels: ["Email", "SMS"],
     reach: "1,243 residents",
@@ -73,6 +75,7 @@ export const pollData = {
     responses: 203,
     timeLeft: "2 days remaining",
     createdAt: "Friday",
+    startDate: "January 8, 2024",
     endDate: "January 22, 2024",
     channels: ["Facebook", "SMS", "Email"],
     reach: "2,100 residents",
@@ -103,6 +106,7 @@ export const pollData = {
     responses: 219,
     timeLeft: "1 week remaining",
     createdAt: "2 weeks ago",
+    startDate: "January 4, 2024",
     endDate: "January 18, 2024",
     channels: ["Facebook", "Email", "SMS"],
     reach: "1,500 residents",
@@ -133,6 +137,7 @@ export const pollData = {
     responses: 342,
     timeLeft: "Completed",
     createdAt: "3 weeks ago",
+    startDate: "December 22, 2023",
     endDate: "January 12, 2024",
     channels: ["Facebook", "Email"],
     reach: "2,800 residents",
@@ -164,6 +169,7 @@ export const pollData = {
     responses: 156,
     timeLeft: "1 week remaining",
     createdAt: "1 week ago",
+    startDate: "January 29, 2024",
     endDate: "February 5, 2024",
     channels: ["Email", "Website"],
     reach: "1,200 residents",
@@ -197,6 +203,7 @@ export interface Poll {
   responses: number;
   timeLeft: string;
   createdAt: string;
+  startDate: string;
   endDate: string;
   channels: string[];
   reach: string;
