@@ -17,3 +17,18 @@ export const isPollStarted = (startDate: string): boolean => {
   const start = new Date(startDate);
   return now >= start;
 };
+
+export const calculateTimeLeft = (endDate: string): string => {
+  const now = new Date();
+  const end = new Date(endDate);
+  const diffInMs = end.getTime() - now.getTime();
+  const diffInDays = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+  
+  if (diffInDays <= 0) {
+    return '0 days remaining';
+  } else if (diffInDays === 1) {
+    return '1 day remaining';
+  } else {
+    return `${diffInDays} days remaining`;
+  }
+};

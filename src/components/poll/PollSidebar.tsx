@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Calendar, Send, TrendingUp, StopCircle, Edit, Play } from 'lucide-react';
 import { Poll } from '@/data/pollData';
-import { isPollStarted } from '@/utils/pollUtils';
+import { isPollStarted, calculateTimeLeft } from '@/utils/pollUtils';
 import { StatusBadge } from '@/components/ui/status-badge';
 interface PollSidebarProps {
   poll: Poll;
@@ -33,7 +33,7 @@ export default function PollSidebar({
             </div>
             <div className="flex justify-between">
               <span className="text-sm text-muted-foreground">Time Left</span>
-              <span className="text-sm font-medium">{poll.timeLeft}</span>
+              <span className="text-sm font-medium">{calculateTimeLeft(poll.endDate)}</span>
             </div>
           </div>
         </CardContent>
