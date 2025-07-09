@@ -87,7 +87,7 @@ export function PreviewStep({ questions, audience, channels, isMultipleQuestions
               <div className="bg-muted/50 p-4 rounded-lg">
                 <div className="text-center space-y-3">
                   <h3 className="font-semibold">City of Oakland Survey</h3>
-                  <p className="text-sm text-muted-foreground">From: Sarah Chen, District 3 Council Member</p>
+                  <p className="text-sm text-muted-foreground">From: Raymond Chen, District 3 Council Member</p>
                   <div className="space-y-2 text-left">
                     {questions.map((question, index) => (
                       <div key={question.id} className="p-2 bg-white rounded border">
