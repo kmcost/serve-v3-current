@@ -24,22 +24,22 @@ export default function Dashboard() {
             <p className="text-sm text-muted-foreground">Suggested questions:</p>
             <div className="space-y-2">
               <button 
-                onClick={() => setQuestion("What are my constituent's most important issues?")}
+                onClick={() => setQuestion("What issues do you as a constituent care about most?")}
                 className="w-full p-3 text-left text-sm bg-card border rounded-lg hover:bg-accent transition-colors"
               >
-                What are my constituent's most important issues?
+                What issues do you as a constituent care about most?
               </button>
               <button 
-                onClick={() => setQuestion("Where are the most troubling roadworks issues?")}
+                onClick={() => setQuestion("Would you support increased funding for our local library?")}
                 className="w-full p-3 text-left text-sm bg-card border rounded-lg hover:bg-accent transition-colors"
               >
-                Where are the most troubling roadworks issues?
+                Would you support increased funding for our local library?
               </button>
               <button 
-                onClick={() => setQuestion("How can we make our school system better?")}
+                onClick={() => setQuestion("What programs or services would you like to see offered in our schools?")}
                 className="w-full p-3 text-left text-sm bg-card border rounded-lg hover:bg-accent transition-colors"
               >
-                How can we make our school system better?
+                What programs or services would you like to see offered in our schools?
               </button>
             </div>
           </div>
@@ -54,7 +54,7 @@ export default function Dashboard() {
             }}
             disabled={!question.trim()}
           >
-            Get AI Recommendations
+            Create Poll
             <ArrowRight className="h-4 w-4" />
           </Button>
         </div>
