@@ -1,9 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, Settings, StopCircle, Send } from 'lucide-react';
 import { Poll } from '@/data/pollData';
-import { getPollStatus } from '@/utils/pollUtils';
+import { StatusBadge } from '@/components/ui/status-badge';
 interface PollHeaderProps {
   poll: Poll;
 }
@@ -11,7 +10,6 @@ export default function PollHeader({
   poll
 }: PollHeaderProps) {
   const navigate = useNavigate();
-  const pollStatus = getPollStatus(poll.startDate, poll.endDate);
   
   return <div className="flex flex-col gap-3">
       <Button variant="ghost" size="sm" onClick={() => navigate('/polls')} className="gap-2 self-start">
@@ -19,7 +17,7 @@ export default function PollHeader({
         Back to Polls
       </Button>
       
-      <Badge variant={pollStatus === 'Active' ? 'default' : pollStatus === 'Not Started' ? 'outline' : 'secondary'} className={`self-start ${pollStatus === 'Not Started' ? 'bg-gray-800 text-white border-gray-800 hover:bg-gray-700' : ''}`}>{pollStatus}</Badge>
+      <StatusBadge startDate={poll.startDate} endDate={poll.endDate} className="self-start" />
       
       <h1 className="text-2xl font-bold text-foreground">{poll.title}</h1>
       

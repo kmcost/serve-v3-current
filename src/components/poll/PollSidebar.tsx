@@ -1,16 +1,15 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Calendar, Send, TrendingUp, StopCircle, Edit, Play } from 'lucide-react';
 import { Poll } from '@/data/pollData';
-import { getPollStatus, isPollStarted } from '@/utils/pollUtils';
+import { isPollStarted } from '@/utils/pollUtils';
+import { StatusBadge } from '@/components/ui/status-badge';
 interface PollSidebarProps {
   poll: Poll;
 }
 export default function PollSidebar({
   poll
 }: PollSidebarProps) {
-  const pollStatus = getPollStatus(poll.startDate, poll.endDate);
   const pollStarted = isPollStarted(poll.startDate);
 
   return <div className="space-y-4">
@@ -22,9 +21,7 @@ export default function PollSidebar({
           <div className="space-y-2">
             <div className="flex justify-between">
               <span className="text-sm text-muted-foreground">Status</span>
-              <Badge variant={pollStatus === 'Active' ? 'default' : pollStatus === 'Not Started' ? 'outline' : 'secondary'} className={pollStatus === 'Not Started' ? 'bg-gray-800 text-white border-gray-800 hover:bg-gray-700' : ''}>
-                {pollStatus}
-              </Badge>
+              <StatusBadge startDate={poll.startDate} endDate={poll.endDate} />
             </div>
             <div className="flex justify-between">
               <span className="text-sm text-muted-foreground">Start Date</span>

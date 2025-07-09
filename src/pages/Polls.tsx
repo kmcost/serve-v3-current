@@ -9,7 +9,7 @@ import { Progress } from '@/components/ui/progress';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { Search, Filter, Plus, BarChart3, MessageSquare, Clock, Users, CheckCircle, Grid3X3, List, ArrowUpDown } from 'lucide-react';
 import { pollData, Poll } from '@/data/pollData';
-import { getPollStatus } from '@/utils/pollUtils';
+import { StatusBadge } from '@/components/ui/status-badge';
 export default function Polls() {
   const [searchTerm, setSearchTerm] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -25,21 +25,11 @@ export default function Polls() {
     expectedResponses: 200, // Default expected responses
     startDate: poll.startDate,
     endDate: poll.endDate,
-    status: getPollStatus(poll.startDate, poll.endDate),
     engagement: poll.responseRate
   }));
 
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case 'Active':
-        return <Badge variant="default" className="whitespace-nowrap">Active</Badge>;
-      case 'Not Started':
-        return <Badge variant="outline" className="bg-gray-800 text-white border-gray-800 hover:bg-gray-700 whitespace-nowrap">Not Started</Badge>;
-      case 'Completed':
-        return <Badge className="bg-green-600 text-white hover:bg-green-600/80 whitespace-nowrap">Completed</Badge>;
-      default:
-        return <Badge variant="outline" className="whitespace-nowrap">Unknown</Badge>;
-    }
+  const getStatusBadge = (startDate: string, endDate: string) => {
+    return <StatusBadge startDate={startDate} endDate={endDate} className="whitespace-nowrap" />;
   };
   const getTypeIcon = (type: string) => {
     return type === 'Poll' ? <BarChart3 className="h-4 w-4" /> : <MessageSquare className="h-4 w-4" />;
@@ -50,14 +40,16 @@ export default function Polls() {
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString();
   };
-  const getDaysLeft = (endDate: string, status: string) => {
-    if (status === 'Completed') return 'Completed';
-    if (status === 'Not Started') return 'Not Started';
+  const getDaysLeft = (endDate: string, startDate: string) => {
     const end = new Date(endDate);
+    const start = new Date(startDate);
     const now = new Date();
+    
+    if (now < start) return 'Not Started';
+    if (now > end) return 'Completed';
+    
     const diffTime = end.getTime() - now.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    if (diffDays < 0) return 'Expired';
     if (diffDays === 0) return 'Ends today';
     if (diffDays === 1) return '1 day left';
     return `${diffDays} days left`;
@@ -90,7 +82,7 @@ export default function Polls() {
   }) => <Card className="hover:shadow-md transition-shadow">
       <CardHeader className="pb-3">
         <div className="space-y-3 px-0 py-0 my-0">
-          {getStatusBadge(poll.status)}
+          {getStatusBadge(poll.startDate, poll.endDate)}
           <Link to={`/polls/${poll.id}`} className="hover:text-primary transition-colors">
             <CardTitle className="text-lg font-semibold leading-6 py-[8px]">{poll.title}</CardTitle>
           </Link>
@@ -187,7 +179,7 @@ export default function Polls() {
             </TableHeader>
             <TableBody>
               {sortedAndFilteredPolls.map((poll, index) => <TableRow key={poll.id} className={`hover:bg-transparent ${index % 2 === 1 ? 'bg-gray-50' : 'bg-white'}`}>
-                  <TableCell>{getStatusBadge(poll.status)}</TableCell>
+                  <TableCell>{getStatusBadge(poll.startDate, poll.endDate)}</TableCell>
                   <TableCell>
                     <Link to={`/polls/${poll.id}`} className="font-medium hover:text-primary transition-colors">
                       {poll.title}
