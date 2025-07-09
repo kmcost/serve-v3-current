@@ -240,29 +240,31 @@ export default function Polls() {
         </div>
         
         {/* View Toggle */}
-        <ToggleGroup 
-          type="single" 
-          value={viewMode} 
-          onValueChange={(value) => value && setViewMode(value as 'grid' | 'list')}
-          className="w-full grid grid-cols-2 h-12 bg-muted rounded-lg p-1"
-        >
-          <ToggleGroupItem 
-            value="list" 
-            aria-label="List view"
-            className="flex items-center justify-center gap-2 h-full rounded-md data-[state=on]:bg-background data-[state=on]:shadow-sm data-[state=on]:text-foreground text-muted-foreground font-medium"
+        <div className="relative bg-muted/50 p-1 rounded-xl border">
+          <ToggleGroup 
+            type="single" 
+            value={viewMode} 
+            onValueChange={(value) => value && setViewMode(value as 'grid' | 'list')}
+            className="grid grid-cols-2 gap-0 bg-transparent"
           >
-            <List className="h-4 w-4" />
-            <span>List</span>
-          </ToggleGroupItem>
-          <ToggleGroupItem 
-            value="grid" 
-            aria-label="Grid view"
-            className="flex items-center justify-center gap-2 h-full rounded-md data-[state=on]:bg-background data-[state=on]:shadow-sm data-[state=on]:text-foreground text-muted-foreground font-medium"
-          >
-            <Grid3X3 className="h-4 w-4" />
-            <span>Grid</span>
-          </ToggleGroupItem>
-        </ToggleGroup>
+            <ToggleGroupItem 
+              value="list" 
+              aria-label="List view"
+              className="relative flex items-center justify-center gap-2 h-11 px-6 rounded-lg bg-transparent border-0 text-muted-foreground font-medium transition-all duration-200 data-[state=on]:bg-background data-[state=on]:text-foreground data-[state=on]:shadow-sm hover:text-foreground"
+            >
+              <List className="h-4 w-4" />
+              <span className="text-sm font-medium">List</span>
+            </ToggleGroupItem>
+            <ToggleGroupItem 
+              value="grid" 
+              aria-label="Grid view"
+              className="relative flex items-center justify-center gap-2 h-11 px-6 rounded-lg bg-transparent border-0 text-muted-foreground font-medium transition-all duration-200 data-[state=on]:bg-background data-[state=on]:text-foreground data-[state=on]:shadow-sm hover:text-foreground"
+            >
+              <Grid3X3 className="h-4 w-4" />
+              <span className="text-sm font-medium">Grid</span>
+            </ToggleGroupItem>
+          </ToggleGroup>
+        </div>
       </div>
 
       {/* Content */}
