@@ -19,7 +19,7 @@ export default function PollHeader({
         Back to Polls
       </Button>
       
-      <Badge variant={pollStatus === 'Active' ? 'default' : 'secondary'} className="self-start">{pollStatus}</Badge>
+      <Badge variant={pollStatus === 'Active' ? 'default' : pollStatus === 'Not Started' ? 'outline' : 'secondary'} className={`self-start ${pollStatus === 'Not Started' ? 'bg-gray-800 text-white border-gray-800 hover:bg-gray-700' : ''}`}>{pollStatus}</Badge>
       
       <h1 className="text-2xl font-bold text-foreground">{poll.title}</h1>
       

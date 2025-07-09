@@ -32,20 +32,22 @@ export default function PollResults({ poll }: PollResultsProps) {
             </AlertDescription>
           </Alert>
         )}
-        <div className="grid grid-cols-3 gap-4">
-          <div className="text-center">
-            <p className="text-2xl font-bold text-primary">{poll.responses}</p>
-            <p className="text-sm text-muted-foreground">Total Responses</p>
+        {pollStarted && (
+          <div className="grid grid-cols-3 gap-4">
+            <div className="text-center">
+              <p className="text-2xl font-bold text-primary">{poll.responses}</p>
+              <p className="text-sm text-muted-foreground">Total Responses</p>
+            </div>
+            <div className="text-center">
+              <p className="text-2xl font-bold text-success">{poll.responseRate}</p>
+              <p className="text-sm text-muted-foreground">Response Rate</p>
+            </div>
+            <div className="text-center">
+              <p className="text-2xl font-bold text-warning">{getDaysLeft(poll.timeLeft)}</p>
+              <p className="text-sm text-muted-foreground">Days Left</p>
+            </div>
           </div>
-          <div className="text-center">
-            <p className="text-2xl font-bold text-success">{poll.responseRate}</p>
-            <p className="text-sm text-muted-foreground">Response Rate</p>
-          </div>
-          <div className="text-center">
-            <p className="text-2xl font-bold text-warning">{getDaysLeft(poll.timeLeft)}</p>
-            <p className="text-sm text-muted-foreground">Days Left</p>
-          </div>
-        </div>
+        )}
       </CardContent>
     </Card>
   );

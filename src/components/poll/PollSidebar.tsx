@@ -22,7 +22,7 @@ export default function PollSidebar({
           <div className="space-y-2">
             <div className="flex justify-between">
               <span className="text-sm text-muted-foreground">Status</span>
-              <Badge variant={pollStatus === 'Active' ? 'default' : 'secondary'}>
+              <Badge variant={pollStatus === 'Active' ? 'default' : pollStatus === 'Not Started' ? 'outline' : 'secondary'} className={pollStatus === 'Not Started' ? 'bg-gray-800 text-white border-gray-800 hover:bg-gray-700' : ''}>
                 {pollStatus}
               </Badge>
             </div>
