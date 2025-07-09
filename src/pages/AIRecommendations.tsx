@@ -133,19 +133,19 @@ export default function AIRecommendations() {
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
-      {/* Header */}
-      <div className="flex items-center gap-4">
+      {/* Header - Mobile-First Layout */}
+      <div className="space-y-3">
         <Button 
           variant="ghost" 
           size="sm" 
           onClick={() => navigate('/')}
-          className="gap-2"
+          className="gap-2 self-start"
         >
           <ArrowLeft className="h-4 w-4" />
           Back
         </Button>
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">AI Recommendations</h1>
+        <div className="space-y-1">
+          <h1 className="text-2xl font-bold text-foreground">AI-Powered Polling Strategy</h1>
           <p className="text-muted-foreground">Optimized poll strategy based on your question</p>
         </div>
       </div>
