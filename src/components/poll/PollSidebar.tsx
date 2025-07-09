@@ -47,13 +47,10 @@ export default function PollSidebar({
               <span className="text-sm font-medium">{poll.channels.join(', ')}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-sm text-muted-foreground">Reach</span>
+              <span className="text-sm text-muted-foreground">Potential Reach</span>
               <span className="text-sm font-medium">{poll.reach}</span>
             </div>
-            <div className="flex justify-between">
-              <span className="text-sm text-muted-foreground">Potential Reach</span>
-              <span className="text-sm font-medium text-success">{poll.responseRate}</span>
-            </div>
+            
           </div>
         </CardContent>
       </Card>
