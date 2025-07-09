@@ -1,5 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Poll } from '@/data/pollData';
+import { isPollStarted } from '@/utils/pollUtils';
 
 interface PollResultsProps {
   poll: Poll;
@@ -15,12 +17,21 @@ export default function PollResults({ poll }: PollResultsProps) {
     return "N/A";
   };
 
+  const pollStarted = isPollStarted(poll.startDate);
+
   return (
     <Card>
       <CardHeader>
         <CardTitle className="text-lg">Poll Results</CardTitle>
       </CardHeader>
-      <CardContent>        
+      <CardContent>
+        {!pollStarted && (
+          <Alert className="mb-4">
+            <AlertDescription>
+              This poll has not yet started.
+            </AlertDescription>
+          </Alert>
+        )}
         <div className="grid grid-cols-3 gap-4">
           <div className="text-center">
             <p className="text-2xl font-bold text-primary">{poll.responses}</p>

@@ -163,26 +163,23 @@ export const pollData = {
     id: 6,
     title: "Public Library Hours Survey",
     type: "Survey", 
-    status: "Active",
+    status: "Not Started",
     question: "What library hours would work best for you?",
     description: "Survey to optimize public library operating hours based on community needs.",
-    responses: 156,
-    timeLeft: "1 week remaining",
+    responses: 0,
+    timeLeft: "5 days until start",
     createdAt: "1 week ago",
-    startDate: "January 29, 2024",
-    endDate: "February 5, 2024",
+    startDate: "January 25, 2025",
+    endDate: "February 5, 2025",
     channels: ["Email", "Website"],
     reach: "1,200 residents",
-    responseRate: "29%",
+    responseRate: "0%",
     results: {
-      extended: { count: 78, percentage: 50 },
-      current: { count: 47, percentage: 30 },
-      reduced: { count: 31, percentage: 20 }
+      extended: { count: 0, percentage: 0 },
+      current: { count: 0, percentage: 0 },
+      reduced: { count: 0, percentage: 0 }
     },
-    recentResponses: [
-      { name: "David K.", response: "Extended hours", time: "2 days ago", comment: "Need evening access" },
-      { name: "Lisa P.", response: "Current hours", time: "1 day ago", comment: "Current schedule works fine" }
-    ],
+    recentResponses: [],
     demographics: {
       byAge: [
         { range: "18-30", yes: 45, no: 12 },

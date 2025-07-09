@@ -6,12 +6,14 @@ import PollResults from '@/components/poll/PollResults';
 import QuestionsAsked from '@/components/poll/QuestionsAsked';
 import RecentResponses from '@/components/poll/RecentResponses';
 import PollSidebar from '@/components/poll/PollSidebar';
+import { isPollStarted } from '@/utils/pollUtils';
 
 export default function PollDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   
   const poll = pollData[Number(id) as keyof typeof pollData];
+  const pollStarted = poll ? isPollStarted(poll.startDate) : false;
   
   if (!poll) {
     return (
@@ -33,7 +35,7 @@ export default function PollDetail() {
         <div className="lg:col-span-2 space-y-6">
           <PollResults poll={poll} />
           <QuestionsAsked poll={poll} />
-          <RecentResponses poll={poll} />
+          {pollStarted && <RecentResponses poll={poll} />}
         </div>
 
         {/* Sidebar */}
