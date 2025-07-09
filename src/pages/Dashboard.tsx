@@ -64,7 +64,7 @@ export default function Dashboard() {
             <h2 className="text-lg font-semibold text-foreground">Top Issue Categories</h2>
             <Link to="/issues" className="text-primary hover:text-primary/80 text-sm font-medium">View Issues</Link>
           </div>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="text-center p-4 bg-card rounded-lg border">
               <p className="text-3xl font-bold text-primary">42%</p>
               <p className="text-sm font-medium text-muted-foreground mt-2">Infrastructure & Roads</p>
@@ -89,40 +89,52 @@ export default function Dashboard() {
             </Link>
           </div>
           <div className="space-y-6">
-            <div className="flex items-center justify-between">
-              <div>
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-2 md:space-y-0">
+              <div className="order-1 md:order-1">
                 <Link to="/polls/2" className="font-medium text-sm text-primary hover:text-primary/80">
                   Should we reopen the community pool?
                 </Link>
-                <p className="text-xs text-muted-foreground">2 hours ago</p>
               </div>
-              <div className="text-right">
+              <div className="order-3 md:order-2 md:text-right">
                 <p className="text-sm font-medium">Facebook, SMS, Email</p>
+              </div>
+              <div className="order-4 md:order-3 md:text-right">
                 <p className="text-xs text-muted-foreground">1243 recipients</p>
               </div>
+              <div className="order-2 md:order-4">
+                <p className="text-xs text-muted-foreground">2 hours ago</p>
+              </div>
             </div>
-            <div className="flex items-center justify-between">
-              <div>
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-2 md:space-y-0">
+              <div className="order-1 md:order-1">
                 <Link to="/polls/3" className="font-medium text-sm text-primary hover:text-primary/80">
                   Are you in favor of the operation of golf carts on village streets?
                 </Link>
-                <p className="text-xs text-muted-foreground">Friday</p>
               </div>
-              <div className="text-right">
+              <div className="order-3 md:order-2 md:text-right">
                 <p className="text-sm font-medium">Facebook, SMS, Email</p>
+              </div>
+              <div className="order-4 md:order-3 md:text-right">
                 <p className="text-xs text-muted-foreground">567 recipients</p>
               </div>
+              <div className="order-2 md:order-4">
+                <p className="text-xs text-muted-foreground">Friday</p>
+              </div>
             </div>
-            <div className="flex items-center justify-between">
-              <div>
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-2 md:space-y-0">
+              <div className="order-1 md:order-1">
                 <Link to="/polls/4" className="font-medium text-sm text-primary hover:text-primary/80">
                   How would you like to receive council updates?
                 </Link>
-                <p className="text-xs text-muted-foreground">2 weeks ago</p>
               </div>
-              <div className="text-right">
+              <div className="order-3 md:order-2 md:text-right">
                 <p className="text-sm font-medium">Facebook</p>
+              </div>
+              <div className="order-4 md:order-3 md:text-right">
                 <p className="text-xs text-muted-foreground">982 recipients</p>
+              </div>
+              <div className="order-2 md:order-4">
+                <p className="text-xs text-muted-foreground">2 weeks ago</p>
               </div>
             </div>
           </div>
