@@ -84,10 +84,6 @@ export default function PollSidebar({
                 <Send className="h-4 w-4" />
                 Send Reminder
               </Button>
-              <Button variant="outline" size="sm" className="w-full gap-2">
-                <TrendingUp className="h-4 w-4" />
-                Export Data
-              </Button>
               <Button variant="destructive" size="sm" className="w-full gap-2">
                 <StopCircle className="h-4 w-4" />
                 End Poll Early
