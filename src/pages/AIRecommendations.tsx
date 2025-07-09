@@ -73,23 +73,7 @@ export default function AIRecommendations() {
 
   if (loading) {
     return (
-      <div className="max-w-2xl mx-auto space-y-6">
-        <div className="flex items-center gap-4">
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            onClick={() => navigate('/')}
-            className="gap-2"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back
-          </Button>
-          <div>
-            <h1 className="text-2xl font-bold text-foreground">AI Analysis</h1>
-            <p className="text-muted-foreground">Generating your optimal poll strategy...</p>
-          </div>
-        </div>
-
+      <div className="max-w-2xl mx-auto">
         <Card>
           <CardContent className="p-8">
             <div className="flex flex-col items-center space-y-4">
