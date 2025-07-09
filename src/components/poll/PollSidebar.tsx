@@ -1,48 +1,88 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Poll, getPollStatus, getDaysLeft } from '@/data/pollData';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { 
+  Calendar,
+  Send,
+  TrendingUp,
+  StopCircle
+} from 'lucide-react';
+import { Poll } from '@/data/pollData';
 
 interface PollSidebarProps {
   poll: Poll;
 }
 
 export default function PollSidebar({ poll }: PollSidebarProps) {
-  const status = getPollStatus(poll.startDate, poll.endDate);
-  const daysLeft = getDaysLeft(poll.endDate, status);
-  const responseRate = Math.round((poll.responses / poll.expectedResponses) * 100);
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric'
-    });
-  };
-
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-lg">Distribution</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="space-y-2">
-          <div className="flex justify-between">
-            <span className="text-sm text-muted-foreground">Channels</span>
-            <span className="text-sm font-medium">{poll.channels.join(', ')}</span>
+    <div className="space-y-4">
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg">Poll Status</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <div className="flex justify-between">
+              <span className="text-sm text-muted-foreground">Status</span>
+              <Badge variant="default">Active</Badge>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-sm text-muted-foreground">Time Left</span>
+              <span className="text-sm font-medium">{poll.timeLeft}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-sm text-muted-foreground">End Date</span>
+              <span className="text-sm font-medium">{poll.endDate}</span>
+            </div>
           </div>
-          <div className="flex justify-between">
-            <span className="text-sm text-muted-foreground">Reach</span>
-            <span className="text-sm font-medium">{poll.reach}</span>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg">Distribution</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <div className="flex justify-between">
+              <span className="text-sm text-muted-foreground">Channels</span>
+              <span className="text-sm font-medium">{poll.channels.join(', ')}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-sm text-muted-foreground">Reach</span>
+              <span className="text-sm font-medium">{poll.reach}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-sm text-muted-foreground">Response Rate</span>
+              <span className="text-sm font-medium text-success">{poll.responseRate}</span>
+            </div>
           </div>
-          <div className="flex justify-between">
-            <span className="text-sm text-muted-foreground">Response Rate</span>
-            <span className="text-sm font-medium text-success">{responseRate}%</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-sm text-muted-foreground">End Date</span>
-            <span className="text-sm font-medium">{formatDate(poll.endDate)}</span>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg">Quick Actions</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-2">
+          <Button variant="outline" size="sm" className="w-full gap-2">
+            <Calendar className="h-4 w-4" />
+            Extend Duration
+          </Button>
+          <Button variant="outline" size="sm" className="w-full gap-2">
+            <Send className="h-4 w-4" />
+            Send Reminder
+          </Button>
+          <Button variant="outline" size="sm" className="w-full gap-2">
+            <TrendingUp className="h-4 w-4" />
+            Export Data
+          </Button>
+          <Button variant="destructive" size="sm" className="w-full gap-2">
+            <StopCircle className="h-4 w-4" />
+            End Poll Early
+          </Button>
+        </CardContent>
+      </Card>
+    </div>
   );
 }
