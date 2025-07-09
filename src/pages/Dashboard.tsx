@@ -18,8 +18,34 @@ export default function Dashboard() {
         
         <div className="space-y-4">
           <Textarea placeholder="What would you like to ask your constituents?" value={question} onChange={e => setQuestion(e.target.value)} className="min-h-[100px] text-base resize-none" />
+          
+          {/* Suggested Questions */}
+          <div className="space-y-3">
+            <p className="text-sm text-muted-foreground">Suggested questions:</p>
+            <div className="space-y-2">
+              <button 
+                onClick={() => setQuestion("What are my constituent's most important issues?")}
+                className="w-full p-3 text-left text-sm bg-card border rounded-lg hover:bg-accent transition-colors"
+              >
+                What are my constituent's most important issues?
+              </button>
+              <button 
+                onClick={() => setQuestion("Where are the most troubling roadworks issues?")}
+                className="w-full p-3 text-left text-sm bg-card border rounded-lg hover:bg-accent transition-colors"
+              >
+                Where are the most troubling roadworks issues?
+              </button>
+              <button 
+                onClick={() => setQuestion("How can we make our school system better?")}
+                className="w-full p-3 text-left text-sm bg-card border rounded-lg hover:bg-accent transition-colors"
+              >
+                How can we make our school system better?
+              </button>
+            </div>
+          </div>
+          
           <Link to="/polls/create">
-            <Button size="lg" className="gap-2 my-[16px]">
+            <Button size="lg" className="gap-2 my-[16px] w-full">
               Get Started
               <ArrowRight className="h-4 w-4" />
             </Button>
@@ -32,6 +58,28 @@ export default function Dashboard() {
 
       {/* Stats Sections */}
       <div className="space-y-6">
+        {/* Top Issue Categories */}
+        <div className="space-y-4 px-[16px] py-[16px] bg-white rounded-xl">
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-semibold text-foreground">Top Issue Categories</h2>
+            <Link to="/issues" className="text-primary hover:text-primary/80 text-sm font-medium">View Issues</Link>
+          </div>
+          <div className="grid grid-cols-3 gap-4">
+            <div className="text-center p-4 bg-card rounded-lg border">
+              <p className="text-3xl font-bold text-primary">42%</p>
+              <p className="text-sm font-medium text-muted-foreground mt-2">Infrastructure & Roads</p>
+            </div>
+            <div className="text-center p-4 bg-card rounded-lg border">
+              <p className="text-3xl font-bold text-primary">28%</p>
+              <p className="text-sm font-medium text-muted-foreground mt-2">Public Safety</p>
+            </div>
+            <div className="text-center p-4 bg-card rounded-lg border">
+              <p className="text-3xl font-bold text-primary">16%</p>
+              <p className="text-sm font-medium text-muted-foreground mt-2">Environmental Initiatives</p>
+            </div>
+          </div>
+        </div>
+
         {/* Active Outreach */}
         <div className="space-y-4 py-[16px] px-[16px] bg-white rounded-xl">
           <div className="flex items-center justify-between">
@@ -76,28 +124,6 @@ export default function Dashboard() {
                 <p className="text-sm font-medium">Facebook</p>
                 <p className="text-xs text-muted-foreground">982 recipients</p>
               </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Top Issue Categories */}
-        <div className="space-y-4 px-[16px] py-[16px] bg-white rounded-xl">
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-foreground">Top Issue Categories</h2>
-            <Link to="/issues" className="text-primary hover:text-primary/80 text-sm font-medium">View Issues</Link>
-          </div>
-          <div className="grid grid-cols-3 gap-4">
-            <div className="text-center p-4 bg-card rounded-lg border">
-              <p className="text-3xl font-bold text-primary">42%</p>
-              <p className="text-sm font-medium text-muted-foreground mt-2">Infrastructure & Roads</p>
-            </div>
-            <div className="text-center p-4 bg-card rounded-lg border">
-              <p className="text-3xl font-bold text-primary">28%</p>
-              <p className="text-sm font-medium text-muted-foreground mt-2">Public Safety</p>
-            </div>
-            <div className="text-center p-4 bg-card rounded-lg border">
-              <p className="text-3xl font-bold text-primary">16%</p>
-              <p className="text-sm font-medium text-muted-foreground mt-2">Environmental Initiatives</p>
             </div>
           </div>
         </div>
