@@ -14,24 +14,24 @@ export default function PollDemographics({ poll }: PollDemographicsProps) {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          <h4 className="font-medium text-sm sm:text-base">By Age Group</h4>
+          <h4 className="font-medium">By Age Group</h4>
           {poll.demographics.byAge.map((age, index) => (
-            <div key={index} className="space-y-3">
+            <div key={index} className="space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="font-medium">{age.range}</span>
-                <span className="text-muted-foreground">{age.yes + age.no} responses</span>
+                <span>{age.range}</span>
+                <span>{age.yes + age.no} responses</span>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="space-y-1">
-                  <div className="flex justify-between text-xs">
-                    <span className="font-medium text-green-600">Yes</span>
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <div className="flex justify-between text-xs mb-1">
+                    <span>Yes</span>
                     <span>{age.yes}</span>
                   </div>
                   <Progress value={(age.yes / (age.yes + age.no)) * 100} className="h-2" />
                 </div>
-                <div className="space-y-1">
-                  <div className="flex justify-between text-xs">
-                    <span className="font-medium text-red-600">No</span>
+                <div>
+                  <div className="flex justify-between text-xs mb-1">
+                    <span>No</span>
                     <span>{age.no}</span>
                   </div>
                   <Progress value={(age.no / (age.yes + age.no)) * 100} className="h-2" />

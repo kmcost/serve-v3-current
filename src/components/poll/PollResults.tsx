@@ -36,18 +36,18 @@ export default function PollResults({ poll }: PollResultsProps) {
           ))}
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t">
-          <div className="text-center py-2">
-            <p className="text-xl sm:text-2xl font-bold text-primary">{poll.responses}</p>
-            <p className="text-xs sm:text-sm text-muted-foreground">Total Responses</p>
+        <div className="grid grid-cols-3 gap-4 pt-4 border-t">
+          <div className="text-center">
+            <p className="text-2xl font-bold text-primary">{poll.responses}</p>
+            <p className="text-sm text-muted-foreground">Total Responses</p>
           </div>
-          <div className="text-center py-2">
-            <p className="text-xl sm:text-2xl font-bold text-success">{poll.responseRate}</p>
-            <p className="text-xs sm:text-sm text-muted-foreground">Response Rate</p>
+          <div className="text-center">
+            <p className="text-2xl font-bold text-success">{poll.responseRate}</p>
+            <p className="text-sm text-muted-foreground">Response Rate</p>
           </div>
-          <div className="text-center py-2">
-            <p className="text-xl sm:text-2xl font-bold text-warning">3</p>
-            <p className="text-xs sm:text-sm text-muted-foreground">Days Left</p>
+          <div className="text-center">
+            <p className="text-2xl font-bold text-warning">3</p>
+            <p className="text-sm text-muted-foreground">Days Left</p>
           </div>
         </div>
       </CardContent>

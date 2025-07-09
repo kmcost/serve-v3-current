@@ -15,8 +15,8 @@ export default function RecentResponses({ poll }: RecentResponsesProps) {
       <CardContent>
         <div className="space-y-3">
           {poll.recentResponses.map((response, index) => (
-            <div key={index} className="p-3 border rounded-lg space-y-2">
-              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
+            <div key={index} className="p-3 border rounded-lg">
+              <div className="flex justify-between items-start mb-2">
                 <div className="flex items-center gap-2">
                   <span className="font-medium text-sm">{response.name}</span>
                   <Badge 
@@ -29,7 +29,7 @@ export default function RecentResponses({ poll }: RecentResponsesProps) {
                 <span className="text-xs text-muted-foreground">{response.time}</span>
               </div>
               {response.comment && (
-                <p className="text-sm text-muted-foreground italic leading-relaxed">"{response.comment}"</p>
+                <p className="text-sm text-muted-foreground italic">"{response.comment}"</p>
               )}
             </div>
           ))}
