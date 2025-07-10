@@ -60,7 +60,7 @@ export function QuestionSetupStep({
             <RadioGroup 
               value={question.type}
               onValueChange={(value) => onUpdateQuestion(question.id, 'type', value)}
-              className="mt-3 space-y-3"
+              className="mt-5 space-y-3"
             >
               <div className="flex items-center space-x-3">
                 <RadioGroupItem value="yes_no" id={`yes_no_${question.id}`} />

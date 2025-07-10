@@ -83,7 +83,7 @@ export default function CreatePoll() {
         <Button 
           variant="ghost" 
           size="sm" 
-          onClick={() => navigate(isCustomizingRecommendations ? '/polls/ai-recommendations' : '/polls')}
+          onClick={() => navigate(isCustomizingRecommendations ? `/polls/ai-recommendations?question=${encodeURIComponent(questions[0]?.text || '')}` : '/polls')}
           className="gap-2 self-start"
         >
           <ArrowLeft className="h-4 w-4" />

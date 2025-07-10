@@ -110,7 +110,7 @@ export function AudienceStep({
     interest: AUDIENCE_TAGS.filter(t => t.category === 'interest'),
     engagement: AUDIENCE_TAGS.filter(t => t.category === 'engagement')
   };
-  return <div className="space-y-6">
+  return <div className="space-y-2">
       <div>
         <h2 className="text-xl font-semibold mb-2">Who do you want to ask?</h2>
       </div>
@@ -126,7 +126,7 @@ export function AudienceStep({
                 </div>
               </div>
               <div className="flex flex-wrap gap-2 py-[4px]">
-                {selectedTags.map(tag => <Badge key={tag.id} variant="secondary" className="gap-2 px-3 py-1 bg-blue-200">
+                {selectedTags.map(tag => <Badge key={tag.id} variant="secondary" className="gap-2 px-3 py-1 bg-blue-100 text-blue-800">
                     {tag.label}
                     <Button variant="ghost" size="sm" className="h-4 w-4 p-0 hover:bg-transparent" onClick={() => toggleTag(tag.id)}>
                       <X className="h-3 w-3" />
