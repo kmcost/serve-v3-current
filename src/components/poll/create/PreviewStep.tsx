@@ -97,47 +97,36 @@ export function PreviewStep({
     return totalResponses;
   };
   return <div className="space-y-4">
-      <div>
+      <div className="space-y-4">
         <h2 className="text-xl font-semibold mb-2">Preview & Launch</h2>
         
-      </div>
-
-      <div className="grid lg:grid-cols-2">
         <div className="space-y-4">
-          <Card className="bg-blue-50">
-            <CardContent className="p-4 space-y-4 bg-blue-50">
-              <div>
-                <h3 className="font-semibold text-foreground mb-2">
-                  {questions.length === 1 ? 'Question' : 'Questions'}
-                </h3>
-                <div className="space-y-1">
-                  {questions.map((question, index) => <p key={index} className="text-muted-foreground">
-                      {questions.length === 1 ? question.text : `Question ${index + 1}: ${question.text}`}
-                    </p>)}
-                </div>
-              </div>
-              <div>
-                <h3 className="font-semibold text-foreground mb-2">Audience</h3>
-                <div>{getAudienceDisplay()}</div>
-              </div>
-              <div>
-                <h3 className="font-semibold text-foreground mb-2">Channels</h3>
-                <div>{getChannelsDisplay()}</div>
-              </div>
-              <div>
-                <h3 className="font-semibold text-foreground mb-2">Expected Engagement</h3>
-                <p className="text-muted-foreground">{getExpectedEngagement()} Responses</p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-foreground mb-2">Total Cost</h3>
-                <p className="text-blue-500 font-bold">$120</p>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        <div className="space-y-4">
-          
+          <div>
+            <h3 className="font-semibold text-foreground mb-2">
+              {questions.length === 1 ? 'Question' : 'Questions'}
+            </h3>
+            <div className="space-y-1">
+              {questions.map((question, index) => <p key={index} className="text-muted-foreground">
+                  {questions.length === 1 ? question.text : `Question ${index + 1}: ${question.text}`}
+                </p>)}
+            </div>
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground mb-2">Audience</h3>
+            <div>{getAudienceDisplay()}</div>
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground mb-2">Channels</h3>
+            <div>{getChannelsDisplay()}</div>
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground mb-2">Expected Engagement</h3>
+            <p className="text-muted-foreground">{getExpectedEngagement()} Responses</p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground mb-2">Total Cost</h3>
+            <p className="text-blue-500 font-bold">$120</p>
+          </div>
         </div>
       </div>
     </div>;
