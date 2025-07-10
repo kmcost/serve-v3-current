@@ -166,7 +166,7 @@ export default function AIRecommendations() {
           <CardContent className="space-y-3">
             <div className="space-y-1">
               <div className="text-sm text-muted-foreground">Target Population:</div>
-              <div className="text-3xl font-bold text-primary whitespace-nowrap">
+              <div className="text-xl font-bold text-primary whitespace-nowrap">
                 {recommendation.audience.totalSize.toLocaleString()} Residents
               </div>
             </div>
@@ -201,7 +201,7 @@ export default function AIRecommendations() {
           <CardContent className="space-y-3">
             <div className="space-y-1">
               <div className="text-sm text-muted-foreground">Expected Engagement:</div>
-              <div className="text-3xl font-bold text-primary whitespace-nowrap">
+              <div className="text-xl font-bold text-primary whitespace-nowrap">
                 {recommendation.channels.expectedResponses} Responses
               </div>
             </div>
