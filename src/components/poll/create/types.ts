@@ -7,7 +7,7 @@ export interface Question {
 
 export interface CreatePollState {
   questions: Question[];
-  audience: string;
+  audience: string[];
   channels: string[];
 }
 

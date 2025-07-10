@@ -8,12 +8,17 @@ export interface QuestionAnalysis {
   bias: number; // 0-100
 }
 
+export interface AudienceTag {
+  id: string;
+  label: string;
+  category: 'demographic' | 'geographic' | 'interest' | 'engagement';
+  estimatedSize: number;
+}
+
 export interface AudienceRecommendation {
-  type: 'all' | 'downtown' | 'residential' | 'previous';
-  name: string;
-  size: number;
+  tags: AudienceTag[];
+  totalSize: number;
   reasoning: string;
-  confidence: number; // 0-100
 }
 
 export interface ChannelRecommendation {
@@ -113,43 +118,63 @@ const analyzeQuestion = (question: string): QuestionAnalysis => {
   };
 };
 
-// Mock audience intelligence
+// Comprehensive audience tag library
+const AUDIENCE_TAGS: AudienceTag[] = [
+  // Geographic
+  { id: 'downtown', label: 'Downtown Area', category: 'geographic', estimatedSize: 2400 },
+  { id: 'residential', label: 'Residential Neighborhoods', category: 'geographic', estimatedSize: 18500 },
+  { id: 'suburban', label: 'Suburban Areas', category: 'geographic', estimatedSize: 8200 },
+  
+  // Demographics
+  { id: 'young-adults', label: 'Young Adults (18-25)', category: 'demographic', estimatedSize: 3500 },
+  { id: 'middle-age', label: 'Middle Age (26-55)', category: 'demographic', estimatedSize: 12000 },
+  { id: 'seniors', label: 'Seniors (55+)', category: 'demographic', estimatedSize: 6800 },
+  { id: 'parents', label: 'Parents with Children', category: 'demographic', estimatedSize: 9200 },
+  
+  // Interests & Occupations
+  { id: 'business-owners', label: 'Business Owners', category: 'interest', estimatedSize: 1200 },
+  { id: 'transit-users', label: 'Public Transit Users', category: 'interest', estimatedSize: 4800 },
+  { id: 'students', label: 'Students', category: 'interest', estimatedSize: 2100 },
+  { id: 'veterans', label: 'Veterans', category: 'interest', estimatedSize: 1800 },
+  
+  // Engagement
+  { id: 'previous-respondents', label: 'Previous Poll Respondents', category: 'engagement', estimatedSize: 850 },
+  { id: 'newsletter-subscribers', label: 'Newsletter Subscribers', category: 'engagement', estimatedSize: 2200 },
+  { id: 'meeting-attendees', label: 'Community Meeting Attendees', category: 'engagement', estimatedSize: 650 }
+];
+
+// Mock audience intelligence with tag-based recommendations
 const recommendAudience = (question: string): AudienceRecommendation => {
   const lowercaseQ = question.toLowerCase();
+  const recommendedTags: AudienceTag[] = [];
   
+  // Geographic targeting based on question content
   if (lowercaseQ.includes('downtown') || lowercaseQ.includes('parking') || lowercaseQ.includes('business')) {
-    return {
-      type: 'downtown',
-      name: 'Downtown Area',
-      size: 2400,
-      reasoning: 'Downtown residents and businesses are directly affected by this topic and will provide the most relevant feedback.',
-      confidence: 92
-    };
+    recommendedTags.push(AUDIENCE_TAGS.find(t => t.id === 'downtown')!);
+    recommendedTags.push(AUDIENCE_TAGS.find(t => t.id === 'business-owners')!);
   } else if (lowercaseQ.includes('school') || lowercaseQ.includes('education') || lowercaseQ.includes('children')) {
-    return {
-      type: 'residential',
-      name: 'Residential Neighborhoods',
-      size: 18500,
-      reasoning: 'Families in residential areas are most impacted by school-related decisions.',
-      confidence: 88
-    };
-  } else if (lowercaseQ.includes('traffic') || lowercaseQ.includes('road') || lowercaseQ.includes('infrastructure')) {
-    return {
-      type: 'all',
-      name: 'All Constituents',
-      size: 25000,
-      reasoning: 'Infrastructure affects all residents and requires broad community input.',
-      confidence: 85
-    };
+    recommendedTags.push(AUDIENCE_TAGS.find(t => t.id === 'residential')!);
+    recommendedTags.push(AUDIENCE_TAGS.find(t => t.id === 'parents')!);
+  } else if (lowercaseQ.includes('transit') || lowercaseQ.includes('bus') || lowercaseQ.includes('train')) {
+    recommendedTags.push(AUDIENCE_TAGS.find(t => t.id === 'transit-users')!);
+    recommendedTags.push(AUDIENCE_TAGS.find(t => t.id === 'middle-age')!);
+  } else if (lowercaseQ.includes('veteran') || lowercaseQ.includes('military')) {
+    recommendedTags.push(AUDIENCE_TAGS.find(t => t.id === 'veterans')!);
+    recommendedTags.push(AUDIENCE_TAGS.find(t => t.id === 'seniors')!);
   } else {
-    return {
-      type: 'previous',
-      name: 'Previous Poll Respondents',
-      size: 850,
-      reasoning: 'Engaged constituents who have previously participated are likely to provide thoughtful responses.',
-      confidence: 75
-    };
+    // Default broad targeting
+    recommendedTags.push(AUDIENCE_TAGS.find(t => t.id === 'previous-respondents')!);
+    recommendedTags.push(AUDIENCE_TAGS.find(t => t.id === 'middle-age')!);
   }
+  
+  // Calculate total size (accounting for potential overlap)
+  const totalSize = Math.round(recommendedTags.reduce((sum, tag) => sum + tag.estimatedSize, 0) * 0.8);
+  
+  return {
+    tags: recommendedTags,
+    totalSize,
+    reasoning: `AI selected these audience segments based on question relevance and expected engagement levels.`
+  };
 };
 
 // Mock channel optimization
@@ -188,7 +213,7 @@ export const generatePollRecommendation = async (question: string): Promise<Poll
   
   const questionAnalysis = analyzeQuestion(question);
   const audienceRec = recommendAudience(question);
-  const channelRec = optimizeChannels(audienceRec.size, questionAnalysis.suggestedType);
+  const channelRec = optimizeChannels(audienceRec.totalSize, questionAnalysis.suggestedType);
   
   return {
     question: questionAnalysis,
@@ -200,7 +225,7 @@ export const generatePollRecommendation = async (question: string): Promise<Poll
     },
     roi: {
       costPerResponse: Math.round(channelRec.totalCost / channelRec.expectedResponses * 100) / 100,
-      expectedInsight: `High-confidence actionable data with ${audienceRec.confidence}% relevance score`
+      expectedInsight: `High-confidence actionable data based on AI-selected audience segments`
     }
   };
 };

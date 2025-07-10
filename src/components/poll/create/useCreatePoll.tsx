@@ -8,7 +8,7 @@ export const useCreatePoll = () => {
   const [questions, setQuestions] = useState<Question[]>([
     { id: 1, text: '', type: 'yes_no', options: [] }
   ]);
-  const [audience, setAudience] = useState('all');
+  const [audience, setAudience] = useState<string[]>([]);
   const [channels, setChannels] = useState<string[]>([]);
 
   // Initialize with AI recommendations if available
@@ -18,7 +18,7 @@ export const useCreatePoll = () => {
       setQuestions([{ id: 1, text: state.question, type: 'yes_no', options: [] }]);
     }
     if (state?.audience) {
-      setAudience(state.audience);
+      setAudience(Array.isArray(state.audience) ? state.audience : [state.audience]);
     }
     if (state?.channels) {
       setChannels(state.channels);

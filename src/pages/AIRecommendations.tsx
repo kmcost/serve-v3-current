@@ -187,12 +187,15 @@ export default function AIRecommendations() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="font-medium">{recommendation.audience.name}</span>
-              <Badge variant="secondary">{recommendation.audience.confidence}% match</Badge>
+            <div className="flex flex-wrap gap-2">
+              {recommendation.audience.tags.map((tag) => (
+                <Badge key={tag.id} variant="outline" className="gap-1">
+                  {tag.label}
+                </Badge>
+              ))}
             </div>
             <div className="text-2xl font-bold text-primary">
-              {recommendation.audience.size.toLocaleString()} people
+              {recommendation.audience.totalSize.toLocaleString()} people
             </div>
             <p className="text-sm text-muted-foreground">
               {recommendation.audience.reasoning}
@@ -287,7 +290,7 @@ export default function AIRecommendations() {
           onClick={() => navigate('/polls/create', { 
             state: { 
               question: recommendation.question.optimizedQuestion,
-              audience: recommendation.audience.type,
+              audience: recommendation.audience.tags.map(t => t.id),
               channels: recommendation.channels.channels
             }
           })}

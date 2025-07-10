@@ -5,20 +5,33 @@ import { Question } from './types';
 
 interface PreviewStepProps {
   questions: Question[];
-  audience: string;
+  audience: string[];
   channels: string[];
   isMultipleQuestions: boolean;
 }
 
+const AUDIENCE_TAGS = [
+  { id: 'downtown', label: 'Downtown Area' },
+  { id: 'residential', label: 'Residential Neighborhoods' },
+  { id: 'suburban', label: 'Suburban Areas' },
+  { id: 'young-adults', label: 'Young Adults (18-25)' },
+  { id: 'middle-age', label: 'Middle Age (26-55)' },
+  { id: 'seniors', label: 'Seniors (55+)' },
+  { id: 'parents', label: 'Parents with Children' },
+  { id: 'business-owners', label: 'Business Owners' },
+  { id: 'transit-users', label: 'Public Transit Users' },
+  { id: 'students', label: 'Students' },
+  { id: 'veterans', label: 'Veterans' },
+  { id: 'previous-respondents', label: 'Previous Poll Respondents' },
+  { id: 'newsletter-subscribers', label: 'Newsletter Subscribers' },
+  { id: 'meeting-attendees', label: 'Community Meeting Attendees' }
+];
+
 export function PreviewStep({ questions, audience, channels, isMultipleQuestions }: PreviewStepProps) {
-  const getAudienceName = (audienceValue: string) => {
-    switch (audienceValue) {
-      case 'all': return 'All Constituents (~25,000)';
-      case 'downtown': return 'Downtown Area (~2,400)';
-      case 'residential': return 'Residential (~18,500)';
-      case 'previous': return 'Previous Respondents (~850)';
-      default: return 'Unknown';
-    }
+  const getAudienceDisplay = () => {
+    if (audience.length === 0) return 'No audience selected';
+    const selectedTags = AUDIENCE_TAGS.filter(tag => audience.includes(tag.id));
+    return selectedTags.map(tag => tag.label).join(', ');
   };
 
   const getQuestionTypeDisplay = (type: string) => {
@@ -57,7 +70,7 @@ export function PreviewStep({ questions, audience, channels, isMultipleQuestions
               </div>
               <div>
                 <Label className="text-sm text-muted-foreground">Audience</Label>
-                <p className="font-medium">{getAudienceName(audience)}</p>
+                <p className="font-medium">{getAudienceDisplay()}</p>
               </div>
               <div>
                 <Label className="text-sm text-muted-foreground">Channels</Label>
