@@ -26,7 +26,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/polls" element={<Polls />} />
-            <Route path="/polls/create" element={<CreatePoll />} />
+            <Route path="/polls/edit" element={<CreatePoll />} />
             <Route path="/polls/ai-recommendations" element={<AIRecommendations />} />
             <Route path="/polls/:id" element={<PollDetail />} />
             <Route path="/inbox" element={<Inbox />} />
