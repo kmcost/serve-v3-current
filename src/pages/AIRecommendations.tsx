@@ -4,36 +4,20 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-import { 
-  ArrowLeft, 
-  ArrowRight, 
-  CheckCircle, 
-  Mail, 
-  MessageSquare, 
-  Share2, 
-  Phone,
-  Clock,
-  DollarSign,
-  Brain,
-  Info
-} from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle, Mail, MessageSquare, Share2, Phone, Clock, DollarSign, Brain, Info } from 'lucide-react';
 import { generatePollRecommendation, PollRecommendation } from '@/services/aiPollService';
-
 export default function AIRecommendations() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const question = searchParams.get('question') || '';
-  
   const [recommendation, setRecommendation] = useState<PollRecommendation | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
   useEffect(() => {
     if (!question) {
       navigate('/');
       return;
     }
-
     const generateRecommendation = async () => {
       try {
         setLoading(true);
@@ -45,33 +29,38 @@ export default function AIRecommendations() {
         setLoading(false);
       }
     };
-
     generateRecommendation();
   }, [question, navigate]);
-
   const getChannelIcon = (channel: string) => {
     switch (channel) {
-      case 'email': return Mail;
-      case 'sms': return MessageSquare;
-      case 'social': return Share2;
-      case 'phone': return Phone;
-      default: return Mail;
+      case 'email':
+        return Mail;
+      case 'sms':
+        return MessageSquare;
+      case 'social':
+        return Share2;
+      case 'phone':
+        return Phone;
+      default:
+        return Mail;
     }
   };
-
   const getChannelName = (channel: string) => {
     switch (channel) {
-      case 'email': return 'Email';
-      case 'sms': return 'SMS';
-      case 'social': return 'Social Media';
-      case 'phone': return 'Phone Calls';
-      default: return channel;
+      case 'email':
+        return 'Email';
+      case 'sms':
+        return 'SMS';
+      case 'social':
+        return 'Social Media';
+      case 'phone':
+        return 'Phone Calls';
+      default:
+        return channel;
     }
   };
-
   if (loading) {
-    return (
-      <div className="max-w-2xl mx-auto">
+    return <div className="max-w-2xl mx-auto">
         <Card>
           <CardContent className="p-8">
             <div className="flex flex-col items-center space-y-4">
@@ -87,20 +76,12 @@ export default function AIRecommendations() {
             </div>
           </CardContent>
         </Card>
-      </div>
-    );
+      </div>;
   }
-
   if (error || !recommendation) {
-    return (
-      <div className="max-w-2xl mx-auto space-y-6">
+    return <div className="max-w-2xl mx-auto space-y-6">
         <div className="flex items-center gap-4">
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            onClick={() => navigate('/')}
-            className="gap-2"
-          >
+          <Button variant="ghost" size="sm" onClick={() => navigate('/')} className="gap-2">
             <ArrowLeft className="h-4 w-4" />
             Back
           </Button>
@@ -109,20 +90,12 @@ export default function AIRecommendations() {
             <p className="text-muted-foreground">{error}</p>
           </div>
         </div>
-      </div>
-    );
+      </div>;
   }
-
-  return (
-    <div className="max-w-4xl mx-auto space-y-6">
+  return <div className="max-w-4xl mx-auto space-y-6">
       {/* Header - Mobile-First Layout */}
       <div className="space-y-3">
-        <Button 
-          variant="ghost" 
-          size="sm" 
-          onClick={() => navigate('/')}
-          className="gap-2 self-start"
-        >
+        <Button variant="ghost" size="sm" onClick={() => navigate('/')} className="gap-2 self-start">
           <ArrowLeft className="h-4 w-4" />
           Back
         </Button>
@@ -147,9 +120,7 @@ export default function AIRecommendations() {
           
           <div className="space-y-2">
             <div className="text-sm text-muted-foreground">
-              {recommendation.question.optimizedQuestion !== recommendation.question.originalQuestion 
-                ? 'AI-Optimized Question:' 
-                : 'AI-Validated Question:'}
+              {recommendation.question.optimizedQuestion !== recommendation.question.originalQuestion ? 'AI-Optimized Question:' : 'AI-Validated Question:'}
             </div>
             <div className="p-3 bg-primary/5 border border-primary/20 rounded-lg text-sm font-medium">
               {recommendation.question.optimizedQuestion}
@@ -194,13 +165,11 @@ export default function AIRecommendations() {
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex flex-wrap gap-2">
-              {recommendation.audience.tags.map((tag) => (
-                <Badge key={tag.id} className="bg-muted text-muted-foreground hover:bg-muted/80">
+              {recommendation.audience.tags.map(tag => <Badge key={tag.id} className="bg-muted text-muted-foreground hover:bg-muted/80">
                   {tag.label}
-                </Badge>
-              ))}
+                </Badge>)}
             </div>
-            <div className="text-2xl font-bold text-primary">
+            <div className="text-xl font-bold text-primary">
               Target Population: {recommendation.audience.totalSize.toLocaleString()} Residents
             </div>
             <p className="text-sm text-muted-foreground">
@@ -228,11 +197,9 @@ export default function AIRecommendations() {
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex gap-2">
-              {recommendation.channels.channels.map((channel) => (
-                <Badge key={channel} className="bg-muted text-muted-foreground hover:bg-muted/80">
+              {recommendation.channels.channels.map(channel => <Badge key={channel} className="bg-muted text-muted-foreground hover:bg-muted/80">
                   {getChannelName(channel)}
-                </Badge>
-              ))}
+                </Badge>)}
             </div>
             <div className="text-2xl font-bold text-primary">
               Expected Engagement: {recommendation.channels.expectedResponses} Responses
@@ -287,31 +254,21 @@ export default function AIRecommendations() {
 
       {/* Action Buttons */}
       <div className="flex gap-4 flex-col sm:flex-row">
-        <Button 
-          size="lg"
-          onClick={() => navigate('/polls')}
-          className="gap-2 flex-1"
-        >
+        <Button size="lg" onClick={() => navigate('/polls')} className="gap-2 flex-1">
           <CheckCircle className="h-4 w-4" />
           Approve & Launch Poll
         </Button>
         
-        <Button 
-          variant="outline" 
-          size="lg"
-          onClick={() => navigate('/polls/create', { 
-            state: { 
-              question: recommendation.question.optimizedQuestion,
-              audience: recommendation.audience.tags.map(t => t.id),
-              channels: recommendation.channels.channels
-            }
-          })}
-          className="gap-2 flex-1"
-        >
+        <Button variant="outline" size="lg" onClick={() => navigate('/polls/create', {
+        state: {
+          question: recommendation.question.optimizedQuestion,
+          audience: recommendation.audience.tags.map(t => t.id),
+          channels: recommendation.channels.channels
+        }
+      })} className="gap-2 flex-1">
           Customize Poll
           <ArrowRight className="h-4 w-4" />
         </Button>
       </div>
-    </div>
-  );
+    </div>;
 }
