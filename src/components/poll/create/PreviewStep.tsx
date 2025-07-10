@@ -123,7 +123,7 @@ export function PreviewStep({
                   {questions.map((question, index) => (
                     <p key={index} className="font-medium">
                       {questions.length === 1 
-                        ? `Question: ${question.text}`
+                        ? question.text
                         : `Question ${index + 1}: ${question.text}`
                       }
                     </p>
