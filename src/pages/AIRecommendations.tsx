@@ -8,17 +8,13 @@ import {
   ArrowLeft, 
   ArrowRight, 
   CheckCircle, 
-  Users, 
   Mail, 
   MessageSquare, 
   Share2, 
   Phone,
   Clock,
   DollarSign,
-  Target,
   Brain,
-  Lightbulb,
-  TrendingUp,
   Info
 } from 'lucide-react';
 import { generatePollRecommendation, PollRecommendation } from '@/services/aiPollService';
@@ -139,8 +135,7 @@ export default function AIRecommendations() {
       {/* Question Analysis */}
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Lightbulb className="h-5 w-5 text-primary" />
+          <CardTitle>
             Question Optimization
           </CardTitle>
         </CardHeader>
@@ -183,23 +178,8 @@ export default function AIRecommendations() {
         {/* Audience */}
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Users className="h-5 w-5 text-primary" />
+            <CardTitle className="flex items-center justify-between">
               Target Audience
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <div className="flex flex-wrap gap-2">
-              {recommendation.audience.tags.map((tag) => (
-                <Badge key={tag.id} variant="outline" className="gap-1">
-                  {tag.label}
-                </Badge>
-              ))}
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="text-2xl font-bold text-primary">
-                Target Population: {recommendation.audience.totalSize.toLocaleString()} residents
-              </div>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Info className="h-4 w-4 text-muted-foreground cursor-help" />
@@ -210,6 +190,18 @@ export default function AIRecommendations() {
                   </p>
                 </TooltipContent>
               </Tooltip>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="flex flex-wrap gap-2">
+              {recommendation.audience.tags.map((tag) => (
+                <Badge key={tag.id} className="bg-muted text-muted-foreground hover:bg-muted/80">
+                  {tag.label}
+                </Badge>
+              ))}
+            </div>
+            <div className="text-2xl font-bold text-primary">
+              Target Population: {recommendation.audience.totalSize.toLocaleString()} Residents
             </div>
             <p className="text-sm text-muted-foreground">
               {recommendation.audience.reasoning}
@@ -220,27 +212,8 @@ export default function AIRecommendations() {
         {/* Channels */}
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Target className="h-5 w-5 text-primary" />
+            <CardTitle className="flex items-center justify-between">
               Distribution Channels
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <div className="flex gap-2">
-              {recommendation.channels.channels.map((channel) => {
-                const Icon = getChannelIcon(channel);
-                return (
-                  <Badge key={channel} variant="outline" className="gap-1">
-                    <Icon className="h-3 w-3" />
-                    {getChannelName(channel)}
-                  </Badge>
-                );
-              })}
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="text-2xl font-bold text-primary">
-                Expected: {recommendation.channels.expectedResponses} responses
-              </div>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Info className="h-4 w-4 text-muted-foreground cursor-help" />
@@ -251,6 +224,18 @@ export default function AIRecommendations() {
                   </p>
                 </TooltipContent>
               </Tooltip>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="flex gap-2">
+              {recommendation.channels.channels.map((channel) => (
+                <Badge key={channel} className="bg-muted text-muted-foreground hover:bg-muted/80">
+                  {getChannelName(channel)}
+                </Badge>
+              ))}
+            </div>
+            <div className="text-2xl font-bold text-primary">
+              Expected Engagement: {recommendation.channels.expectedResponses} Responses
             </div>
             <p className="text-sm text-muted-foreground">
               {recommendation.channels.reasoning}
@@ -262,8 +247,7 @@ export default function AIRecommendations() {
       {/* Performance Metrics */}
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <TrendingUp className="h-5 w-5 text-primary" />
+          <CardTitle>
             Expected Performance
           </CardTitle>
         </CardHeader>
@@ -278,7 +262,7 @@ export default function AIRecommendations() {
             </div>
             <div className="text-center p-4 bg-muted/50 rounded-lg">
               <div className="flex items-center justify-center mb-2">
-                <TrendingUp className="h-5 w-5 text-primary" />
+                <CheckCircle className="h-5 w-5 text-primary" />
               </div>
               <div className="text-lg font-bold">{recommendation.channels.responseRate}%</div>
               <div className="text-sm text-muted-foreground">Response Rate</div>
@@ -304,6 +288,7 @@ export default function AIRecommendations() {
       {/* Action Buttons */}
       <div className="flex gap-4 flex-col sm:flex-row">
         <Button 
+          size="lg"
           onClick={() => navigate('/polls')}
           className="gap-2 flex-1"
         >
@@ -313,6 +298,7 @@ export default function AIRecommendations() {
         
         <Button 
           variant="outline" 
+          size="lg"
           onClick={() => navigate('/polls/create', { 
             state: { 
               question: recommendation.question.optimizedQuestion,
