@@ -108,7 +108,7 @@ export function PreviewStep({
         
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid lg:grid-cols-2">
         <div className="space-y-4">
           <Card>
             <CardHeader className="p-4">
