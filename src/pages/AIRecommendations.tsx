@@ -170,7 +170,7 @@ export default function AIRecommendations() {
                 {recommendation.audience.totalSize.toLocaleString()} Residents
               </div>
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 py-[4px]">
               {recommendation.audience.tags.map(tag => <Badge key={tag.id} className="bg-muted text-muted-foreground hover:bg-muted/80">
                   {tag.label}
                 </Badge>)}
@@ -205,7 +205,7 @@ export default function AIRecommendations() {
                 {recommendation.channels.expectedResponses} Responses
               </div>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 py-[4px]">
               {recommendation.channels.channels.map(channel => <Badge key={channel} className="bg-muted text-muted-foreground hover:bg-muted/80">
                   {getChannelName(channel)}
                 </Badge>)}
@@ -260,7 +260,7 @@ export default function AIRecommendations() {
 
       {/* Action Buttons */}
       <div className="flex gap-4 flex-col sm:flex-row">
-        <Button size="lg" onClick={() => navigate('/polls')} className="gap-2 flex-1">
+        <Button size="lg" onClick={() => navigate('/polls')} className="gap-2 flex-1 py-[16px]">
           <CheckCircle className="h-4 w-4" />
           Approve & Launch Poll
         </Button>
@@ -271,7 +271,7 @@ export default function AIRecommendations() {
           audience: recommendation.audience.tags.map(t => t.id),
           channels: recommendation.channels.channels
         }
-      })} className="gap-2 flex-1">
+      })} className="gap-2 flex-1 py-[16px]">
           Customize Poll
           <ArrowRight className="h-4 w-4" />
         </Button>
