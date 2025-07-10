@@ -21,6 +21,9 @@ export default function CreatePoll() {
     setChannels,
     addQuestion,
     updateQuestion,
+    addOption,
+    removeOption,
+    updateOption,
     removeQuestion,
     nextStep,
     prevStep
@@ -39,6 +42,9 @@ export default function CreatePoll() {
             onAddQuestion={addQuestion}
             onUpdateQuestion={updateQuestion}
             onRemoveQuestion={removeQuestion}
+            onAddOption={addOption}
+            onRemoveOption={removeOption}
+            onUpdateOption={updateOption}
           />
         );
       case 2:

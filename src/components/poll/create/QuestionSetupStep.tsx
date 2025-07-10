@@ -4,19 +4,26 @@ import { Textarea } from '@/components/ui/textarea';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Plus } from 'lucide-react';
 import { Question } from './types';
+import { QuestionTypeConfig } from './QuestionTypeConfig';
 
 interface QuestionSetupStepProps {
   questions: Question[];
   onAddQuestion: () => void;
   onUpdateQuestion: (id: number, field: string, value: string) => void;
   onRemoveQuestion: (id: number) => void;
+  onAddOption: (questionId: number) => void;
+  onRemoveOption: (questionId: number, optionIndex: number) => void;
+  onUpdateOption: (questionId: number, optionIndex: number, value: string) => void;
 }
 
 export function QuestionSetupStep({ 
   questions, 
   onAddQuestion, 
   onUpdateQuestion, 
-  onRemoveQuestion 
+  onRemoveQuestion,
+  onAddOption,
+  onRemoveOption,
+  onUpdateOption
 }: QuestionSetupStepProps) {
   return (
     <div className="space-y-6">
@@ -76,6 +83,13 @@ export function QuestionSetupStep({
               </div>
             </RadioGroup>
           </div>
+
+          <QuestionTypeConfig
+            question={question}
+            onAddOption={onAddOption}
+            onRemoveOption={onRemoveOption}
+            onUpdateOption={onUpdateOption}
+          />
         </div>
       ))}
 
