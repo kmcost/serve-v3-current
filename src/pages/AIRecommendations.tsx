@@ -265,7 +265,7 @@ export default function AIRecommendations() {
           Approve & Launch Poll
         </Button>
         
-        <Button variant="outline" size="lg" onClick={() => navigate('/polls/create', {
+        <Button variant="outline" size="lg" onClick={() => navigate('/polls/edit', {
         state: {
           question: recommendation.question.optimizedQuestion,
           audience: recommendation.audience.tags.map(t => t.id),
