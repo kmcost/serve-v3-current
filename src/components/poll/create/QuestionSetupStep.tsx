@@ -72,7 +72,7 @@ export function QuestionSetupStep({
               </div>
               <div className="flex items-center space-x-3">
                 <RadioGroupItem value="rating" id={`rating_${question.id}`} />
-                <Label htmlFor={`rating_${question.id}`}>Rating Scale (1-5)</Label>
+                <Label htmlFor={`rating_${question.id}`}>Rating Scale</Label>
               </div>
               <div className="flex items-center space-x-3">
                 <RadioGroupItem value="open_text" id={`text_${question.id}`} />

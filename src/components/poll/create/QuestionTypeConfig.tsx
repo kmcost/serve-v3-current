@@ -67,31 +67,11 @@ export function QuestionTypeConfig({
   const renderRatingConfig = () => (
     <div className="space-y-3">
       <Label className="text-sm font-medium">Rating Scale</Label>
-      <div className="flex gap-4 items-center">
-        <div className="flex gap-2 items-center">
-          <Label className="text-sm">From</Label>
-          <Input
-            type="number"
-            value={question.options[0] || '1'}
-            onChange={(e) => onUpdateOption(question.id, 0, e.target.value)}
-            className="w-20"
-            min="1"
-          />
+      <div className="bg-muted/50 p-3 rounded-lg space-y-2">
+        <div className="text-sm font-medium">1 (Strongly Disagree) to 5 (Strongly Agree)</div>
+        <div className="text-xs text-muted-foreground">
+          Respondents will rate their agreement with your question on a standard 1-5 scale.
         </div>
-        <div className="flex gap-2 items-center">
-          <Label className="text-sm">To</Label>
-          <Input
-            type="number"
-            value={question.options[1] || '5'}
-            onChange={(e) => onUpdateOption(question.id, 1, e.target.value)}
-            className="w-20"
-            min="2"
-            max="10"
-          />
-        </div>
-      </div>
-      <div className="text-sm text-muted-foreground">
-        Preview: {question.options[0] || '1'} - {question.options[1] || '5'} scale
       </div>
     </div>
   );
@@ -104,7 +84,7 @@ export function QuestionTypeConfig({
           className="w-full justify-between p-0 h-auto font-normal"
         >
           <span className="text-sm font-medium">
-            {question.type === 'multiple_choice' ? 'Configure Options' : 'Configure Rating Scale'}
+            {question.type === 'multiple_choice' ? 'Configure Options' : 'Rating Scale Details'}
           </span>
           <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
         </Button>
