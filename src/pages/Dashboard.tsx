@@ -1,11 +1,6 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Textarea } from '@/components/ui/textarea';
-import { ArrowRight, BarChart3, Inbox, AlertTriangle, Users, MessageSquare, TrendingUp } from 'lucide-react';
+import { QuestionInput } from '@/components/QuestionInput';
 export default function Dashboard() {
-  const [question, setQuestion] = useState('');
   return <div className="space-y-8">
       {/* Hero Section */}
       <div className="space-y-6">
@@ -13,51 +8,9 @@ export default function Dashboard() {
           <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
             Welcome back, Raymond
           </h1>
-          
         </div>
         
-        <div className="space-y-4">
-          <Textarea placeholder="What would you like to ask your constituents?" value={question} onChange={e => setQuestion(e.target.value)} className="min-h-[100px] text-base resize-none" />
-          
-          {/* Suggested Questions */}
-          <div className="space-y-3">
-            <p className="text-sm text-muted-foreground">Suggested questions:</p>
-            <div className="space-y-2">
-              <button 
-                onClick={() => setQuestion("What issues do you as a constituent care about most?")}
-                className="w-full p-3 text-left text-sm bg-card border rounded-lg hover:bg-accent transition-colors"
-              >
-                What issues do you as a constituent care about most?
-              </button>
-              <button 
-                onClick={() => setQuestion("Would you support increased funding for our local library?")}
-                className="w-full p-3 text-left text-sm bg-card border rounded-lg hover:bg-accent transition-colors"
-              >
-                Would you support increased funding for our local library?
-              </button>
-              <button 
-                onClick={() => setQuestion("What programs or services would you like to see offered in our schools?")}
-                className="w-full p-3 text-left text-sm bg-card border rounded-lg hover:bg-accent transition-colors"
-              >
-                What programs or services would you like to see offered in our schools?
-              </button>
-            </div>
-          </div>
-          
-          <Button 
-            size="lg" 
-            className="gap-2 my-[16px] w-full"
-            onClick={() => {
-              if (question.trim()) {
-                window.location.href = `/polls/ai-recommendations?question=${encodeURIComponent(question)}`;
-              }
-            }}
-            disabled={!question.trim()}
-          >
-            Create Poll
-            <ArrowRight className="h-4 w-4" />
-          </Button>
-        </div>
+        <QuestionInput />
       </div>
 
       {/* Main Dashboard Sections */}
