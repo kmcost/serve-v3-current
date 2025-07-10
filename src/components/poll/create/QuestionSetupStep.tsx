@@ -26,7 +26,7 @@ export function QuestionSetupStep({
   onUpdateOption
 }: QuestionSetupStepProps) {
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div>
         <h2 className="text-xl font-semibold mb-2">What do you want to ask?</h2>
       </div>
