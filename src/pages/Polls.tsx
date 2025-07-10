@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { QuestionInput } from '@/components/QuestionInput';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -115,13 +114,9 @@ export default function Polls() {
     </Card>;
   return <div className="space-y-6">
       {/* Header */}
-      <div className="space-y-6">
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">Polls & Surveys</h1>
-          <p className="text-muted-foreground">Manage your constituent engagement</p>
-        </div>
-        
-        <QuestionInput showSuggestions={false} />
+      <div>
+        <h1 className="text-2xl font-bold text-foreground">Polls & Surveys</h1>
+        <p className="text-muted-foreground">Manage your constituent engagement</p>
       </div>
 
       {/* Search, Filters, and View Toggle */}
