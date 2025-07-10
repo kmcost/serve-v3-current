@@ -148,14 +148,16 @@ export default function AIRecommendations() {
             <div className="p-3 bg-muted/50 rounded-lg text-sm">{recommendation.question.originalQuestion}</div>
           </div>
           
-          {recommendation.question.optimizedQuestion !== recommendation.question.originalQuestion && (
-            <div className="space-y-2">
-              <div className="text-sm text-muted-foreground">AI-Optimized Question:</div>
-              <div className="p-3 bg-primary/5 border border-primary/20 rounded-lg text-sm font-medium">
-                {recommendation.question.optimizedQuestion}
-              </div>
+          <div className="space-y-2">
+            <div className="text-sm text-muted-foreground">
+              {recommendation.question.optimizedQuestion !== recommendation.question.originalQuestion 
+                ? 'AI-Optimized Question:' 
+                : 'AI-Validated Question:'}
             </div>
-          )}
+            <div className="p-3 bg-primary/5 border border-primary/20 rounded-lg text-sm font-medium">
+              {recommendation.question.optimizedQuestion}
+            </div>
+          </div>
 
           <div className="flex gap-4 text-sm">
             <div className="flex items-center gap-2">
