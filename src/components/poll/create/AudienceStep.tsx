@@ -110,7 +110,7 @@ export function AudienceStep({
     interest: AUDIENCE_TAGS.filter(t => t.category === 'interest'),
     engagement: AUDIENCE_TAGS.filter(t => t.category === 'engagement')
   };
-  return <div className="space-y-2">
+  return <div className="space-y-4">
       <div>
         <h2 className="text-xl font-semibold mb-2">Who do you want to ask?</h2>
       </div>

@@ -106,7 +106,7 @@ export default function Layout({
       {/* User info footer - shows current user context */}
       <div className="lg:pl-64">
         <div className="border-t px-4 py-3 text-xs text-muted-foreground bg-slate-100">
-          Logged in as Sarah Chen, Oakland City Council Member, District 3
+          GoodParty.org
         </div>
       </div>
     </div>;
