@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { 
   ArrowLeft, 
   ArrowRight, 
@@ -17,7 +18,8 @@ import {
   Target,
   Brain,
   Lightbulb,
-  TrendingUp
+  TrendingUp,
+  Info
 } from 'lucide-react';
 import { generatePollRecommendation, PollRecommendation } from '@/services/aiPollService';
 
@@ -194,8 +196,20 @@ export default function AIRecommendations() {
                 </Badge>
               ))}
             </div>
-            <div className="text-2xl font-bold text-primary">
-              {recommendation.audience.totalSize.toLocaleString()} people
+            <div className="flex items-center gap-2">
+              <div className="text-2xl font-bold text-primary">
+                Target Population: {recommendation.audience.totalSize.toLocaleString()} residents
+              </div>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Info className="h-4 w-4 text-muted-foreground cursor-help" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p className="max-w-xs">
+                    Total estimated residents in your selected audience segments. This number helps determine potential poll reach and response rates.
+                  </p>
+                </TooltipContent>
+              </Tooltip>
             </div>
             <p className="text-sm text-muted-foreground">
               {recommendation.audience.reasoning}
@@ -223,8 +237,20 @@ export default function AIRecommendations() {
                 );
               })}
             </div>
-            <div className="text-2xl font-bold text-primary">
-              {recommendation.channels.expectedResponses} responses
+            <div className="flex items-center gap-2">
+              <div className="text-2xl font-bold text-primary">
+                Expected: {recommendation.channels.expectedResponses} responses
+              </div>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Info className="h-4 w-4 text-muted-foreground cursor-help" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p className="max-w-xs">
+                    This estimate is based on your target audience size, selected distribution channels, and typical response rates for similar polls in your area.
+                  </p>
+                </TooltipContent>
+              </Tooltip>
             </div>
             <p className="text-sm text-muted-foreground">
               {recommendation.channels.reasoning}
