@@ -57,37 +57,33 @@ export function PreviewStep({
   channels,
   isMultipleQuestions
 }: PreviewStepProps) {
-  const CHANNEL_OPTIONS = [
-    { id: 'email', name: 'Email' },
-    { id: 'sms', name: 'SMS' },
-    { id: 'social', name: 'Social Media' },
-    { id: 'phone', name: 'Phone Calls' }
-  ];
-
+  const CHANNEL_OPTIONS = [{
+    id: 'email',
+    name: 'Email'
+  }, {
+    id: 'sms',
+    name: 'SMS'
+  }, {
+    id: 'social',
+    name: 'Social Media'
+  }, {
+    id: 'phone',
+    name: 'Phone Calls'
+  }];
   const getAudienceDisplay = () => {
     if (audience.length === 0) return <p className="text-muted-foreground">No audience selected</p>;
     const selectedTags = AUDIENCE_TAGS.filter(tag => audience.includes(tag.id));
-    return (
-      <div className="space-y-1">
-        {selectedTags.map(tag => (
-          <p key={tag.id} className="text-muted-foreground">{tag.label}</p>
-        ))}
-      </div>
-    );
+    return <div className="space-y-1">
+        {selectedTags.map(tag => <p key={tag.id} className="text-muted-foreground">{tag.label}</p>)}
+      </div>;
   };
-
   const getChannelsDisplay = () => {
     if (channels.length === 0) return <p className="text-muted-foreground">None selected</p>;
     const selectedChannels = CHANNEL_OPTIONS.filter(channel => channels.includes(channel.id));
-    return (
-      <div className="space-y-1">
-        {selectedChannels.map(channel => (
-          <p key={channel.id} className="text-muted-foreground">{channel.name}</p>
-        ))}
-      </div>
-    );
+    return <div className="space-y-1">
+        {selectedChannels.map(channel => <p key={channel.id} className="text-muted-foreground">{channel.name}</p>)}
+      </div>;
   };
-
   const getExpectedEngagement = () => {
     const channelResponses = {
       email: 800,
@@ -95,11 +91,9 @@ export function PreviewStep({
       social: 300,
       phone: 150
     };
-    
     const totalResponses = channels.reduce((sum, channelId) => {
       return sum + (channelResponses[channelId as keyof typeof channelResponses] || 0);
     }, 0);
-    
     return totalResponses;
   };
   return <div className="space-y-4">
@@ -110,21 +104,16 @@ export function PreviewStep({
 
       <div className="grid lg:grid-cols-2">
         <div className="space-y-4">
-          <Card>
-            <CardContent className="p-4 bg-muted/50 space-y-4">
+          <Card className="bg-blue-50">
+            <CardContent className="p-4 space-y-4 bg-blue-50">
               <div>
                 <h3 className="font-semibold text-foreground mb-2">
                   {questions.length === 1 ? 'Question' : 'Questions'}
                 </h3>
                 <div className="space-y-1">
-                  {questions.map((question, index) => (
-                    <p key={index} className="text-muted-foreground">
-                      {questions.length === 1 
-                        ? question.text
-                        : `Question ${index + 1}: ${question.text}`
-                      }
-                    </p>
-                  ))}
+                  {questions.map((question, index) => <p key={index} className="text-muted-foreground">
+                      {questions.length === 1 ? question.text : `Question ${index + 1}: ${question.text}`}
+                    </p>)}
                 </div>
               </div>
               <div>
@@ -141,7 +130,7 @@ export function PreviewStep({
               </div>
               <div>
                 <h3 className="font-semibold text-foreground mb-2">Total Cost</h3>
-                <p className="text-muted-foreground">$120</p>
+                <p className="text-blue-500 font-bold">$120</p>
               </div>
             </CardContent>
           </Card>
