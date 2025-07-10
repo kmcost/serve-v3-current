@@ -164,13 +164,16 @@ export default function AIRecommendations() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
+            <div className="space-y-1">
+              <div className="text-sm text-muted-foreground">Target Population:</div>
+              <div className="text-3xl font-bold text-primary whitespace-nowrap">
+                {recommendation.audience.totalSize.toLocaleString()} Residents
+              </div>
+            </div>
             <div className="flex flex-wrap gap-2">
               {recommendation.audience.tags.map(tag => <Badge key={tag.id} className="bg-muted text-muted-foreground hover:bg-muted/80">
                   {tag.label}
                 </Badge>)}
-            </div>
-            <div className="text-xl font-bold text-primary">
-              Target Population: {recommendation.audience.totalSize.toLocaleString()} Residents
             </div>
             <p className="text-sm text-muted-foreground">
               {recommendation.audience.reasoning}
@@ -196,13 +199,16 @@ export default function AIRecommendations() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
+            <div className="space-y-1">
+              <div className="text-sm text-muted-foreground">Expected Engagement:</div>
+              <div className="text-3xl font-bold text-primary whitespace-nowrap">
+                {recommendation.channels.expectedResponses} Responses
+              </div>
+            </div>
             <div className="flex gap-2">
               {recommendation.channels.channels.map(channel => <Badge key={channel} className="bg-muted text-muted-foreground hover:bg-muted/80">
                   {getChannelName(channel)}
                 </Badge>)}
-            </div>
-            <div className="text-xl font-bold text-primary">
-              Expected Engagement: {recommendation.channels.expectedResponses} Responses
             </div>
             <p className="text-sm text-muted-foreground">
               {recommendation.channels.reasoning}
