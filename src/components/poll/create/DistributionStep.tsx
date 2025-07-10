@@ -26,9 +26,6 @@ export function DistributionStep({ channels, onChannelsChange }: DistributionSte
     <div className="space-y-6">
       <div>
         <h2 className="text-xl font-semibold mb-2">How do you want to ask them?</h2>
-        <p className="text-muted-foreground">
-          Select how you want to reach your audience.
-        </p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
@@ -45,13 +42,10 @@ export function DistributionStep({ channels, onChannelsChange }: DistributionSte
                 }`}
                 onClick={() => toggleChannel(channel.id)}
               >
-                <div className="flex items-center gap-3">
-                  <Icon className="h-5 w-5 text-primary" />
+                <div className="flex items-start gap-3">
+                  <Icon className="h-5 w-5 text-primary mt-0.5" />
                   <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <p className="font-medium">{channel.name}</p>
-                      {isSelected && <Badge variant="default" className="text-xs">Selected</Badge>}
-                    </div>
+                    <p className="font-medium">{channel.name}</p>
                     <p className="text-sm text-muted-foreground">
                       {channel.reach} • {channel.cost}
                     </p>

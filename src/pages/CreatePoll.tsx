@@ -94,10 +94,7 @@ export default function CreatePoll() {
             {isCustomizingRecommendations ? 'Customize' : 'Create'} {isMultipleQuestions ? 'Survey' : 'Poll'}
           </h1>
           <p className="text-muted-foreground">
-            {isMultipleQuestions ? 
-              'Multi-question survey for detailed feedback' : 
-              'Quick poll for simple questions'
-            }
+            Edit content, change audience, and add details.
           </p>
         </div>
       </div>

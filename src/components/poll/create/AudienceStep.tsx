@@ -62,25 +62,22 @@ export function AudienceStep({ audience, onAudienceChange }: AudienceStepProps) 
     <div className="space-y-6">
       <div>
         <h2 className="text-xl font-semibold mb-2">Who do you want to ask?</h2>
-        <p className="text-muted-foreground">
-          Select audience segments to target for maximum relevant engagement.
-        </p>
       </div>
 
       {/* Selected Tags Summary */}
       {selectedTags.length > 0 && (
         <Card>
-          <CardContent className="p-4">
+          <CardContent className="p-4 bg-muted/50">
             <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="font-medium">Selected Audience</span>
-                <span className="text-lg font-bold text-primary">
-                  ~{Math.round(totalEstimatedSize * 0.8).toLocaleString()} people
-                </span>
+              <div className="space-y-1">
+                <div className="text-sm text-muted-foreground">Current Selection:</div>
+                <div className="text-xl font-bold text-primary whitespace-nowrap">
+                  {Math.round(totalEstimatedSize * 0.8).toLocaleString()} Residents
+                </div>
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 py-[4px]">
                 {selectedTags.map((tag) => (
-                  <Badge key={tag.id} variant="secondary" className="gap-1">
+                  <Badge key={tag.id} variant="secondary" className="gap-2 px-3 py-1">
                     {tag.label}
                     <Button
                       variant="ghost"

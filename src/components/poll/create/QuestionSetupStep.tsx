@@ -29,9 +29,6 @@ export function QuestionSetupStep({
     <div className="space-y-6">
       <div>
         <h2 className="text-xl font-semibold mb-2">What do you want to ask?</h2>
-        <p className="text-muted-foreground">
-          Add your questions below. Multiple questions automatically create a survey.
-        </p>
       </div>
 
       {questions.map((question, index) => (
@@ -63,21 +60,21 @@ export function QuestionSetupStep({
             <RadioGroup 
               value={question.type}
               onValueChange={(value) => onUpdateQuestion(question.id, 'type', value)}
-              className="mt-2"
+              className="mt-2 space-y-3"
             >
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-3">
                 <RadioGroupItem value="yes_no" id={`yes_no_${question.id}`} />
                 <Label htmlFor={`yes_no_${question.id}`}>Yes/No</Label>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-3">
                 <RadioGroupItem value="multiple_choice" id={`mc_${question.id}`} />
                 <Label htmlFor={`mc_${question.id}`}>Multiple Choice</Label>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-3">
                 <RadioGroupItem value="rating" id={`rating_${question.id}`} />
                 <Label htmlFor={`rating_${question.id}`}>Rating Scale (1-5)</Label>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-3">
                 <RadioGroupItem value="open_text" id={`text_${question.id}`} />
                 <Label htmlFor={`text_${question.id}`}>Open Text</Label>
               </div>
