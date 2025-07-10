@@ -114,7 +114,7 @@ export function PreviewStep({
             <CardHeader className="p-4">
               <CardTitle className="text-lg">Summary</CardTitle>
             </CardHeader>
-            <CardContent className="p-4 pt-0 space-y-3">
+            <CardContent className="p-4 pt-3 space-y-3">
               <div>
                 <Label className="text-sm text-muted-foreground">
                   {questions.length === 1 ? 'Question' : 'Questions'}
