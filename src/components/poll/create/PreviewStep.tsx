@@ -65,24 +65,24 @@ export function PreviewStep({
   ];
 
   const getAudienceDisplay = () => {
-    if (audience.length === 0) return <p className="font-medium">No audience selected</p>;
+    if (audience.length === 0) return <p className="text-muted-foreground">No audience selected</p>;
     const selectedTags = AUDIENCE_TAGS.filter(tag => audience.includes(tag.id));
     return (
       <div className="space-y-1">
         {selectedTags.map(tag => (
-          <p key={tag.id} className="font-medium">{tag.label}</p>
+          <p key={tag.id} className="text-muted-foreground">{tag.label}</p>
         ))}
       </div>
     );
   };
 
   const getChannelsDisplay = () => {
-    if (channels.length === 0) return <p className="font-medium">None selected</p>;
+    if (channels.length === 0) return <p className="text-muted-foreground">None selected</p>;
     const selectedChannels = CHANNEL_OPTIONS.filter(channel => channels.includes(channel.id));
     return (
       <div className="space-y-1">
         {selectedChannels.map(channel => (
-          <p key={channel.id} className="font-medium">{channel.name}</p>
+          <p key={channel.id} className="text-muted-foreground">{channel.name}</p>
         ))}
       </div>
     );
@@ -136,8 +136,12 @@ export function PreviewStep({
                 <div>{getChannelsDisplay()}</div>
               </div>
               <div>
-                <h3 className="font-semibold text-foreground mb-2">Expected Results</h3>
-                <p className="text-muted-foreground">{getExpectedEngagement()} Responses • $120</p>
+                <h3 className="font-semibold text-foreground mb-2">Expected Engagement</h3>
+                <p className="text-muted-foreground">{getExpectedEngagement()} Responses</p>
+              </div>
+              <div>
+                <h3 className="font-semibold text-foreground mb-2">Total Cost</h3>
+                <p className="text-muted-foreground">$120</p>
               </div>
             </CardContent>
           </Card>
