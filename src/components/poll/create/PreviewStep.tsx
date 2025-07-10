@@ -111,17 +111,14 @@ export function PreviewStep({
       <div className="grid lg:grid-cols-2">
         <div className="space-y-4">
           <Card>
-            <CardHeader className="p-4">
-              <CardTitle className="text-lg">Summary</CardTitle>
-            </CardHeader>
-            <CardContent className="p-4 pt-3 space-y-3">
+            <CardContent className="p-4 bg-muted/50 space-y-4">
               <div>
-                <Label className="text-sm text-muted-foreground">
+                <h3 className="font-semibold text-foreground mb-2">
                   {questions.length === 1 ? 'Question' : 'Questions'}
-                </Label>
-                <div className="space-y-1 mt-1">
+                </h3>
+                <div className="space-y-1">
                   {questions.map((question, index) => (
-                    <p key={index} className="font-medium">
+                    <p key={index} className="text-muted-foreground">
                       {questions.length === 1 
                         ? question.text
                         : `Question ${index + 1}: ${question.text}`
@@ -131,20 +128,16 @@ export function PreviewStep({
                 </div>
               </div>
               <div>
-                <Label className="text-sm text-muted-foreground">Audience</Label>
-                <div className="mt-1">{getAudienceDisplay()}</div>
+                <h3 className="font-semibold text-foreground mb-2">Audience</h3>
+                <div>{getAudienceDisplay()}</div>
               </div>
               <div>
-                <Label className="text-sm text-muted-foreground">Channels</Label>
-                <div className="mt-1">{getChannelsDisplay()}</div>
+                <h3 className="font-semibold text-foreground mb-2">Channels</h3>
+                <div>{getChannelsDisplay()}</div>
               </div>
               <div>
-                <Label className="text-sm text-muted-foreground">Expected Engagement</Label>
-                <p className="font-medium text-primary">{getExpectedEngagement()} Responses</p>
-              </div>
-              <div>
-                <Label className="text-sm text-muted-foreground">Total Cost</Label>
-                <p className="font-medium">$120</p>
+                <h3 className="font-semibold text-foreground mb-2">Expected Results</h3>
+                <p className="text-muted-foreground">{getExpectedEngagement()} Responses • $120</p>
               </div>
             </CardContent>
           </Card>
