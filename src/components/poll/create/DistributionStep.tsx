@@ -23,7 +23,7 @@ export function DistributionStep({ channels, onChannelsChange }: DistributionSte
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div>
         <h2 className="text-xl font-semibold mb-2">How do you want to ask them?</h2>
       </div>

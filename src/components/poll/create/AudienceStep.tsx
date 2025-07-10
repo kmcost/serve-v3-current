@@ -59,7 +59,7 @@ export function AudienceStep({ audience, onAudienceChange }: AudienceStepProps) 
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div>
         <h2 className="text-xl font-semibold mb-2">Who do you want to ask?</h2>
       </div>
@@ -77,7 +77,7 @@ export function AudienceStep({ audience, onAudienceChange }: AudienceStepProps) 
               </div>
               <div className="flex flex-wrap gap-2 py-[4px]">
                 {selectedTags.map((tag) => (
-                  <Badge key={tag.id} variant="secondary" className="gap-2 px-3 py-1">
+                  <Badge key={tag.id} className="gap-2 px-3 py-1 bg-white text-foreground border hover:bg-white/90">
                     {tag.label}
                     <Button
                       variant="ghost"
