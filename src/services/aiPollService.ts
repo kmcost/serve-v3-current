@@ -44,29 +44,64 @@ const analyzeQuestion = (question: string): QuestionAnalysis => {
   
   // Analyze question type and provide intelligent suggestions
   let suggestedType: QuestionAnalysis['suggestedType'] = 'yes_no';
-  let optimizedQuestion = question;
+  let optimizedQuestion = question.trim();
   let reasoning = '';
   
+  // Always optimize - provide meaningful improvements for every question type
   if (lowercaseQ.includes('what') || lowercaseQ.includes('how') || lowercaseQ.includes('where')) {
     suggestedType = 'multiple_choice';
     if (lowercaseQ.includes('what')) {
       optimizedQuestion = question.replace(/what/i, 'Which of the following');
-      reasoning = 'Converted open question to multiple choice for better data analysis';
+      reasoning = 'Converted open question to multiple choice for better data analysis and clearer response options';
+    } else {
+      // Improve how/where questions
+      optimizedQuestion = optimizedQuestion.replace(/how do you feel about/i, 'What is your opinion on');
+      optimizedQuestion = optimizedQuestion.replace(/where do you/i, 'Which location do you prefer for');
+      reasoning = 'Restructured for clearer multiple choice format with specific options';
     }
-  } else if (lowercaseQ.includes('rate') || lowercaseQ.includes('satisfaction')) {
+  } else if (lowercaseQ.includes('rate') || lowercaseQ.includes('satisfaction') || lowercaseQ.includes('quality')) {
     suggestedType = 'rating';
-    reasoning = 'Rating scale provides nuanced feedback for satisfaction questions';
-  } else if (lowercaseQ.includes('should') || lowercaseQ.includes('support') || lowercaseQ.includes('favor')) {
+    if (!lowercaseQ.includes('scale') && !lowercaseQ.includes('1-5')) {
+      optimizedQuestion += ' (on a scale of 1-5, where 1 = very poor and 5 = excellent)';
+    }
+    reasoning = 'Added clear rating scale definition for consistent responses and better data quality';
+  } else if (lowercaseQ.includes('should') || lowercaseQ.includes('support') || lowercaseQ.includes('favor') || lowercaseQ.includes('agree')) {
     suggestedType = 'yes_no';
+    // Always improve yes/no questions for clarity and bias reduction
+    optimizedQuestion = optimizedQuestion.replace(/do you support/i, 'Would you support');
+    optimizedQuestion = optimizedQuestion.replace(/should we/i, 'Should the city');
+    optimizedQuestion = optimizedQuestion.replace(/would you favor/i, 'Do you support');
+    
+    // Ensure proper punctuation
     if (!optimizedQuestion.endsWith('?')) {
       optimizedQuestion += '?';
     }
-    reasoning = 'Yes/No format provides clear actionable results for policy decisions';
+    reasoning = 'Improved wording for neutral tone and clearer yes/no decision format';
+  } else {
+    // Handle other question types - always provide some optimization
+    suggestedType = 'open_text';
+    if (!optimizedQuestion.endsWith('?')) {
+      optimizedQuestion += '?';
+    }
+    // Make questions more specific
+    optimizedQuestion = optimizedQuestion.replace(/thoughts/i, 'specific feedback');
+    optimizedQuestion = optimizedQuestion.replace(/opinions/i, 'views');
+    reasoning = 'Enhanced specificity and clarity for more actionable open-ended responses';
   }
   
-  // Calculate quality scores
-  const clarity = Math.min(100, question.length > 10 ? 80 + Math.random() * 20 : 60 + Math.random() * 20);
-  const bias = Math.max(0, 30 - question.split(' ').length + Math.random() * 20);
+  // Calculate quality scores based on question characteristics
+  const wordCount = question.split(' ').length;
+  const hasQuestionMark = question.includes('?');
+  const clarity = Math.min(100, 
+    (hasQuestionMark ? 85 : 70) + 
+    (wordCount > 5 && wordCount < 20 ? 10 : 0) + 
+    Math.random() * 10
+  );
+  const bias = Math.max(0, 
+    (lowercaseQ.includes('don\'t') || lowercaseQ.includes('shouldn\'t') ? 40 : 0) +
+    (wordCount > 25 ? 20 : 0) +
+    Math.random() * 15
+  );
   
   return {
     originalQuestion: question,
