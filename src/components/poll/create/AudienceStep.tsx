@@ -61,7 +61,7 @@ export function AudienceStep({ audience, onAudienceChange }: AudienceStepProps) 
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-semibold mb-2">Who should we ask?</h2>
+        <h2 className="text-xl font-semibold mb-2">Who do you want to ask?</h2>
         <p className="text-muted-foreground">
           Select audience segments to target for maximum relevant engagement.
         </p>
@@ -127,18 +127,6 @@ export function AudienceStep({ audience, onAudienceChange }: AudienceStepProps) 
         ))}
       </div>
 
-      {/* AI Recommendation */}
-      <div className="bg-accent/50 border-l-4 border-l-primary p-4 rounded">
-        <div className="flex gap-3">
-          <Lightbulb className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-          <div>
-            <p className="font-medium text-sm">AI Recommendation</p>
-            <p className="text-sm text-muted-foreground mt-1">
-              Mix demographic and geographic segments for precise targeting. For example, combine "Downtown Area" + "Business Owners" for parking-related questions, or "Residential" + "Parents" for education topics.
-            </p>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

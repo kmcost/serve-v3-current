@@ -6,11 +6,13 @@ import { ArrowRight } from 'lucide-react';
 interface QuestionInputProps {
   placeholder?: string;
   className?: string;
+  showSuggestions?: boolean;
 }
 
 export function QuestionInput({ 
   placeholder = "What would you like to ask your constituents?",
-  className = ""
+  className = "",
+  showSuggestions = true
 }: QuestionInputProps) {
   const [question, setQuestion] = useState('');
 
@@ -30,29 +32,31 @@ export function QuestionInput({
       />
       
       {/* Suggested Questions */}
-      <div className="space-y-3">
-        <p className="text-sm text-muted-foreground">Suggested questions:</p>
-        <div className="space-y-2">
-          <button 
-            onClick={() => setQuestion("What issues do you as a constituent care about most?")}
-            className="w-full p-3 text-left text-sm bg-card border rounded-lg hover:bg-accent transition-colors"
-          >
-            What issues do you as a constituent care about most?
-          </button>
-          <button 
-            onClick={() => setQuestion("Would you support increased funding for our local library?")}
-            className="w-full p-3 text-left text-sm bg-card border rounded-lg hover:bg-accent transition-colors"
-          >
-            Would you support increased funding for our local library?
-          </button>
-          <button 
-            onClick={() => setQuestion("What programs or services would you like to see offered in our schools?")}
-            className="w-full p-3 text-left text-sm bg-card border rounded-lg hover:bg-accent transition-colors"
-          >
-            What programs or services would you like to see offered in our schools?
-          </button>
+      {showSuggestions && (
+        <div className="space-y-3">
+          <p className="text-sm text-muted-foreground">Suggested questions:</p>
+          <div className="space-y-2">
+            <button 
+              onClick={() => setQuestion("What issues do you as a constituent care about most?")}
+              className="w-full p-3 text-left text-sm bg-card border rounded-lg hover:bg-accent transition-colors"
+            >
+              What issues do you as a constituent care about most?
+            </button>
+            <button 
+              onClick={() => setQuestion("Would you support increased funding for our local library?")}
+              className="w-full p-3 text-left text-sm bg-card border rounded-lg hover:bg-accent transition-colors"
+            >
+              Would you support increased funding for our local library?
+            </button>
+            <button 
+              onClick={() => setQuestion("What programs or services would you like to see offered in our schools?")}
+              className="w-full p-3 text-left text-sm bg-card border rounded-lg hover:bg-accent transition-colors"
+            >
+              What programs or services would you like to see offered in our schools?
+            </button>
+          </div>
         </div>
-      </div>
+      )}
       
       <Button 
         size="lg" 

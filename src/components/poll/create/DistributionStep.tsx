@@ -25,7 +25,7 @@ export function DistributionStep({ channels, onChannelsChange }: DistributionSte
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-semibold mb-2">Channels & Distribution</h2>
+        <h2 className="text-xl font-semibold mb-2">How do you want to ask them?</h2>
         <p className="text-muted-foreground">
           Select how you want to reach your audience.
         </p>
@@ -63,18 +63,6 @@ export function DistributionStep({ channels, onChannelsChange }: DistributionSte
         </div>
       </div>
 
-      {/* AI Recommendation */}
-      <div className="bg-accent/50 border-l-4 border-l-primary p-4 rounded">
-        <div className="flex gap-3">
-          <Lightbulb className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-          <div>
-            <p className="font-medium text-sm">AI Recommendation</p>
-            <p className="text-sm text-muted-foreground mt-1">
-              For maximum engagement, we suggest combining <strong>Email + SMS</strong> (est. 1,200 responses, $120 total). This combination typically achieves 35-40% response rates for local government polls.
-            </p>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

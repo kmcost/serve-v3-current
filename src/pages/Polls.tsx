@@ -121,7 +121,7 @@ export default function Polls() {
           <p className="text-muted-foreground">Manage your constituent engagement</p>
         </div>
         
-        <QuestionInput />
+        <QuestionInput showSuggestions={false} />
       </div>
 
       {/* Search, Filters, and View Toggle */}
