@@ -105,7 +105,7 @@ export default function Layout({
 
       {/* User info footer - shows current user context */}
       <div className="lg:pl-64">
-        <div className="border-t px-4 py-3 text-xs text-muted-foreground bg-slate-100">
+        <div className="border-t px-4 py-3 text-xs text-muted-foreground bg-slate-100 text-center">
           GoodParty.org
         </div>
       </div>

@@ -57,26 +57,52 @@ export function PreviewStep({
   channels,
   isMultipleQuestions
 }: PreviewStepProps) {
+  const CHANNEL_OPTIONS = [
+    { id: 'email', name: 'Email' },
+    { id: 'sms', name: 'SMS' },
+    { id: 'social', name: 'Social Media' },
+    { id: 'phone', name: 'Phone Calls' }
+  ];
+
   const getAudienceDisplay = () => {
-    if (audience.length === 0) return 'No audience selected';
+    if (audience.length === 0) return <p className="font-medium">No audience selected</p>;
     const selectedTags = AUDIENCE_TAGS.filter(tag => audience.includes(tag.id));
-    return selectedTags.map(tag => tag.label).join(', ');
+    return (
+      <div className="space-y-1">
+        {selectedTags.map(tag => (
+          <p key={tag.id} className="font-medium">{tag.label}</p>
+        ))}
+      </div>
+    );
   };
-  const getQuestionTypeDisplay = (type: string) => {
-    switch (type) {
-      case 'yes_no':
-        return 'Yes / No';
-      case 'multiple_choice':
-        return 'Multiple choice options';
-      case 'rating':
-        return 'Rating scale 1-5';
-      case 'open_text':
-        return 'Open text response';
-      default:
-        return type;
-    }
+
+  const getChannelsDisplay = () => {
+    if (channels.length === 0) return <p className="font-medium">None selected</p>;
+    const selectedChannels = CHANNEL_OPTIONS.filter(channel => channels.includes(channel.id));
+    return (
+      <div className="space-y-1">
+        {selectedChannels.map(channel => (
+          <p key={channel.id} className="font-medium">{channel.name}</p>
+        ))}
+      </div>
+    );
   };
-  return <div className="space-y-6">
+
+  const getExpectedEngagement = () => {
+    const channelResponses = {
+      email: 800,
+      sms: 400,
+      social: 300,
+      phone: 150
+    };
+    
+    const totalResponses = channels.reduce((sum, channelId) => {
+      return sum + (channelResponses[channelId as keyof typeof channelResponses] || 0);
+    }, 0);
+    
+    return totalResponses;
+  };
+  return <div className="space-y-4">
       <div>
         <h2 className="text-xl font-semibold mb-2">Preview & Launch</h2>
         
@@ -85,29 +111,36 @@ export function PreviewStep({
       <div className="grid gap-6 lg:grid-cols-2">
         <div className="space-y-4">
           <Card>
-            <CardHeader>
+            <CardHeader className="p-4">
               <CardTitle className="text-lg">Summary</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3">
+            <CardContent className="p-4 pt-0 space-y-3">
               <div>
-                <Label className="text-sm text-muted-foreground">Type</Label>
-                <p className="font-medium">{isMultipleQuestions ? 'Survey' : 'Poll'}</p>
-              </div>
-              <div>
-                <Label className="text-sm text-muted-foreground">Questions</Label>
-                <p className="font-medium">{questions.length} question{questions.length !== 1 ? 's' : ''}</p>
+                <Label className="text-sm text-muted-foreground">
+                  {questions.length === 1 ? 'Question' : 'Questions'}
+                </Label>
+                <div className="space-y-1 mt-1">
+                  {questions.map((question, index) => (
+                    <p key={index} className="font-medium">
+                      {questions.length === 1 
+                        ? `Question: ${question.text}`
+                        : `Question ${index + 1}: ${question.text}`
+                      }
+                    </p>
+                  ))}
+                </div>
               </div>
               <div>
                 <Label className="text-sm text-muted-foreground">Audience</Label>
-                <p className="font-medium">{getAudienceDisplay()}</p>
+                <div className="mt-1">{getAudienceDisplay()}</div>
               </div>
               <div>
                 <Label className="text-sm text-muted-foreground">Channels</Label>
-                <p className="font-medium">{channels.length || 'None selected'}</p>
+                <div className="mt-1">{getChannelsDisplay()}</div>
               </div>
               <div>
-                <Label className="text-sm text-muted-foreground">Estimated Responses</Label>
-                <p className="font-medium text-primary">~800-1,200 responses</p>
+                <Label className="text-sm text-muted-foreground">Expected Engagement</Label>
+                <p className="font-medium text-primary">{getExpectedEngagement()} Responses</p>
               </div>
               <div>
                 <Label className="text-sm text-muted-foreground">Total Cost</Label>
