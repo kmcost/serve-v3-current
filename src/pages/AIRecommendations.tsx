@@ -201,7 +201,7 @@ export default function AIRecommendations() {
                   {getChannelName(channel)}
                 </Badge>)}
             </div>
-            <div className="text-2xl font-bold text-primary">
+            <div className="text-xl font-bold text-primary">
               Expected Engagement: {recommendation.channels.expectedResponses} Responses
             </div>
             <p className="text-sm text-muted-foreground">
