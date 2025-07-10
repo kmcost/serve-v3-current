@@ -17,6 +17,7 @@ export default function CreatePoll() {
     audience,
     channels,
     isMultipleQuestions,
+    isCustomizingRecommendations,
     setAudience,
     setChannels,
     addQuestion,
@@ -82,15 +83,15 @@ export default function CreatePoll() {
         <Button 
           variant="ghost" 
           size="sm" 
-          onClick={() => navigate('/polls')}
+          onClick={() => navigate(isCustomizingRecommendations ? '/polls/ai-recommendations' : '/polls')}
           className="gap-2 self-start"
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to Polls
+          {isCustomizingRecommendations ? 'Back to Recommendations' : 'Back to Polls'}
         </Button>
         <div className="space-y-1">
           <h1 className="text-2xl font-bold text-foreground">
-            Create {isMultipleQuestions ? 'Survey' : 'Poll'}
+            {isCustomizingRecommendations ? 'Customize' : 'Create'} {isMultipleQuestions ? 'Survey' : 'Poll'}
           </h1>
           <p className="text-muted-foreground">
             {isMultipleQuestions ? 

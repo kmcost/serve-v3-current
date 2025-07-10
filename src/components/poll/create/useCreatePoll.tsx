@@ -11,6 +11,9 @@ export const useCreatePoll = () => {
   const [audience, setAudience] = useState<string[]>([]);
   const [channels, setChannels] = useState<string[]>([]);
 
+  // Check if we're customizing AI recommendations
+  const isCustomizingRecommendations = Boolean(location.state?.question || location.state?.audience || location.state?.channels);
+
   // Initialize with AI recommendations if available
   useEffect(() => {
     const state = location.state as any;
@@ -111,6 +114,7 @@ export const useCreatePoll = () => {
     audience,
     channels,
     isMultipleQuestions,
+    isCustomizingRecommendations,
     setCurrentStep,
     setQuestions,
     setAudience,
