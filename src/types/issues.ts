@@ -27,5 +27,19 @@ export const topIssues: Issue[] = [
     supportPercentage: 70,
     description: "Reopening community pool facility for summer recreation",
     relatedPollId: 4
+  },
+  {
+    id: 4,
+    title: "Downtown Parking Solutions",
+    supportPercentage: 58,
+    description: "Implementation of new parking meters and expanded public parking areas",
+    relatedPollId: 1
+  },
+  {
+    id: 5,
+    title: "Youth Sports Program Expansion",
+    supportPercentage: 82,
+    description: "Expanding youth sports programs and facility improvements at local parks",
+    relatedPollId: 5
   }
 ];
