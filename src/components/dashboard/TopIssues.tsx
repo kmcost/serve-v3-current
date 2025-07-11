@@ -16,47 +16,42 @@ export function TopIssues() {
       </div>
       
       <div className="space-y-3">
-        {topIssues.map((issue, index) => (
+        {topIssues.map((issue) => (
           <div 
             key={issue.id}
             className="p-4 bg-card rounded-lg border hover:bg-card/80 transition-colors"
           >
-            {/* Mobile-first layout: everything stacked */}
             <div className="space-y-3">
-              {/* Top row: ranking and title */}
-              <div className="flex items-start gap-3">
-                <div className="flex items-center justify-center w-8 h-8 bg-primary text-primary-foreground rounded-full text-sm font-bold flex-shrink-0">
-                  #{index + 1}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-medium text-foreground leading-tight">
-                    {issue.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
-                    {issue.description}
-                  </p>
-                </div>
+              {/* Lead with support percentage */}
+              <div className="flex items-center gap-1">
+                <span className="text-xl sm:text-2xl font-bold text-primary">
+                  {issue.supportPercentage}%
+                </span>
+                <span className="text-xl sm:text-2xl font-bold text-primary">
+                  support
+                </span>
               </div>
               
-              {/* Bottom row: support percentage and link */}
-              <div className="flex items-center justify-between pt-2 border-t border-border/50">
-                <div className="flex items-center gap-2">
-                  <span className="text-xl sm:text-2xl font-bold text-primary">
-                    {issue.supportPercentage}%
-                  </span>
-                  <span className="text-xs text-muted-foreground">support</span>
-                </div>
-                
-                {issue.relatedPollId && (
-                  <Link 
-                    to={`/polls/${issue.relatedPollId}`}
-                    className="flex items-center gap-1 text-primary hover:text-primary/80 text-sm font-medium"
-                  >
-                    View Details
-                    <ExternalLink className="w-3 h-3" />
-                  </Link>
-                )}
+              {/* Title and description */}
+              <div>
+                <h3 className="font-medium text-foreground leading-tight mb-1">
+                  {issue.title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {issue.description}
+                </p>
               </div>
+              
+              {/* Full-width button */}
+              {issue.relatedPollId && (
+                <Link 
+                  to={`/polls/${issue.relatedPollId}`}
+                  className="w-full flex items-center justify-center gap-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors text-sm font-medium"
+                >
+                  View Details
+                  <ExternalLink className="w-3 h-3" />
+                </Link>
+              )}
             </div>
           </div>
         ))}
