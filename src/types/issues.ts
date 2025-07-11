@@ -6,6 +6,23 @@ export interface Issue {
   relatedPollId?: number;
 }
 
+// Type guards and validation
+export function isValidIssue(issue: unknown): issue is Issue {
+  return (
+    typeof issue === 'object' &&
+    issue !== null &&
+    typeof (issue as Issue).id === 'number' &&
+    typeof (issue as Issue).title === 'string' &&
+    typeof (issue as Issue).supportPercentage === 'number' &&
+    typeof (issue as Issue).description === 'string' &&
+    ((issue as Issue).relatedPollId === undefined || typeof (issue as Issue).relatedPollId === 'number')
+  );
+}
+
+export function validateIssues(issues: unknown[]): Issue[] {
+  return issues.filter(isValidIssue);
+}
+
 export const topIssues: Issue[] = [
   {
     id: 5,
