@@ -31,6 +31,16 @@ export function QuestionInput({
         className="min-h-[100px] text-base resize-none" 
       />
       
+      <Button 
+        size="lg" 
+        className="gap-2 w-full"
+        onClick={handleCreatePoll}
+        disabled={!question.trim()}
+      >
+        Create Poll
+        <ArrowRight className="h-4 w-4" />
+      </Button>
+      
       {/* Suggested Questions */}
       {showSuggestions && (
         <div className="space-y-3">
@@ -57,16 +67,6 @@ export function QuestionInput({
           </div>
         </div>
       )}
-      
-      <Button 
-        size="lg" 
-        className="gap-2 my-[16px] w-full"
-        onClick={handleCreatePoll}
-        disabled={!question.trim()}
-      >
-        Create Poll
-        <ArrowRight className="h-4 w-4" />
-      </Button>
     </div>
   );
 }
