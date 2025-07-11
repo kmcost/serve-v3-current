@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { ExternalLink } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { Issue } from '@/types/issues';
 import { SupportPercentage } from './SupportPercentage';
 import { DESIGN_TOKENS, TRANSITIONS, PERFORMANCE_CONFIG } from './styles';
@@ -31,16 +31,15 @@ export const IssueCard = React.memo(function IssueCard({ issue }: IssueCardProps
       onKeyDown={handleKeyDown}
     >
       <div className={DESIGN_TOKENS.spacing.card}>
-        <SupportPercentage percentage={issue.supportPercentage} />
-        
         <div>
           <h3 
             id={`issue-title-${issue.id}`}
-            className={`${DESIGN_TOKENS.typography.subtitle} mb-1`}
+            className={`${DESIGN_TOKENS.typography.subtitle} mb-2`}
           >
             {issue.title}
           </h3>
-          <p className={DESIGN_TOKENS.typography.description}>
+          <SupportPercentage percentage={issue.supportPercentage} />
+          <p className={`${DESIGN_TOKENS.typography.description} mt-2`}>
             {issue.description}
           </p>
         </div>
@@ -48,11 +47,11 @@ export const IssueCard = React.memo(function IssueCard({ issue }: IssueCardProps
         {issue.relatedPollId && (
           <Link 
             to={`/polls/${issue.relatedPollId}`}
-            className={`${DESIGN_TOKENS.interactive.button} ${TRANSITIONS.focus}`}
-            aria-label={getAriaLabel.viewDetails(issue.title)}
+            className="block mt-4"
           >
-            {t(I18N_KEYS.VIEW_DETAILS_BUTTON)}
-            <ExternalLink className="w-3 h-3" aria-hidden="true" />
+            <Button variant="outline" className="w-full">
+              {t(I18N_KEYS.VIEW_DETAILS_BUTTON)}
+            </Button>
           </Link>
         )}
       </div>

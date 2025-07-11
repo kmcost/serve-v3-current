@@ -16,11 +16,8 @@ export const SupportPercentage = React.memo(function SupportPercentage({
       aria-label={getAriaLabel.supportPercentage(percentage)}
       aria-live="polite"
     >
-      <span className={DESIGN_TOKENS.typography.percentage}>
-        {percentage}%
-      </span>
-      <span className={DESIGN_TOKENS.typography.percentage}>
-        support
+      <span className="text-sm text-muted-foreground font-medium">
+        {percentage}% support
       </span>
     </div>
   );
