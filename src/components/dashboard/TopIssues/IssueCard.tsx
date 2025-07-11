@@ -1,30 +1,45 @@
+import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { ExternalLink } from 'lucide-react';
 import { Issue } from '@/types/issues';
 import { SupportPercentage } from './SupportPercentage';
+import { DESIGN_TOKENS, TRANSITIONS, PERFORMANCE_CONFIG } from './styles';
 
 interface IssueCardProps {
   issue: Issue;
 }
 
-export function IssueCard({ issue }: IssueCardProps) {
+export const IssueCard = React.memo(function IssueCard({ issue }: IssueCardProps) {
+  const handleKeyDown = useCallback((event: React.KeyboardEvent<HTMLDivElement>) => {
+    // Enhanced keyboard navigation - Enter/Space to focus first interactive element
+    if (event.key === 'Enter' || event.key === ' ') {
+      const link = event.currentTarget.querySelector('a');
+      if (link) {
+        event.preventDefault();
+        link.focus();
+      }
+    }
+  }, []);
+
   return (
     <div 
-      className="p-4 bg-card rounded-lg border hover:bg-card/80 transition-colors"
+      className={`${DESIGN_TOKENS.layout.card} ${TRANSITIONS.hover} ${TRANSITIONS.focus}`}
       role="article"
       aria-labelledby={`issue-title-${issue.id}`}
+      tabIndex={0}
+      onKeyDown={handleKeyDown}
     >
-      <div className="space-y-3">
+      <div className={DESIGN_TOKENS.spacing.card}>
         <SupportPercentage percentage={issue.supportPercentage} />
         
         <div>
           <h3 
             id={`issue-title-${issue.id}`}
-            className="font-medium text-foreground leading-tight mb-1"
+            className={`${DESIGN_TOKENS.typography.subtitle} mb-1`}
           >
             {issue.title}
           </h3>
-          <p className="text-sm text-muted-foreground leading-relaxed">
+          <p className={DESIGN_TOKENS.typography.description}>
             {issue.description}
           </p>
         </div>
@@ -32,7 +47,7 @@ export function IssueCard({ issue }: IssueCardProps) {
         {issue.relatedPollId && (
           <Link 
             to={`/polls/${issue.relatedPollId}`}
-            className="w-full flex items-center justify-center gap-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors text-sm font-medium"
+            className={`${DESIGN_TOKENS.interactive.button} ${TRANSITIONS.focus}`}
             aria-label={`View details for ${issue.title}`}
           >
             View Details
@@ -42,4 +57,4 @@ export function IssueCard({ issue }: IssueCardProps) {
       </div>
     </div>
   );
-}
+}, PERFORMANCE_CONFIG.issueComparison);

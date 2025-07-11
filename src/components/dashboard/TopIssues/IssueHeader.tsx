@@ -1,16 +1,18 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { DESIGN_TOKENS, TRANSITIONS } from './styles';
 
-export function IssueHeader() {
+export const IssueHeader = React.memo(function IssueHeader() {
   return (
-    <div className="flex items-center justify-between">
-      <h2 className="text-lg font-semibold text-foreground">Top 5 Issues</h2>
+    <header className="flex items-center justify-between">
+      <h2 className={DESIGN_TOKENS.typography.title}>Top 5 Issues</h2>
       <Link 
         to="/issues" 
-        className="text-primary hover:text-primary/80 text-sm font-medium"
+        className={`${DESIGN_TOKENS.typography.link} ${TRANSITIONS.focus}`}
         aria-label="View all community issues"
       >
         View All Issues
       </Link>
-    </div>
+    </header>
   );
-}
+});

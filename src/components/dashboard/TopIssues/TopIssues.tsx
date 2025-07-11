@@ -1,7 +1,8 @@
-import React from 'react';
-import { topIssues, Issue } from '@/types/issues';
+import React, { useMemo } from 'react';
+import { topIssues, Issue, validateIssues } from '@/types/issues';
 import { IssueCard } from './IssueCard';
 import { IssueHeader } from './IssueHeader';
+import { DESIGN_TOKENS, getSkeletonClasses, getErrorClasses, getEmptyStateClasses } from './styles';
 
 interface TopIssuesProps {
   issues?: Issue[];
@@ -14,71 +15,102 @@ export const TopIssues = React.memo(function TopIssues({
   loading = false, 
   error = null 
 }: TopIssuesProps) {
-  if (loading) {
-    return (
-      <div className="space-y-4 px-4 py-4 bg-white rounded-xl">
-        <IssueHeader />
-        <div className="space-y-3">
-          {Array.from({ length: 5 }).map((_, index) => (
-            <div 
-              key={index} 
-              className="p-4 bg-card rounded-lg border animate-pulse"
-              aria-hidden="true"
-            >
-              <div className="space-y-3">
-                <div className="h-6 bg-muted rounded w-32"></div>
-                <div className="h-4 bg-muted rounded w-3/4"></div>
-                <div className="h-3 bg-muted rounded w-full"></div>
-                <div className="h-8 bg-muted rounded"></div>
-              </div>
-            </div>
-          ))}
+  // Memoize validated issues for performance
+  const validatedIssues = useMemo(() => {
+    if (!issues) return [];
+    return validateIssues(issues).slice(0, 5); // Ensure max 5 issues
+  }, [issues]);
+
+  // Memoize loading skeleton to prevent unnecessary re-renders
+  const loadingSkeleton = useMemo(() => (
+    Array.from({ length: 5 }, (_, index) => (
+      <div 
+        key={`skeleton-${index}`}
+        className={`${DESIGN_TOKENS.layout.card} ${DESIGN_TOKENS.states.loading}`}
+        aria-hidden="true"
+      >
+        <div className={DESIGN_TOKENS.spacing.card}>
+          <div className={getSkeletonClasses('w-32')}></div>
+          <div className={getSkeletonClasses('w-3/4')}></div>
+          <div className={getSkeletonClasses('w-full')}></div>
+          <div className={getSkeletonClasses('w-full')} style={{ height: '2rem' }}></div>
         </div>
       </div>
+    ))
+  ), []);
+
+  if (loading) {
+    return (
+      <section 
+        className={`${DESIGN_TOKENS.spacing.component} ${DESIGN_TOKENS.spacing.header} ${DESIGN_TOKENS.layout.container}`}
+        aria-live="polite"
+        aria-busy="true"
+        aria-label="Loading top issues"
+      >
+        <IssueHeader />
+        <div className={DESIGN_TOKENS.layout.cardGrid}>
+          {loadingSkeleton}
+        </div>
+      </section>
     );
   }
 
   if (error) {
     return (
-      <div className="space-y-4 px-4 py-4 bg-white rounded-xl">
+      <section 
+        className={`${DESIGN_TOKENS.spacing.component} ${DESIGN_TOKENS.spacing.header} ${DESIGN_TOKENS.layout.container}`}
+        aria-live="assertive"
+      >
         <IssueHeader />
         <div 
-          className="p-4 bg-destructive/10 text-destructive rounded-lg border border-destructive/20"
+          className={getErrorClasses()}
           role="alert"
         >
           <p className="text-sm font-medium">Error loading issues</p>
           <p className="text-xs mt-1">{error}</p>
         </div>
-      </div>
+      </section>
     );
   }
 
-  if (!issues || issues.length === 0) {
+  if (validatedIssues.length === 0) {
     return (
-      <div className="space-y-4 px-4 py-4 bg-white rounded-xl">
+      <section 
+        className={`${DESIGN_TOKENS.spacing.component} ${DESIGN_TOKENS.spacing.header} ${DESIGN_TOKENS.layout.container}`}
+        aria-live="polite"
+      >
         <IssueHeader />
-        <div className="p-8 text-center text-muted-foreground">
+        <div className={getEmptyStateClasses()}>
           <p className="text-sm">No issues available at the moment.</p>
         </div>
-      </div>
+      </section>
     );
   }
 
   return (
-    <div className="space-y-4 px-4 py-4 bg-white rounded-xl">
+    <section 
+      className={`${DESIGN_TOKENS.spacing.component} ${DESIGN_TOKENS.spacing.header} ${DESIGN_TOKENS.layout.container}`}
+      aria-labelledby="top-issues-heading"
+    >
       <IssueHeader />
       
       <div 
-        className="space-y-3"
+        className={DESIGN_TOKENS.layout.cardGrid}
         role="list"
         aria-label="Top community issues by support percentage"
+        aria-live="polite"
       >
-        {issues.map((issue) => (
-          <div key={issue.id} role="listitem">
+        {validatedIssues.map((issue, index) => (
+          <div 
+            key={issue.id} 
+            role="listitem"
+            aria-posinset={index + 1}
+            aria-setsize={validatedIssues.length}
+          >
             <IssueCard issue={issue} />
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 });
