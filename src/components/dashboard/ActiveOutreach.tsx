@@ -47,14 +47,16 @@ export function ActiveOutreach() {
               </div>
               
               {/* Poll Title */}
-              <Link 
-                to={`/polls/${poll.id}`}
-                className="hover:text-primary transition-colors mt-4"
-              >
-                <h3 className="font-medium text-foreground leading-tight">
-                  {poll.question}
-                </h3>
-              </Link>
+              <div className="mt-6">
+                <Link 
+                  to={`/polls/${poll.id}`}
+                  className="hover:text-primary transition-colors"
+                >
+                  <h3 className="font-medium text-foreground leading-tight">
+                    {poll.question}
+                  </h3>
+                </Link>
+              </div>
               
               {/* Channels */}
               <p className="text-sm text-muted-foreground">
