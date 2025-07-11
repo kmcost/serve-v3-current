@@ -4,3 +4,9 @@ export { SupportPercentage } from './SupportPercentage';
 export { IssueHeader } from './IssueHeader';
 export { TopIssuesErrorBoundary } from './ErrorBoundary';
 export { DESIGN_TOKENS } from './styles';
+export { 
+  useTopIssuesPerformance, 
+  useTopIssuesAccessibility, 
+  useTopIssuesValidation,
+  useTopIssuesLoading 
+} from './hooks';

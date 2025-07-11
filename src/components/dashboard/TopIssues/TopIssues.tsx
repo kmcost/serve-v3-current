@@ -3,6 +3,11 @@ import { topIssues, Issue, validateIssues } from '@/types/issues';
 import { IssueCard } from './IssueCard';
 import { IssueHeader } from './IssueHeader';
 import { DESIGN_TOKENS, getSkeletonClasses, getErrorClasses, getEmptyStateClasses } from './styles';
+import { 
+  useTopIssuesPerformance, 
+  useTopIssuesAccessibility, 
+  useTopIssuesValidation 
+} from './hooks';
 
 interface TopIssuesProps {
   issues?: Issue[];
@@ -15,11 +20,24 @@ export const TopIssues = React.memo(function TopIssues({
   loading = false, 
   error = null 
 }: TopIssuesProps) {
-  // Memoize validated issues for performance
+  // Performance monitoring
+  const { performanceData } = useTopIssuesPerformance();
+  
+  // Accessibility features
+  const { 
+    focusedIndex, 
+    announcements, 
+    handleKeyNavigation, 
+    announceChange 
+  } = useTopIssuesAccessibility();
+  
+  // Data validation
+  const { validationErrors, sanitizedIssues, isValid } = useTopIssuesValidation(issues || [], loading);
+  
+  // Use validated issues instead of raw issues
   const validatedIssues = useMemo(() => {
-    if (!issues) return [];
-    return validateIssues(issues).slice(0, 5); // Ensure max 5 issues
-  }, [issues]);
+    return sanitizedIssues.slice(0, 5); // Ensure max 5 issues
+  }, [sanitizedIssues]);
 
   // Memoize loading skeleton to prevent unnecessary re-renders
   const loadingSkeleton = useMemo(() => (
@@ -91,8 +109,34 @@ export const TopIssues = React.memo(function TopIssues({
     <section 
       className={`${DESIGN_TOKENS.spacing.component} ${DESIGN_TOKENS.spacing.header} ${DESIGN_TOKENS.layout.container}`}
       aria-labelledby="top-issues-heading"
+      onKeyDown={(e) => handleKeyNavigation(e, validatedIssues.length)}
     >
       <IssueHeader />
+      
+      {/* Screen reader announcements */}
+      {announcements && (
+        <div 
+          className="sr-only" 
+          aria-live="polite" 
+          aria-atomic="true"
+        >
+          {announcements}
+        </div>
+      )}
+      
+      {/* Validation errors in development */}
+      {process.env.NODE_ENV === 'development' && validationErrors.length > 0 && (
+        <div className="p-2 bg-warning/10 text-warning text-xs rounded">
+          <details>
+            <summary>Validation Issues ({validationErrors.length})</summary>
+            <ul className="mt-2 space-y-1">
+              {validationErrors.map((error, index) => (
+                <li key={index}>• {error}</li>
+              ))}
+            </ul>
+          </details>
+        </div>
+      )}
       
       <div 
         className={DESIGN_TOKENS.layout.cardGrid}
@@ -106,11 +150,20 @@ export const TopIssues = React.memo(function TopIssues({
             role="listitem"
             aria-posinset={index + 1}
             aria-setsize={validatedIssues.length}
+            className={focusedIndex === index ? 'ring-2 ring-ring rounded-lg' : ''}
           >
             <IssueCard issue={issue} />
           </div>
         ))}
       </div>
+      
+      {/* Performance data in development */}
+      {process.env.NODE_ENV === 'development' && (
+        <div className="sr-only">
+          Performance: {performanceData.totalRenders} renders, 
+          last took {performanceData.averageRenderTime.toFixed(2)}ms
+        </div>
+      )}
     </section>
   );
 });
