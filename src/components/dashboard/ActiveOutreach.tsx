@@ -49,7 +49,7 @@ export function ActiveOutreach() {
               {/* Poll Title */}
               <Link 
                 to={`/polls/${poll.id}`}
-                className="hover:text-primary transition-colors"
+                className="hover:text-primary transition-colors mt-4"
               >
                 <h3 className="font-medium text-foreground leading-tight">
                   {poll.question}
