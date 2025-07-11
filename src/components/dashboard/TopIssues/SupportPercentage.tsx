@@ -1,5 +1,6 @@
 import React from 'react';
 import { DESIGN_TOKENS } from './styles';
+import { getAriaLabel } from './i18n';
 
 interface SupportPercentageProps {
   percentage: number;
@@ -12,7 +13,7 @@ export const SupportPercentage = React.memo(function SupportPercentage({
     <div 
       className="flex items-center gap-1" 
       role="status" 
-      aria-label={`${percentage} percent support`}
+      aria-label={getAriaLabel.supportPercentage(percentage)}
       aria-live="polite"
     >
       <span className={DESIGN_TOKENS.typography.percentage}>

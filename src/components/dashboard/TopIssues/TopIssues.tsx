@@ -8,6 +8,8 @@ import {
   useTopIssuesAccessibility, 
   useTopIssuesValidation 
 } from './hooks';
+import { useErrorRecovery, usePerformanceOptimization } from './advanced-hooks';
+import { t, I18N_KEYS, getAriaLabel } from './i18n';
 
 interface TopIssuesProps {
   issues?: Issue[];
@@ -20,8 +22,16 @@ export const TopIssues = React.memo(function TopIssues({
   loading = false, 
   error = null 
 }: TopIssuesProps) {
-  // Performance monitoring
+  // Performance monitoring and optimization
   const { performanceData } = useTopIssuesPerformance();
+  const { getPerformanceMetrics, logPerformanceWarning } = usePerformanceOptimization();
+  
+  // Error recovery
+  const errorRecovery = useErrorRecovery({
+    maxRetries: 3,
+    retryDelay: 2000,
+    fallbackData: topIssues.slice(0, 5),
+  });
   
   // Accessibility features
   const { 
@@ -36,8 +46,15 @@ export const TopIssues = React.memo(function TopIssues({
   
   // Use validated issues instead of raw issues
   const validatedIssues = useMemo(() => {
-    return sanitizedIssues.slice(0, 5); // Ensure max 5 issues
-  }, [sanitizedIssues]);
+    const result = sanitizedIssues.slice(0, 5); // Ensure max 5 issues
+    
+    // Log performance warning if needed
+    if (process.env.NODE_ENV === 'development') {
+      logPerformanceWarning(50); // 50ms threshold
+    }
+    
+    return result;
+  }, [sanitizedIssues, logPerformanceWarning]);
 
   // Memoize loading skeleton to prevent unnecessary re-renders
   const loadingSkeleton = useMemo(() => (
@@ -57,13 +74,21 @@ export const TopIssues = React.memo(function TopIssues({
     ))
   ), []);
 
+  // Enhanced error retry handler
+  const handleRetry = React.useCallback(async () => {
+    await errorRecovery.attemptRecovery(async () => {
+      // This would trigger a data refetch in a real application
+      announceChange('Retrying to load issues...');
+    });
+  }, [errorRecovery, announceChange]);
+
   if (loading) {
     return (
       <section 
         className={`${DESIGN_TOKENS.spacing.component} ${DESIGN_TOKENS.spacing.header} ${DESIGN_TOKENS.layout.container}`}
         aria-live="polite"
         aria-busy="true"
-        aria-label="Loading top issues"
+        aria-label={t(I18N_KEYS.LOADING_ARIA)}
       >
         <IssueHeader />
         <div className={DESIGN_TOKENS.layout.cardGrid}>
@@ -84,8 +109,18 @@ export const TopIssues = React.memo(function TopIssues({
           className={getErrorClasses()}
           role="alert"
         >
-          <p className="text-sm font-medium">Error loading issues</p>
+          <p className="text-sm font-medium">{t(I18N_KEYS.ERROR_TITLE)}</p>
           <p className="text-xs mt-1">{error}</p>
+          {errorRecovery.canRetry && (
+            <button 
+              onClick={handleRetry}
+              disabled={errorRecovery.isRecovering}
+              className="mt-3 text-xs underline hover:no-underline focus:outline-none focus:ring-2 focus:ring-ring disabled:opacity-50"
+              aria-label="Retry loading issues"
+            >
+              {errorRecovery.isRecovering ? 'Retrying...' : t(I18N_KEYS.ERROR_RETRY)}
+            </button>
+          )}
         </div>
       </section>
     );
@@ -99,7 +134,7 @@ export const TopIssues = React.memo(function TopIssues({
       >
         <IssueHeader />
         <div className={getEmptyStateClasses()}>
-          <p className="text-sm">No issues available at the moment.</p>
+          <p className="text-sm">{t(I18N_KEYS.EMPTY_MESSAGE)}</p>
         </div>
       </section>
     );
@@ -141,7 +176,7 @@ export const TopIssues = React.memo(function TopIssues({
       <div 
         className={DESIGN_TOKENS.layout.cardGrid}
         role="list"
-        aria-label="Top community issues by support percentage"
+        aria-label={t(I18N_KEYS.ISSUE_LIST_LABEL)}
         aria-live="polite"
       >
         {validatedIssues.map((issue, index) => (

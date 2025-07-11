@@ -4,6 +4,7 @@ import { ExternalLink } from 'lucide-react';
 import { Issue } from '@/types/issues';
 import { SupportPercentage } from './SupportPercentage';
 import { DESIGN_TOKENS, TRANSITIONS, PERFORMANCE_CONFIG } from './styles';
+import { t, I18N_KEYS, getAriaLabel } from './i18n';
 
 interface IssueCardProps {
   issue: Issue;
@@ -48,9 +49,9 @@ export const IssueCard = React.memo(function IssueCard({ issue }: IssueCardProps
           <Link 
             to={`/polls/${issue.relatedPollId}`}
             className={`${DESIGN_TOKENS.interactive.button} ${TRANSITIONS.focus}`}
-            aria-label={`View details for ${issue.title}`}
+            aria-label={getAriaLabel.viewDetails(issue.title)}
           >
-            View Details
+            {t(I18N_KEYS.VIEW_DETAILS_BUTTON)}
             <ExternalLink className="w-3 h-3" aria-hidden="true" />
           </Link>
         )}

@@ -10,3 +10,9 @@ export {
   useTopIssuesValidation,
   useTopIssuesLoading 
 } from './hooks';
+export {
+  useErrorRecovery,
+  useTopIssuesState,
+  usePerformanceOptimization
+} from './advanced-hooks';
+export { t, I18N_KEYS, getAriaLabel, DEFAULT_CONTENT } from './i18n';
