@@ -57,19 +57,19 @@ const analyzeQuestion = (question: string): QuestionAnalysis => {
     suggestedType = 'multiple_choice';
     if (lowercaseQ.includes('what')) {
       optimizedQuestion = question.replace(/what/i, 'Which of the following');
-      reasoning = 'Converted open question to multiple choice for better data analysis and clearer response options';
+      reasoning = 'Converted open-ended question to multiple choice for better data analysis and clearer response options.';
     } else {
       // Improve how/where questions
       optimizedQuestion = optimizedQuestion.replace(/how do you feel about/i, 'What is your opinion on');
       optimizedQuestion = optimizedQuestion.replace(/where do you/i, 'Which location do you prefer for');
-      reasoning = 'Restructured for clearer multiple choice format with specific options';
+      reasoning = 'Restructured for clearer multiple choice format with specific options.';
     }
   } else if (lowercaseQ.includes('rate') || lowercaseQ.includes('satisfaction') || lowercaseQ.includes('quality')) {
     suggestedType = 'rating';
     if (!lowercaseQ.includes('scale') && !lowercaseQ.includes('1-5')) {
       optimizedQuestion += ' (on a scale of 1-5, where 1 = very poor and 5 = excellent)';
     }
-    reasoning = 'Added clear rating scale definition for consistent responses and better data quality';
+    reasoning = 'Added clear rating scale definition for consistent responses and better data quality.';
   } else if (lowercaseQ.includes('should') || lowercaseQ.includes('support') || lowercaseQ.includes('favor') || lowercaseQ.includes('agree')) {
     suggestedType = 'yes_no';
     // Always improve yes/no questions for clarity and bias reduction
@@ -81,7 +81,7 @@ const analyzeQuestion = (question: string): QuestionAnalysis => {
     if (!optimizedQuestion.endsWith('?')) {
       optimizedQuestion += '?';
     }
-    reasoning = 'Improved wording for neutral tone and clearer yes/no decision format';
+    reasoning = 'Improved wording for neutral tone and clearer yes/no decision format.';
   } else {
     // Handle other question types - always provide some optimization
     suggestedType = 'open_text';
@@ -91,7 +91,7 @@ const analyzeQuestion = (question: string): QuestionAnalysis => {
     // Make questions more specific
     optimizedQuestion = optimizedQuestion.replace(/thoughts/i, 'specific feedback');
     optimizedQuestion = optimizedQuestion.replace(/opinions/i, 'views');
-    reasoning = 'Enhanced specificity and clarity for more actionable open-ended responses';
+    reasoning = 'Enhanced specificity and clarity for more actionable open-ended responses.';
   }
   
   // Calculate quality scores based on question characteristics

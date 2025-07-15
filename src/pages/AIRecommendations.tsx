@@ -109,7 +109,7 @@ export default function AIRecommendations() {
       <Card>
         <CardHeader>
           <CardTitle>
-            Question Optimization
+            What do you want to ask?
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -157,7 +157,7 @@ export default function AIRecommendations() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
-              Target Audience
+              Who do you want to ask?
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Info className="h-4 w-4 text-muted-foreground cursor-help" />
@@ -207,7 +207,7 @@ export default function AIRecommendations() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
-              Distribution Channels
+              How do you want to ask them?
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Info className="h-4 w-4 text-muted-foreground cursor-help" />
@@ -228,7 +228,7 @@ export default function AIRecommendations() {
             <div className="space-y-1">
               <div className="text-sm text-muted-foreground">Expected Engagement:</div>
               <div className="text-xl font-bold text-primary whitespace-nowrap">
-                {recommendation.channels.expectedResponses} Responses
+                {recommendation.channels.expectedResponses.toLocaleString()} Responses
               </div>
             </div>
             <div className="flex gap-2 py-[4px]">
