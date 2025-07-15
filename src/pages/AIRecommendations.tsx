@@ -113,15 +113,12 @@ export default function AIRecommendations() {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <div className="text-sm text-muted-foreground">Original Question:</div>
-            <div className="p-3 bg-muted/50 rounded-lg text-sm">{recommendation.question.originalQuestion}</div>
-          </div>
+          <p className="text-sm text-muted-foreground">
+            {recommendation.question.reasoning}
+          </p>
           
           <div className="space-y-2">
-            <div className="text-sm text-muted-foreground">
-              {recommendation.question.optimizedQuestion !== recommendation.question.originalQuestion ? 'AI-Optimized Question:' : 'AI-Validated Question:'}
-            </div>
+            <div className="text-sm text-muted-foreground">Question:</div>
             <div className="p-3 bg-primary/5 border border-primary/20 rounded-lg text-sm font-medium">
               {recommendation.question.optimizedQuestion}
             </div>
@@ -138,9 +135,19 @@ export default function AIRecommendations() {
             </div>
           </div>
 
-          <div className="text-sm text-muted-foreground">
-            <strong>Recommendation:</strong> {recommendation.question.reasoning}
-          </div>
+          <Button 
+            onClick={() => navigate('/polls/edit', {
+              state: {
+                step: 1,
+                question: recommendation.question.optimizedQuestion,
+                audience: recommendation.audience.tags.map(t => t.id),
+                channels: recommendation.channels.channels
+              }
+            })}
+            className="w-full"
+          >
+            Edit
+          </Button>
         </CardContent>
       </Card>
 
@@ -164,6 +171,10 @@ export default function AIRecommendations() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
+            <p className="text-sm text-muted-foreground">
+              {recommendation.audience.reasoning}
+            </p>
+            
             <div className="space-y-1">
               <div className="text-sm text-muted-foreground">Target Population:</div>
               <div className="text-xl font-bold text-primary whitespace-nowrap">
@@ -175,9 +186,20 @@ export default function AIRecommendations() {
                   {tag.label}
                 </Badge>)}
             </div>
-            <p className="text-sm text-muted-foreground">
-              {recommendation.audience.reasoning}
-            </p>
+            
+            <Button 
+              onClick={() => navigate('/polls/edit', {
+                state: {
+                  step: 2,
+                  question: recommendation.question.optimizedQuestion,
+                  audience: recommendation.audience.tags.map(t => t.id),
+                  channels: recommendation.channels.channels
+                }
+              })}
+              className="w-full"
+            >
+              Edit
+            </Button>
           </CardContent>
         </Card>
 
@@ -199,6 +221,10 @@ export default function AIRecommendations() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
+            <p className="text-sm text-muted-foreground">
+              {recommendation.channels.reasoning}
+            </p>
+            
             <div className="space-y-1">
               <div className="text-sm text-muted-foreground">Expected Engagement:</div>
               <div className="text-xl font-bold text-primary whitespace-nowrap">
@@ -210,9 +236,20 @@ export default function AIRecommendations() {
                   {getChannelName(channel)}
                 </Badge>)}
             </div>
-            <p className="text-sm text-muted-foreground">
-              {recommendation.channels.reasoning}
-            </p>
+            
+            <Button 
+              onClick={() => navigate('/polls/edit', {
+                state: {
+                  step: 3,
+                  question: recommendation.question.optimizedQuestion,
+                  audience: recommendation.audience.tags.map(t => t.id),
+                  channels: recommendation.channels.channels
+                }
+              })}
+              className="w-full"
+            >
+              Edit
+            </Button>
           </CardContent>
         </Card>
       </div>

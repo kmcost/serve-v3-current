@@ -26,6 +26,9 @@ export const useCreatePoll = () => {
     if (state?.channels) {
       setChannels(state.channels);
     }
+    if (state?.step) {
+      setCurrentStep(state.step);
+    }
   }, [location.state]);
 
   const addQuestion = () => {
