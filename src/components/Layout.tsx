@@ -1,34 +1,58 @@
+
 import { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { Home, BarChart3, Inbox, AlertTriangle, Menu, X } from 'lucide-react';
+import { Home, BarChart3, Inbox, AlertTriangle, Database, Kanban, Globe, Menu, X } from 'lucide-react';
 import { useState } from 'react';
+
 interface LayoutProps {
   children: ReactNode;
 }
-const navigation = [{
-  name: 'Dashboard',
-  href: '/',
-  icon: Home
-}, {
-  name: 'Polls & Surveys',
-  href: '/polls',
-  icon: BarChart3
-}, {
-  name: 'Inbox',
-  href: '/inbox',
-  icon: Inbox
-}, {
-  name: 'Issues',
-  href: '/issues',
-  icon: AlertTriangle
-}];
-export default function Layout({
-  children
-}: LayoutProps) {
+
+const navigation = [
+  {
+    name: 'Dashboard',
+    href: '/',
+    icon: Home
+  },
+  {
+    name: 'Polls & Surveys',
+    href: '/polls',
+    icon: BarChart3
+  },
+  {
+    name: 'Inbox',
+    href: '/inbox',
+    icon: Inbox
+  },
+  {
+    name: 'Issues',
+    href: '/issues',
+    icon: AlertTriangle
+  },
+  {
+    name: 'Data Sources',
+    href: '/data-sources',
+    icon: Database
+  },
+  {
+    name: 'Priorities',
+    href: '/priorities',
+    icon: Kanban
+  },
+  {
+    name: 'Website',
+    href: '/website-preview',
+    icon: Globe
+  }
+];
+
+export default function Layout({ children }: LayoutProps) {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  return <div className="min-h-screen bg-slate-100">
+
+  return (
+    <div className="min-h-screen bg-slate-100">
       {/* Mobile menu */}
       <div className={cn("fixed inset-0 z-50 lg:hidden", mobileMenuOpen ? "block" : "hidden")}>
         <div className="fixed inset-0 bg-black/20" onClick={() => setMobileMenuOpen(false)} />
@@ -42,15 +66,26 @@ export default function Layout({
           <nav className="p-4">
             <ul className="space-y-2">
               {navigation.map(item => {
-              const Icon = item.icon;
-              const isActive = location.pathname === item.href;
-              return <li key={item.name}>
-                    <Link to={item.href} onClick={() => setMobileMenuOpen(false)} className={cn("flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors", isActive ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground hover:bg-accent")}>
+                const Icon = item.icon;
+                const isActive = location.pathname === item.href;
+                return (
+                  <li key={item.name}>
+                    <Link 
+                      to={item.href} 
+                      onClick={() => setMobileMenuOpen(false)} 
+                      className={cn(
+                        "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
+                        isActive 
+                          ? "bg-primary text-primary-foreground" 
+                          : "text-muted-foreground hover:text-foreground hover:bg-accent"
+                      )}
+                    >
                       <Icon className="h-4 w-4" />
                       {item.name}
                     </Link>
-                  </li>;
-            })}
+                  </li>
+                );
+              })}
             </ul>
           </nav>
         </div>
@@ -67,15 +102,25 @@ export default function Layout({
               <li>
                 <ul className="-mx-2 space-y-1">
                   {navigation.map(item => {
-                  const Icon = item.icon;
-                  const isActive = location.pathname === item.href;
-                  return <li key={item.name}>
-                        <Link to={item.href} className={cn("group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold transition-colors", isActive ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground hover:bg-accent")}>
+                    const Icon = item.icon;
+                    const isActive = location.pathname === item.href;
+                    return (
+                      <li key={item.name}>
+                        <Link 
+                          to={item.href} 
+                          className={cn(
+                            "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold transition-colors",
+                            isActive 
+                              ? "bg-primary text-primary-foreground" 
+                              : "text-muted-foreground hover:text-foreground hover:bg-accent"
+                          )}
+                        >
                           <Icon className="h-5 w-5 shrink-0" />
                           {item.name}
                         </Link>
-                      </li>;
-                })}
+                      </li>
+                    );
+                  })}
                 </ul>
               </li>
             </ul>
@@ -109,5 +154,6 @@ export default function Layout({
           GoodParty.org
         </div>
       </div>
-    </div>;
+    </div>
+  );
 }
