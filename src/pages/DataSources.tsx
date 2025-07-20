@@ -54,21 +54,22 @@ const DataSources = () => {
       {connectedCount > 0 && (
         <Card className="mb-8 bg-green-50 border-green-200">
           <CardContent className="pt-6">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex items-center space-x-3">
-                <CheckCircle className="h-8 w-8 text-green-600" />
+                <CheckCircle className="h-6 w-6 sm:h-8 sm:w-8 text-green-600 flex-shrink-0" />
                 <div>
-                  <h3 className="text-lg font-semibold text-green-800">
+                  <h3 className="text-base sm:text-lg font-semibold text-green-800">
                     {connectedCount} of 4 sources connected
                   </h3>
-                  <p className="text-green-700">
+                  <p className="text-sm sm:text-base text-green-700">
                     Monitoring {totalIssues} constituent issues across all channels
                   </p>
                 </div>
               </div>
               <Button
                 onClick={() => navigate('/')}
-                className="bg-green-600 hover:bg-green-700"
+                className="bg-green-600 hover:bg-green-700 w-full sm:w-auto"
+                size="sm"
               >
                 <BarChart3 className="h-4 w-4 mr-2" />
                 View Dashboard
