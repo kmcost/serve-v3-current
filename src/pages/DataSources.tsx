@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DataSourceCard } from "@/components/data-sources/DataSourceCard";
 import { ConnectionModal } from "@/components/data-sources/ConnectionModal";
-import { ArrowLeft, BarChart3, CheckCircle } from 'lucide-react';
+import { BarChart3, CheckCircle } from 'lucide-react';
 import { getDataSources } from '@/services/mockData';
 import { DataSource } from '@/types/core';
 
@@ -44,21 +44,10 @@ const DataSources = () => {
     <div className="container mx-auto p-6 max-w-6xl">
       {/* Header */}
       <div className="mb-8">
-        <div className="flex items-center space-x-4 mb-4">
-          <Button
-            variant="ghost"
-            onClick={() => navigate('/')}
-            className="p-2"
-          >
-            <ArrowLeft className="h-4 w-4" />
-          </Button>
-          <div>
-            <h1 className="text-3xl font-bold">Connect Your Data Sources</h1>
-            <p className="text-muted-foreground mt-1">
-              Centralize constituent feedback from all your communication channels
-            </p>
-          </div>
-        </div>
+        <h1 className="text-3xl font-bold">Connect Your Data Sources</h1>
+        <p className="text-muted-foreground mt-1">
+          Centralize constituent feedback from all your communication channels
+        </p>
       </div>
 
       {/* Connection Status Summary */}
