@@ -1,8 +1,13 @@
+
 import { QuestionInput } from '@/components/QuestionInput';
-import { TopIssues } from '@/components/dashboard/TopIssues';
+import { ValidatedIssues } from '@/components/dashboard/ValidatedIssues';
+import { TrendingIssues } from '@/components/dashboard/TrendingIssues';
+import { IndividualIssues } from '@/components/dashboard/IndividualIssues';
 import { ActiveOutreach } from '@/components/dashboard/ActiveOutreach';
+
 export default function Dashboard() {
-  return <div className="space-y-8">
+  return (
+    <div className="space-y-8">
       {/* Hero Section */}
       <div className="space-y-6">
         <div className="space-y-2">
@@ -13,12 +18,16 @@ export default function Dashboard() {
       </div>
 
       {/* Main Dashboard Sections */}
-      
-
-      {/* Stats Sections */}
       <div className="space-y-6">
-        <TopIssues />
+        <ValidatedIssues />
+        <TrendingIssues />
+        <IndividualIssues />
+      </div>
+
+      {/* Active Outreach Section */}
+      <div className="space-y-6">
         <ActiveOutreach />
       </div>
-    </div>;
+    </div>
+  );
 }
