@@ -58,7 +58,7 @@ export function IndividualIssues() {
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-6">
         <CardTitle>High-Priority Requests</CardTitle>
         <Link 
           to="/inbox" 
@@ -71,8 +71,8 @@ export function IndividualIssues() {
         <div className="space-y-4">
           {issues.slice(0, 5).map((issue) => (
             <div key={issue.id} className="space-y-3 p-3 rounded-lg border bg-card">
-              <div className="flex items-start justify-between gap-2">
-                <div className="space-y-1">
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+                <div className="space-y-1 flex-1">
                   <p className="text-sm font-medium">
                     {issue.constituent?.name}
                   </p>
@@ -80,11 +80,11 @@ export function IndividualIssues() {
                     {issue.title}
                   </h3>
                 </div>
-                <div className="flex flex-col items-end gap-1">
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${getPriorityColor(issue.priority || 'low')}`}>
+                <div className="flex flex-col gap-1 sm:items-end">
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap ${getPriorityColor(issue.priority || 'low')}`}>
                     {issue.priority}
                   </span>
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-xs text-muted-foreground whitespace-nowrap">
                     {issue.timeframe}
                   </span>
                 </div>

@@ -49,7 +49,7 @@ export function ValidatedIssues() {
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-6">
         <CardTitle>Top 5 Issues in Your Community</CardTitle>
         <Link 
           to="/issues" 
@@ -62,11 +62,11 @@ export function ValidatedIssues() {
         <div className="space-y-4">
           {issues.slice(0, 5).map((issue) => (
             <div key={issue.id} className="space-y-2 p-3 rounded-lg border bg-card">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                 <h3 className="font-medium text-foreground leading-tight">
                   {issue.title}
                 </h3>
-                <span className="text-sm font-semibold text-primary">
+                <span className="text-sm font-semibold text-primary whitespace-nowrap">
                   {issue.supportPercentage}% support
                 </span>
               </div>
