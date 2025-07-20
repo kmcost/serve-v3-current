@@ -55,7 +55,7 @@ export function TrendingIssues() {
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-6">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
         <CardTitle>New Issues to Validate</CardTitle>
         <Link 
           to="/issues" 
@@ -73,8 +73,7 @@ export function TrendingIssues() {
                   {issue.title}
                 </h3>
                 <p className="text-xs text-muted-foreground">
-                  <span className="whitespace-nowrap">{issue.mentions} mentions</span>{' '}
-                  <span className="whitespace-nowrap">{issue.timeframe}</span>
+                  {issue.mentions} mentions {issue.timeframe}
                 </p>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed">
