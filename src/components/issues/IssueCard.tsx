@@ -93,9 +93,9 @@ export function IssueCard({
                 {issue.title}
               </CardTitle>
               
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-1 flex-shrink-0">
                 {sourceInfo && (
-                  <Badge className={`${sourceInfo.color} gap-1 text-xs`}>
+                  <Badge className={`${sourceInfo.color} gap-1 text-xs whitespace-nowrap`}>
                     <SourceIcon className="h-3 w-3" />
                     {sourceInfo.label}
                   </Badge>
