@@ -19,6 +19,18 @@ export interface ConstituentIssue {
   updatedAt: string;
 }
 
+export interface PriorityItem extends ConstituentIssue {
+  boardStatus: 'todo' | 'in-progress' | 'completed';
+  addedToBoardAt: string;
+  completedAt?: string;
+  assignee?: string;
+  estimatedDuration?: string;
+  actualDuration?: string;
+  publicNotes?: string;
+}
+
+export type BoardColumn = 'todo' | 'in-progress' | 'completed';
+
 export interface DataSource {
   id: string;
   type: 'website' | 'email' | 'facebook' | 'sms';
@@ -53,6 +65,19 @@ export function isValidConstituentIssue(issue: unknown): issue is ConstituentIss
   );
 }
 
+export function isValidPriorityItem(item: unknown): item is PriorityItem {
+  return (
+    isValidConstituentIssue(item) &&
+    typeof (item as PriorityItem).boardStatus === 'string' &&
+    ['todo', 'in-progress', 'completed'].includes((item as PriorityItem).boardStatus) &&
+    typeof (item as PriorityItem).addedToBoardAt === 'string'
+  );
+}
+
 export function validateConstituentIssues(issues: unknown[]): ConstituentIssue[] {
   return issues.filter(isValidConstituentIssue);
+}
+
+export function validatePriorityItems(items: unknown[]): PriorityItem[] {
+  return items.filter(isValidPriorityItem);
 }

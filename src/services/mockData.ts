@@ -1,5 +1,4 @@
-
-import { ConstituentIssue, DataSource, Poll } from '../types/core';
+import { ConstituentIssue, DataSource, Poll, PriorityItem } from '../types/core';
 
 export const mockDataSources: DataSource[] = [
   {
@@ -236,6 +235,128 @@ export const mockIndividualIssues: ConstituentIssue[] = [
   }
 ];
 
+export const mockPriorityItems: PriorityItem[] = [
+  // TODO Column
+  {
+    id: 'p1',
+    title: 'Youth Sports Program Expansion',
+    description: 'Expanding youth sports programs and facility improvements at local parks',
+    type: 'community',
+    status: 'validated',
+    source: 'ai-detected',
+    priority: 'high',
+    supportPercentage: 82,
+    createdAt: '2025-07-01',
+    updatedAt: '2025-07-15',
+    boardStatus: 'todo',
+    addedToBoardAt: '2025-07-18T09:00:00Z',
+    estimatedDuration: '3-4 months',
+    publicNotes: 'Community strongly supports this initiative. Working with Parks Department on feasibility study.',
+  },
+  {
+    id: 'p2',
+    title: 'Broken streetlight on Elm St',
+    description: 'Streetlight has been out for a week, making intersection dangerous',
+    type: 'individual',
+    status: 'new',
+    source: 'website',
+    priority: 'high',
+    constituent: {
+      name: 'Maria Rodriguez',
+      email: 'maria.r@email.com'
+    },
+    timeframe: '2 hours ago',
+    createdAt: '2025-07-20T10:00:00Z',
+    updatedAt: '2025-07-20T10:00:00Z',
+    boardStatus: 'todo',
+    addedToBoardAt: '2025-07-20T11:00:00Z',
+    estimatedDuration: '1-2 weeks',
+    publicNotes: 'Reported broken streetlight creating safety hazard. Will coordinate with utilities department.',
+  },
+  // IN PROGRESS Column
+  {
+    id: 'p3',
+    title: 'Community Center Funding',
+    description: 'Increased funding for community center improvements and programs',
+    type: 'community',
+    status: 'validated',
+    source: 'ai-detected',
+    priority: 'high',
+    supportPercentage: 74,
+    createdAt: '2025-07-02',
+    updatedAt: '2025-07-14',
+    boardStatus: 'in-progress',
+    addedToBoardAt: '2025-07-16T14:00:00Z',
+    assignee: 'City Council Budget Committee',
+    estimatedDuration: '2-3 months',
+    publicNotes: 'Budget proposal submitted to council. Currently reviewing funding options and community impact assessment.',
+  },
+  {
+    id: 'p4',
+    title: 'Sidewalk accessibility issue',
+    description: 'Broken sidewalk making it difficult for wheelchair access',
+    type: 'individual',
+    status: 'in-progress',
+    source: 'website',
+    priority: 'high',
+    constituent: {
+      name: 'Michael Davis',
+      email: 'mdavis@email.com'
+    },
+    timeframe: '4 hours ago',
+    createdAt: '2025-07-20T08:00:00Z',
+    updatedAt: '2025-07-20T08:00:00Z',
+    boardStatus: 'in-progress',
+    addedToBoardAt: '2025-07-20T09:00:00Z',
+    assignee: 'Public Works Department',
+    estimatedDuration: '2-3 weeks',
+    publicNotes: 'Site inspection completed. Contractor scheduled for accessibility improvements.',
+  },
+  // COMPLETED Column
+  {
+    id: 'p5',
+    title: 'Community Pool Reopening',
+    description: 'Reopening community pool facility for summer recreation',
+    type: 'community',
+    status: 'resolved',
+    source: 'ai-detected',
+    priority: 'high',
+    supportPercentage: 70,
+    createdAt: '2025-07-03',
+    updatedAt: '2025-07-16',
+    boardStatus: 'completed',
+    addedToBoardAt: '2025-07-10T10:00:00Z',
+    completedAt: '2025-07-19T16:00:00Z',
+    assignee: 'Parks and Recreation',
+    estimatedDuration: '1 month',
+    actualDuration: '9 days',
+    publicNotes: 'Pool reopened successfully on July 19th. Safety inspections passed, lifeguards hired and trained.',
+  },
+  {
+    id: 'p6',
+    title: 'Noise complaint - construction hours',
+    description: 'Construction starting too early in residential area - RESOLVED',
+    type: 'individual',
+    status: 'resolved',
+    source: 'email',
+    priority: 'medium',
+    constituent: {
+      name: 'Sarah Johnson',
+      email: 'sarah.johnson@email.com'
+    },
+    timeframe: '3 days ago',
+    createdAt: '2025-07-17T08:15:00Z',
+    updatedAt: '2025-07-18T16:45:00Z',
+    boardStatus: 'completed',
+    addedToBoardAt: '2025-07-17T09:00:00Z',
+    completedAt: '2025-07-18T17:00:00Z',
+    assignee: 'Code Enforcement',
+    estimatedDuration: '1 week',
+    actualDuration: '1 day',
+    publicNotes: 'Contacted construction company. New hours policy implemented: no work before 8 AM in residential areas.',
+  },
+];
+
 // Export functions to get data (simulates API calls)
 export const getValidatedIssues = (): Promise<ConstituentIssue[]> => {
   return Promise.resolve(mockValidatedIssues);
@@ -255,4 +376,40 @@ export const getDataSources = (): Promise<DataSource[]> => {
 
 export const getAllIssues = (): Promise<ConstituentIssue[]> => {
   return Promise.resolve([...mockValidatedIssues, ...mockTrendingIssues, ...mockIndividualIssues]);
+};
+
+// Priority board functions
+export const getPriorityItems = (): Promise<PriorityItem[]> => {
+  return Promise.resolve(mockPriorityItems);
+};
+
+export const updatePriorityItemStatus = (itemId: string, newStatus: 'todo' | 'in-progress' | 'completed'): Promise<PriorityItem> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const item = mockPriorityItems.find(p => p.id === itemId);
+      if (item) {
+        item.boardStatus = newStatus;
+        item.updatedAt = new Date().toISOString();
+        if (newStatus === 'completed' && !item.completedAt) {
+          item.completedAt = new Date().toISOString();
+        }
+        resolve(item);
+      }
+    }, 500); // Simulate API delay
+  });
+};
+
+export const addIssueToPriorities = (issue: ConstituentIssue): Promise<PriorityItem> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const priorityItem: PriorityItem = {
+        ...issue,
+        boardStatus: 'todo',
+        addedToBoardAt: new Date().toISOString(),
+        publicNotes: `Added to priorities board from ${issue.source} source.`,
+      };
+      mockPriorityItems.push(priorityItem);
+      resolve(priorityItem);
+    }, 300);
+  });
 };
