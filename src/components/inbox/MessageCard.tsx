@@ -62,100 +62,102 @@ export function MessageCard({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <CardContent className="p-4">
-        <div className="flex items-start gap-4">
-          {/* Selection Checkbox */}
+      <CardContent className="p-3 md:p-4">
+        {/* Mobile Header with checkbox and sender */}
+        <div className="flex items-start gap-3 mb-3">
           {showCheckbox && (
-            <div className="flex items-center pt-1">
+            <div className="flex items-center pt-0.5">
               <Checkbox
                 checked={isSelected}
                 onCheckedChange={(checked) => onSelect?.(message.id, !!checked)}
               />
             </div>
           )}
-
-          {/* Message Content */}
+          
           <div className="flex-1 min-w-0">
-            <div className="flex items-start justify-between gap-4 mb-2">
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1">
-                  <h3 className={`font-semibold truncate ${!message.isRead ? 'text-primary' : 'text-foreground'}`}>
-                    {message.from}
-                  </h3>
-                  {!message.isRead && (
-                    <div className="w-2 h-2 bg-primary rounded-full flex-shrink-0"></div>
-                  )}
-                </div>
-                
-                <p className={`text-sm font-medium mb-1 ${!message.isRead ? 'text-primary' : 'text-foreground'}`}>
-                  {message.subject}
-                </p>
-                
-                <p className="text-sm text-muted-foreground line-clamp-2 mb-2">
-                  {message.preview}
-                </p>
-              </div>
-              
-              {/* Action Buttons */}
-              <div className="flex flex-col gap-2 flex-shrink-0">
-                <Link to={`/inbox/${message.id}`}>
-                  <Button size="sm" variant="outline" className="gap-2">
-                    <MessageSquare className="h-4 w-4" />
-                    View
-                  </Button>
-                </Link>
-                
-                {message.status !== 'issue-created' && (
-                  <Button
-                    size="sm"
-                    onClick={handleCreateIssue}
-                    className="gap-2"
-                  >
-                    <Plus className="h-4 w-4" />
-                    Create Issue
-                  </Button>
-                )}
-              </div>
-            </div>
-            
-            {/* Message Metadata */}
-            <div className="flex flex-wrap items-center gap-2 mb-2">
-              <MessageSourceBadge source={message.source} />
-              <MessageStatusBadge status={message.status} />
-              
-              {message.priority === 'high' && (
-                <Badge variant="outline" className="gap-1 text-xs bg-red-100 text-red-800 border-red-200">
-                  <AlertTriangle className="h-3 w-3" />
-                  High Priority
-                </Badge>
-              )}
-              
-              {message.relatedIssues && message.relatedIssues.length > 0 && (
-                <Badge variant="outline" className="gap-1 text-xs bg-green-100 text-green-800 border-green-200">
-                  <ArrowRight className="h-3 w-3" />
-                  {message.relatedIssues.length} Issue{message.relatedIssues.length !== 1 ? 's' : ''}
-                </Badge>
+            <div className="flex items-center gap-2 mb-1">
+              <h3 className={`font-semibold truncate text-base ${!message.isRead ? 'text-primary' : 'text-foreground'}`}>
+                {message.from}
+              </h3>
+              {!message.isRead && (
+                <div className="w-2 h-2 bg-primary rounded-full flex-shrink-0"></div>
               )}
             </div>
             
-            {/* Contact Info & Time */}
-            <div className="flex items-center gap-4 text-xs text-muted-foreground">
-              <div className="flex items-center gap-1">
-                <Mail className="h-3 w-3" />
-                {message.email}
-              </div>
-              {message.phone && (
-                <div className="flex items-center gap-1">
-                  <Phone className="h-3 w-3" />
-                  {message.phone}
-                </div>
-              )}
-              <div className="flex items-center gap-1">
-                <Clock className="h-3 w-3" />
-                {message.time}
-              </div>
-            </div>
+            <p className={`text-sm font-medium mb-2 ${!message.isRead ? 'text-primary' : 'text-foreground'}`}>
+              {message.subject}
+            </p>
           </div>
+        </div>
+
+        {/* Message preview */}
+        <div className="mb-3">
+          <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
+            {message.preview}
+          </p>
+        </div>
+
+        {/* Badges - Stack on mobile, inline on desktop */}
+        <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2 mb-3">
+          <div className="flex flex-wrap items-center gap-2">
+            <MessageSourceBadge source={message.source} />
+            <MessageStatusBadge status={message.status} />
+          </div>
+          
+          <div className="flex flex-wrap items-center gap-2">
+            {message.priority === 'high' && (
+              <Badge variant="outline" className="gap-1 text-xs bg-red-100 text-red-800 border-red-200 flex-shrink-0">
+                <AlertTriangle className="h-3 w-3" />
+                High Priority
+              </Badge>
+            )}
+            
+            {message.relatedIssues && message.relatedIssues.length > 0 && (
+              <Badge variant="outline" className="gap-1 text-xs bg-green-100 text-green-800 border-green-200 flex-shrink-0">
+                <ArrowRight className="h-3 w-3" />
+                {message.relatedIssues.length} Issue{message.relatedIssues.length !== 1 ? 's' : ''}
+              </Badge>
+            )}
+          </div>
+        </div>
+
+        {/* Contact info - Stack on mobile */}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs text-muted-foreground mb-3">
+          <div className="flex items-center gap-1">
+            <Mail className="h-3 w-3 flex-shrink-0" />
+            <span className="truncate">{message.email}</span>
+          </div>
+          {message.phone && (
+            <div className="flex items-center gap-1">
+              <Phone className="h-3 w-3 flex-shrink-0" />
+              <span>{message.phone}</span>
+            </div>
+          )}
+          <div className="flex items-center gap-1">
+            <Clock className="h-3 w-3 flex-shrink-0" />
+            <span>{message.time}</span>
+          </div>
+        </div>
+
+        {/* Action Buttons - Full width on mobile, side by side on desktop */}
+        <div className="flex flex-col sm:flex-row gap-2">
+          <Link to={`/inbox/${message.id}`} className="flex-1 sm:flex-initial">
+            <Button size="sm" variant="outline" className="w-full sm:w-auto gap-2">
+              <MessageSquare className="h-4 w-4" />
+              View Message
+            </Button>
+          </Link>
+          
+          {message.status !== 'issue-created' && (
+            <Button
+              size="sm"
+              onClick={handleCreateIssue}
+              className="w-full sm:w-auto gap-2"
+            >
+              <Plus className="h-4 w-4" />
+              Create Issue
+            </Button>
+          )}
         </div>
       </CardContent>
     </Card>
