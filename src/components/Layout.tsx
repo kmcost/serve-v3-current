@@ -2,7 +2,7 @@
 import { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { Home, BarChart3, Inbox, AlertTriangle, Database, Kanban, Globe, Menu, X } from 'lucide-react';
+import { Home, BarChart3, Inbox, AlertTriangle, Database, Kanban, Globe, Users, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 
 interface LayoutProps {
@@ -16,11 +16,6 @@ const navigation = [
     icon: Home
   },
   {
-    name: 'Polls & Surveys',
-    href: '/polls',
-    icon: BarChart3
-  },
-  {
     name: 'Inbox',
     href: '/inbox',
     icon: Inbox
@@ -31,9 +26,14 @@ const navigation = [
     icon: AlertTriangle
   },
   {
-    name: 'Data Sources',
-    href: '/data-sources',
-    icon: Database
+    name: 'People',
+    href: '/people',
+    icon: Users
+  },
+  {
+    name: 'Polls',
+    href: '/polls',
+    icon: BarChart3
   },
   {
     name: 'Priorities',
@@ -42,8 +42,13 @@ const navigation = [
   },
   {
     name: 'Website',
-    href: '/website-preview',
+    href: '/website',
     icon: Globe
+  },
+  {
+    name: 'Data Sources',
+    href: '/data-sources',
+    icon: Database
   }
 ];
 

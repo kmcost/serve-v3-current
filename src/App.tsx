@@ -13,6 +13,7 @@ import PollDetail from "./pages/PollDetail";
 import Inbox from "./pages/Inbox";
 import MessageDetail from "./pages/MessageDetail";
 import Issues from "./pages/Issues";
+import People from "./pages/People";
 import DataSources from "./pages/DataSources";
 import Priorities from "./pages/Priorities";
 import WebsitePreview from "./pages/WebsitePreview";
@@ -36,9 +37,10 @@ const App = () => (
             <Route path="/inbox" element={<Inbox />} />
             <Route path="/inbox/:id" element={<MessageDetail />} />
             <Route path="/issues" element={<Issues />} />
+            <Route path="/people" element={<People />} />
             <Route path="/data-sources" element={<DataSources />} />
             <Route path="/priorities" element={<Priorities />} />
-            <Route path="/website-preview" element={<WebsitePreview />} />
+            <Route path="/website" element={<WebsitePreview />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
