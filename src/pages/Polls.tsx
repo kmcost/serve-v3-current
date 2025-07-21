@@ -10,6 +10,7 @@ import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { Search, Filter, Plus, BarChart3, MessageSquare, Clock, Users, CheckCircle, Grid3X3, List, ArrowUpDown } from 'lucide-react';
 import { pollData, Poll } from '@/data/pollData';
 import { StatusBadge } from '@/components/ui/status-badge';
+import { QuestionInput } from '@/components/QuestionInput';
 export default function Polls() {
   const [searchTerm, setSearchTerm] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -118,6 +119,9 @@ export default function Polls() {
         <h1 className="text-2xl font-bold text-foreground">Polls & Surveys</h1>
         <p className="text-muted-foreground">Manage your constituent engagement</p>
       </div>
+
+      {/* Question Input */}
+      <QuestionInput />
 
       {/* Search, Filters, and View Toggle */}
       <div className="flex flex-col gap-4">
