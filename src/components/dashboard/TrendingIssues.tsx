@@ -49,7 +49,7 @@ export function TrendingIssues() {
   };
   return <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-        <CardTitle className="text-xl">New Issues to Validate</CardTitle>
+        <CardTitle className="text-xl">Trending Topics</CardTitle>
         <Link to="/issues" className="text-primary hover:text-primary/80 text-sm font-medium">
           View all
         </Link>
