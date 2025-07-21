@@ -5,7 +5,7 @@ export interface ConstituentIssue {
   description: string;
   type: 'individual' | 'community' | 'trending';
   status: 'new' | 'in-progress' | 'resolved' | 'validated';
-  source: 'website' | 'email' | 'facebook' | 'sms' | 'ai-detected';
+  source: 'website' | 'email' | 'facebook' | 'ai-detected';
   priority: 'low' | 'medium' | 'high';
   supportPercentage?: number; // for validated community issues
   mentions?: number; // for trending issues
@@ -34,7 +34,7 @@ export type BoardColumn = 'todo' | 'in-progress' | 'completed';
 
 export interface DataSource {
   id: string;
-  type: 'website' | 'email' | 'facebook' | 'sms';
+  type: 'website' | 'email' | 'facebook';
   name: string;
   connected: boolean;
   status: 'analyzing' | 'connected' | 'disconnected' | 'error';
@@ -62,7 +62,7 @@ export function isValidConstituentIssue(issue: unknown): issue is ConstituentIss
     typeof (issue as ConstituentIssue).description === 'string' &&
     ['individual', 'community', 'trending'].includes((issue as ConstituentIssue).type) &&
     ['new', 'in-progress', 'resolved', 'validated'].includes((issue as ConstituentIssue).status) &&
-    ['website', 'email', 'facebook', 'sms', 'ai-detected'].includes((issue as ConstituentIssue).source)
+    ['website', 'email', 'facebook', 'ai-detected'].includes((issue as ConstituentIssue).source)
   );
 }
 

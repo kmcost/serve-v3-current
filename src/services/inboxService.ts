@@ -104,7 +104,7 @@ const mockMessages: EnhancedMessage[] = [
     message: 'Could you please consider extending the community center hours? Many working parents can\'t use the facility with current hours.',
     preview: 'Could you please consider extending the community center hours? Many working...',
     time: '1 day ago',
-    source: 'sms',
+    source: 'website',
     status: 'issue-created',
     priority: 'high',
     isRead: true,

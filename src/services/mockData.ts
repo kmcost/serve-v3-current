@@ -24,13 +24,6 @@ export const mockDataSources: DataSource[] = [
     connected: false,
     status: 'disconnected'
   },
-  {
-    id: '4',
-    type: 'sms',
-    name: 'Text Messages',
-    connected: false,
-    status: 'disconnected'
-  }
 ];
 
 export const mockValidatedIssues: ConstituentIssue[] = [
@@ -404,7 +397,7 @@ export const mockAllIssues: ConstituentIssue[] = [
     description: 'Flickering streetlight causing safety concerns for pedestrians',
     type: 'individual',
     status: 'new',
-    source: 'sms',
+    source: 'website',
     priority: 'high',
     constituent: {
       name: 'David Wilson',

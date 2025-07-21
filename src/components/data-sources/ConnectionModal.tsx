@@ -79,8 +79,6 @@ export const ConnectionModal: React.FC<ConnectionModalProps> = ({
         return <Mail className="h-8 w-8 text-blue-600" />;
       case 'facebook':
         return <MessageSquare className="h-8 w-8 text-blue-600" />;
-      case 'sms':
-        return <Phone className="h-8 w-8 text-blue-600" />;
       default:
         return null;
     }
@@ -134,20 +132,6 @@ export const ConnectionModal: React.FC<ConnectionModalProps> = ({
               </div>
             )}
 
-            {dataSource.type === 'sms' && (
-              <div className="space-y-2">
-                <Label htmlFor="phone">Phone Number</Label>
-                <Input
-                  id="phone"
-                  placeholder="+1 (555) 123-4567"
-                  value={formData.phoneNumber}
-                  onChange={(e) => setFormData(prev => ({ ...prev, phoneNumber: e.target.value }))}
-                />
-                <p className="text-xs text-muted-foreground">
-                  Connect your phone number to analyze text message conversations
-                </p>
-              </div>
-            )}
 
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
               <p className="text-blue-800 text-sm">

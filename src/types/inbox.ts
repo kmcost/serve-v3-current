@@ -10,7 +10,7 @@ export interface EnhancedMessage {
   message: string;
   preview: string;
   time: string;
-  source: 'website' | 'email' | 'facebook' | 'sms';
+  source: 'website' | 'email' | 'facebook';
   status: 'unread' | 'read' | 'responded' | 'issue-created' | 'resolved';
   priority: 'low' | 'medium' | 'high';
   isRead: boolean;
