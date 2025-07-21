@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -8,17 +7,14 @@ import { ConnectionModal } from "@/components/data-sources/ConnectionModal";
 import { BarChart3 } from 'lucide-react';
 import { getDataSources } from '@/services/mockData';
 import { DataSource } from '@/types/core';
-
 const DataSources = () => {
   const navigate = useNavigate();
   const [dataSources, setDataSources] = useState<DataSource[]>([]);
   const [selectedSource, setSelectedSource] = useState<DataSource | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   useEffect(() => {
     getDataSources().then(setDataSources);
   }, []);
-
   const handleConnect = (id: string) => {
     const source = dataSources.find(ds => ds.id === id);
     if (source) {
@@ -26,22 +22,20 @@ const DataSources = () => {
       setIsModalOpen(true);
     }
   };
-
   const handleConnectionComplete = (id: string) => {
-    setDataSources(prev => prev.map(ds => 
-      ds.id === id 
-        ? { ...ds, connected: true, status: 'connected' as const, issuesGenerated: 3, lastSync: 'just now' }
-        : ds
-    ));
+    setDataSources(prev => prev.map(ds => ds.id === id ? {
+      ...ds,
+      connected: true,
+      status: 'connected' as const,
+      issuesGenerated: 3,
+      lastSync: 'just now'
+    } : ds));
     setIsModalOpen(false);
     setSelectedSource(null);
   };
-
   const connectedCount = dataSources.filter(ds => ds.connected).length;
   const totalIssues = dataSources.reduce((sum, ds) => sum + (ds.issuesGenerated || 0), 0);
-
-  return (
-    <div className="space-y-6">
+  return <div className="space-y-6">
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-foreground">Data Sources</h1>
@@ -51,9 +45,8 @@ const DataSources = () => {
       </div>
 
       {/* Connection Status Summary */}
-      {connectedCount > 0 && (
-        <Card className="bg-green-50 border-green-200">
-          <CardContent className="pt-6">
+      {connectedCount > 0 && <Card className="bg-green-50 border-green-200">
+          <CardContent className="pt-6 py-[12px]">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex items-center space-x-3">
                 <div>
@@ -65,33 +58,21 @@ const DataSources = () => {
                   </p>
                 </div>
               </div>
-              <Button
-                onClick={() => navigate('/')}
-                className="bg-green-600 hover:bg-green-700 w-full sm:w-auto"
-                size="sm"
-              >
+              <Button onClick={() => navigate('/')} className="bg-green-600 hover:bg-green-700 w-full sm:w-auto" size="sm">
                 <BarChart3 className="h-4 w-4 mr-2" />
                 View Dashboard
               </Button>
             </div>
           </CardContent>
-        </Card>
-      )}
+        </Card>}
 
       {/* Data Sources Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {dataSources.map((dataSource) => (
-          <DataSourceCard
-            key={dataSource.id}
-            dataSource={dataSource}
-            onConnect={handleConnect}
-          />
-        ))}
+        {dataSources.map(dataSource => <DataSourceCard key={dataSource.id} dataSource={dataSource} onConnect={handleConnect} />)}
       </div>
 
       {/* Getting Started Section */}
-      {connectedCount === 0 && (
-        <Card className="bg-blue-50 border-blue-200">
+      {connectedCount === 0 && <Card className="bg-blue-50 border-blue-200">
           <CardHeader>
             <CardTitle className="text-blue-800">Getting Started</CardTitle>
           </CardHeader>
@@ -113,20 +94,12 @@ const DataSources = () => {
               </div>
             </div>
           </CardContent>
-        </Card>
-      )}
+        </Card>}
 
-      <ConnectionModal
-        isOpen={isModalOpen}
-        onClose={() => {
-          setIsModalOpen(false);
-          setSelectedSource(null);
-        }}
-        dataSource={selectedSource}
-        onConnectionComplete={handleConnectionComplete}
-      />
-    </div>
-  );
+      <ConnectionModal isOpen={isModalOpen} onClose={() => {
+      setIsModalOpen(false);
+      setSelectedSource(null);
+    }} dataSource={selectedSource} onConnectionComplete={handleConnectionComplete} />
+    </div>;
 };
-
 export default DataSources;
