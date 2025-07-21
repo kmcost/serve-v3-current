@@ -1,7 +1,9 @@
+
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { ArrowRight } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 
 interface QuestionInputProps {
   placeholder?: string;
@@ -15,6 +17,7 @@ export function QuestionInput({
   showSuggestions = true
 }: QuestionInputProps) {
   const [question, setQuestion] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleCreatePoll = () => {
     if (question.trim()) {
@@ -41,31 +44,45 @@ export function QuestionInput({
         <ArrowRight className="h-4 w-4" />
       </Button>
       
-      {/* Suggested Questions */}
+      {/* Collapsible Suggested Questions */}
       {showSuggestions && (
-        <div className="space-y-3">
-          <p className="text-sm text-muted-foreground">Suggested questions:</p>
-          <div className="space-y-2">
-            <button 
-              onClick={() => setQuestion("What issues do you as a constituent care about most?")}
-              className="w-full p-3 text-left text-sm bg-card border rounded-lg hover:bg-accent transition-colors"
+        <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+          <CollapsibleTrigger asChild>
+            <Button 
+              variant="ghost" 
+              className="w-full gap-2 text-sm text-muted-foreground hover:text-foreground"
             >
-              What issues do you as a constituent care about most?
-            </button>
-            <button 
-              onClick={() => setQuestion("Would you support increased funding for our local library?")}
-              className="w-full p-3 text-left text-sm bg-card border rounded-lg hover:bg-accent transition-colors"
-            >
-              Would you support increased funding for our local library?
-            </button>
-            <button 
-              onClick={() => setQuestion("What programs or services would you like to see offered in our schools?")}
-              className="w-full p-3 text-left text-sm bg-card border rounded-lg hover:bg-accent transition-colors"
-            >
-              What programs or services would you like to see offered in our schools?
-            </button>
-          </div>
-        </div>
+              Use Suggested Questions
+              <ChevronDown 
+                className={`h-4 w-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} 
+              />
+            </Button>
+          </CollapsibleTrigger>
+          
+          <CollapsibleContent className="space-y-3 animate-accordion-down">
+            <p className="text-sm text-muted-foreground">Suggested questions:</p>
+            <div className="space-y-2">
+              <button 
+                onClick={() => setQuestion("What issues do you as a constituent care about most?")}
+                className="w-full p-3 text-left text-sm bg-card border rounded-lg hover:bg-accent transition-colors"
+              >
+                What issues do you as a constituent care about most?
+              </button>
+              <button 
+                onClick={() => setQuestion("Would you support increased funding for our local library?")}
+                className="w-full p-3 text-left text-sm bg-card border rounded-lg hover:bg-accent transition-colors"
+              >
+                Would you support increased funding for our local library?
+              </button>
+              <button 
+                onClick={() => setQuestion("What programs or services would you like to see offered in our schools?")}
+                className="w-full p-3 text-left text-sm bg-card border rounded-lg hover:bg-accent transition-colors"
+              >
+                What programs or services would you like to see offered in our schools?
+              </button>
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
       )}
     </div>
   );
