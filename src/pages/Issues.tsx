@@ -184,24 +184,27 @@ export default function Issues() {
             {stats.total} total issues • {stats.newIssues} new • {stats.inProgress} in progress • {stats.resolved} resolved
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row gap-2">
           <Button
             variant="outline"
             onClick={() => setBulkSelectMode(!bulkSelectMode)}
-            className="gap-2"
+            className="gap-2 text-xs sm:text-sm"
           >
             <Settings className="h-4 w-4" />
-            {bulkSelectMode ? 'Cancel Selection' : 'Select Multiple'}
+            <span className="hidden xs:inline">{bulkSelectMode ? 'Cancel Selection' : 'Select Multiple'}</span>
+            <span className="xs:hidden">{bulkSelectMode ? 'Cancel' : 'Select'}</span>
           </Button>
           <Link to="/priorities">
-            <Button variant="outline" className="gap-2">
+            <Button variant="outline" className="gap-2 text-xs sm:text-sm">
               <BarChart3 className="h-4 w-4" />
-              View Priorities
+              <span className="hidden xs:inline">View Priorities</span>
+              <span className="xs:hidden">Priorities</span>
             </Button>
           </Link>
-          <Button className="gap-2">
+          <Button className="gap-2 text-xs sm:text-sm">
             <Plus className="h-4 w-4" />
-            Create Issue
+            <span className="hidden xs:inline">Create Issue</span>
+            <span className="xs:hidden">Create</span>
           </Button>
         </div>
       </div>
