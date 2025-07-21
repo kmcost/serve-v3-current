@@ -38,7 +38,7 @@ export function QuestionInput({
           </CollapsibleTrigger>
           
           <CollapsibleContent className="space-y-3 animate-accordion-down">
-            <p className="text-sm text-muted-foreground">Suggested questions:</p>
+            
             <div className="space-y-2">
               <button onClick={() => setQuestion("What issues do you as a constituent care about most?")} className="w-full p-3 text-left text-sm bg-card border rounded-lg hover:bg-accent transition-colors">
                 What issues do you as a constituent care about most?
