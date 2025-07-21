@@ -74,28 +74,31 @@ export function BulkMessageActions({
   }
 
   return (
-    <div className="sticky top-4 z-10 bg-background border rounded-lg p-4 shadow-lg">
-      <div className="flex items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <Badge variant="default" className="px-3 py-1">
+    <div className="sticky top-4 z-10 bg-background border rounded-lg shadow-lg">
+      {/* Mobile-first layout */}
+      <div className="p-3 sm:p-4">
+        {/* Header with selection count and clear */}
+        <div className="flex items-center justify-between mb-3 sm:mb-4">
+          <Badge variant="default" className="px-3 py-2 text-sm font-medium">
             {selectedMessages.length} selected
           </Badge>
           <Button
             variant="ghost"
             size="sm"
             onClick={onClearSelection}
-            className="gap-2"
+            className="gap-2 h-9 px-3"
           >
             <X className="h-4 w-4" />
-            Clear
+            <span className="hidden xs:inline">Clear</span>
           </Button>
         </div>
         
-        <div className="flex items-center gap-2 flex-wrap">
+        {/* Action buttons - mobile-first grid layout */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-wrap gap-2 lg:gap-3">
           <Button
             onClick={handleBulkCreateIssues}
             disabled={isLoading}
-            className="gap-2"
+            className="gap-2 h-11 sm:h-10 w-full sm:w-auto justify-center text-sm font-medium"
           >
             <Plus className="h-4 w-4" />
             Create Issues
@@ -105,30 +108,30 @@ export function BulkMessageActions({
             variant="outline"
             onClick={() => handleStatusUpdate('read')}
             disabled={isLoading}
-            className="gap-2"
+            className="gap-2 h-11 sm:h-10 w-full sm:w-auto justify-center text-sm"
           >
             <Eye className="h-4 w-4" />
-            Mark as Read
+            <span className="hidden xs:inline">Mark as</span> Read
           </Button>
           
           <Button
             variant="outline"
             onClick={() => handleStatusUpdate('responded')}
             disabled={isLoading}
-            className="gap-2"
+            className="gap-2 h-11 sm:h-10 w-full sm:w-auto justify-center text-sm"
           >
             <MessageCircle className="h-4 w-4" />
-            Mark as Responded
+            <span className="hidden xs:inline">Mark as</span> Responded
           </Button>
           
           <Button
             variant="outline"
             onClick={() => handleStatusUpdate('resolved')}
             disabled={isLoading}
-            className="gap-2"
+            className="gap-2 h-11 sm:h-10 w-full sm:w-auto justify-center text-sm"
           >
             <CheckCircle className="h-4 w-4" />
-            Mark as Resolved
+            <span className="hidden xs:inline">Mark as</span> Resolved
           </Button>
         </div>
       </div>
