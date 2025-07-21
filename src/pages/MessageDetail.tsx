@@ -131,19 +131,19 @@ export default function MessageDetail() {
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       {/* Header */}
-      <div className="flex items-center gap-4">
+      <div className="space-y-4">
         <Button 
           variant="ghost" 
           size="sm" 
           onClick={() => navigate('/inbox')}
-          className="gap-2"
+          className="gap-2 self-start"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to Inbox
         </Button>
         <div>
-          <h1 className="text-2xl font-bold text-foreground">{message.subject}</h1>
-          <p className="text-muted-foreground">From {message.from} • {message.time}</p>
+          <h1 className="text-xl sm:text-2xl font-bold text-foreground leading-tight">{message.subject}</h1>
+          <p className="text-muted-foreground text-sm sm:text-base mt-1">From {message.from} • {message.time}</p>
         </div>
       </div>
 
