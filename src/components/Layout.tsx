@@ -1,4 +1,3 @@
-
 import { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -54,7 +53,7 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <div className="min-h-screen bg-slate-100">
       {/* Mobile menu */}
-      <div className={cn("fixed inset-0 z-50 lg:hidden", mobileMenuOpen ? "block" : "hidden")}>
+      <div className={cn("fixed inset-0 z-60 lg:hidden", mobileMenuOpen ? "block" : "hidden")}>
         <div className="fixed inset-0 bg-black/20" onClick={() => setMobileMenuOpen(false)} />
         <div className="fixed inset-y-0 left-0 w-64 bg-white shadow-xl">
           <div className="flex items-center justify-between p-4 border-b">
