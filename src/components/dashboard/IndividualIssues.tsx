@@ -85,7 +85,7 @@ export function IndividualIssues() {
               <p className="text-sm text-muted-foreground leading-relaxed">
                 {issue.description}
               </p>
-              <Link to={`/inbox/${issue.id}`}>
+              <Link to={`/inbox/${issue.id}`} className="mt-4 block">
                 <Button variant="outline" size="sm" className="w-full">
                   Respond
                 </Button>
