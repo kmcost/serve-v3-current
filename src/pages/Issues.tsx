@@ -1,152 +1,178 @@
-import { useState } from 'react';
+
+import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
+import { Card, CardContent } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { 
-  Search, 
   Plus, 
-  MessageSquare, 
   BarChart3, 
-  Users,
-  Calendar,
   AlertTriangle,
   CheckCircle,
-  Clock
+  Clock,
+  TrendingUp,
+  Users,
+  MessageSquare,
+  Settings
 } from 'lucide-react';
-
-const issuesData = [
-  {
-    id: 1,
-    title: "Parking enforcement downtown",
-    description: "Concerns about aggressive parking enforcement and meter hour extensions in the downtown business district.",
-    status: "in_progress",
-    createdAt: "2 weeks ago",
-    updatedAt: "3 days ago",
-    messageCount: 15,
-    pollCount: 1,
-    surveyCount: 0,
-    interestedCount: 28
-  },
-  {
-    id: 2,
-    title: "Street lighting on Oak Ave",
-    description: "Multiple reports of broken or inadequate street lighting along Oak Avenue between 3rd and 8th streets.",
-    status: "open",
-    createdAt: "1 week ago",
-    updatedAt: "2 days ago",
-    messageCount: 8,
-    pollCount: 0,
-    surveyCount: 1,
-    interestedCount: 12
-  },
-  {
-    id: 3,
-    title: "Dog park funding",
-    description: "Community requests for dedicated dog park space and funding allocation in the district.",
-    status: "in_progress",
-    createdAt: "3 weeks ago",
-    updatedAt: "1 day ago",
-    messageCount: 23,
-    pollCount: 3,
-    surveyCount: 1,
-    interestedCount: 45
-  },
-  {
-    id: 4,
-    title: "Community pool hours",
-    description: "Requests to extend community pool operating hours during summer months.",
-    status: "resolved",
-    createdAt: "1 month ago",
-    updatedAt: "1 week ago",
-    messageCount: 12,
-    pollCount: 2,
-    surveyCount: 0,
-    interestedCount: 32
-  },
-  {
-    id: 5,
-    title: "Noise ordinance enforcement",
-    description: "Complaints about construction noise violations and inconsistent enforcement of noise ordinances.",
-    status: "open",
-    createdAt: "5 days ago",
-    updatedAt: "1 day ago",
-    messageCount: 6,
-    pollCount: 0,
-    surveyCount: 0,
-    interestedCount: 9
-  },
-  {
-    id: 6,
-    title: "Bike lane maintenance",
-    description: "Safety concerns about potholes and debris in bike lanes throughout the district.",
-    status: "in_progress",
-    createdAt: "10 days ago",
-    updatedAt: "4 days ago",
-    messageCount: 11,
-    pollCount: 1,
-    surveyCount: 0,
-    interestedCount: 16
-  },
-  {
-    id: 7,
-    title: "Public transportation access",
-    description: "Requests for improved bus stop amenities and schedule reliability.",
-    status: "open",
-    createdAt: "6 days ago",
-    updatedAt: "2 days ago",
-    messageCount: 4,
-    pollCount: 0,
-    surveyCount: 0,
-    interestedCount: 7
-  }
-];
+import { IssueCard } from '@/components/issues/IssueCard';
+import { IssueFilters } from '@/components/issues/IssueFilters';
+import { BulkActions } from '@/components/issues/BulkActions';
+import { getAllIssuesEnhanced, moveIssuesToPriorities } from '@/services/mockData';
+import { ConstituentIssue } from '@/types/core';
+import { toast } from '@/hooks/use-toast';
 
 export default function Issues() {
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedSources, setSelectedSources] = useState<string[]>([]);
+  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
+  const [selectedPriorities, setSelectedPriorities] = useState<string[]>([]);
+  const [selectedIssues, setSelectedIssues] = useState<string[]>([]);
+  const [bulkSelectMode, setBulkSelectMode] = useState(false);
 
-  const filteredIssues = issuesData.filter(issue =>
-    issue.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    issue.description.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const { data: issues = [], isLoading, error, refetch } = useQuery({
+    queryKey: ['all-issues'],
+    queryFn: getAllIssuesEnhanced,
+  });
 
-  const getStatusInfo = (status: string) => {
-    switch (status) {
-      case 'open':
-        return { 
-          label: 'Open', 
-          variant: 'outline' as const, 
-          icon: AlertTriangle, 
-          color: 'text-warning' 
-        };
-      case 'in_progress':
-        return { 
-          label: 'In Progress', 
-          variant: 'default' as const, 
-          icon: Clock, 
-          color: 'text-primary' 
-        };
-      case 'resolved':
-        return { 
-          label: 'Resolved', 
-          variant: 'secondary' as const, 
-          icon: CheckCircle, 
-          color: 'text-success' 
-        };
-      default:
-        return { 
-          label: 'Unknown', 
-          variant: 'outline' as const, 
-          icon: AlertTriangle, 
-          color: 'text-muted-foreground' 
-        };
-    }
+  // Filter issues based on search and filters
+  const filteredIssues = useMemo(() => {
+    return issues.filter(issue => {
+      // Search filter
+      if (searchTerm) {
+        const searchLower = searchTerm.toLowerCase();
+        const matchesSearch = 
+          issue.title.toLowerCase().includes(searchLower) ||
+          issue.description.toLowerCase().includes(searchLower) ||
+          issue.constituent?.name.toLowerCase().includes(searchLower) ||
+          issue.constituent?.email.toLowerCase().includes(searchLower);
+        if (!matchesSearch) return false;
+      }
+
+      // Source filter
+      if (selectedSources.length > 0 && !selectedSources.includes(issue.source)) {
+        return false;
+      }
+
+      // Status filter
+      if (selectedStatuses.length > 0 && !selectedStatuses.includes(issue.status)) {
+        return false;
+      }
+
+      // Priority filter
+      if (selectedPriorities.length > 0 && !selectedPriorities.includes(issue.priority)) {
+        return false;
+      }
+
+      return true;
+    });
+  }, [issues, searchTerm, selectedSources, selectedStatuses, selectedPriorities]);
+
+  // Calculate statistics
+  const stats = useMemo(() => {
+    const total = issues.length;
+    const newIssues = issues.filter(i => i.status === 'new').length;
+    const inProgress = issues.filter(i => i.status === 'in-progress').length;
+    const resolved = issues.filter(i => i.status === 'resolved').length;
+    const validated = issues.filter(i => i.status === 'validated').length;
+    
+    const highPriority = issues.filter(i => i.priority === 'high').length;
+    const communityIssues = issues.filter(i => i.type === 'community').length;
+    const individualIssues = issues.filter(i => i.type === 'individual').length;
+    
+    return {
+      total,
+      newIssues,
+      inProgress,
+      resolved,
+      validated,
+      highPriority,
+      communityIssues,
+      individualIssues
+    };
+  }, [issues]);
+
+  const handleSelectIssue = (issueId: string, selected: boolean) => {
+    setSelectedIssues(prev => 
+      selected 
+        ? [...prev, issueId]
+        : prev.filter(id => id !== issueId)
+    );
   };
 
-  const activeIssues = issuesData.filter(i => i.status !== 'resolved').length;
-  const resolvedIssues = issuesData.filter(i => i.status === 'resolved').length;
-  const totalMessages = issuesData.reduce((sum, issue) => sum + issue.messageCount, 0);
+  const handleSelectAll = (checked: boolean) => {
+    setSelectedIssues(checked ? filteredIssues.map(i => i.id) : []);
+  };
+
+  const handleClearSelection = () => {
+    setSelectedIssues([]);
+    setBulkSelectMode(false);
+  };
+
+  const handleMoveToPriorities = async (issueIds: string[]) => {
+    await moveIssuesToPriorities(issueIds);
+    refetch();
+  };
+
+  const handleStatusChange = async (issueIds: string[], status: string) => {
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 500));
+    refetch();
+  };
+
+  const handleSingleMoveToPriorities = (issueId: string) => {
+    handleMoveToPriorities([issueId]);
+  };
+
+  if (isLoading) {
+    return (
+      <div className="space-y-6">
+        <div className="animate-pulse">
+          <div className="h-8 bg-muted rounded w-48 mb-2"></div>
+          <div className="h-4 bg-muted rounded w-64"></div>
+        </div>
+        <div className="grid gap-4 md:grid-cols-4">
+          {Array.from({ length: 4 }, (_, i) => (
+            <Card key={i} className="animate-pulse">
+              <CardContent className="p-4">
+                <div className="h-16 bg-muted rounded"></div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+        <div className="space-y-4">
+          {Array.from({ length: 6 }, (_, i) => (
+            <Card key={i} className="animate-pulse">
+              <CardContent className="p-6">
+                <div className="space-y-3">
+                  <div className="h-6 bg-muted rounded w-3/4"></div>
+                  <div className="h-4 bg-muted rounded w-full"></div>
+                  <div className="h-4 bg-muted rounded w-2/3"></div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-12">
+        <AlertTriangle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+        <p className="text-lg font-medium text-muted-foreground">Unable to load issues</p>
+        <p className="text-sm text-muted-foreground mb-4">
+          There was an error loading the issues data.
+        </p>
+        <Button onClick={() => refetch()}>
+          Try Again
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -155,26 +181,42 @@ export default function Issues() {
         <div>
           <h1 className="text-2xl font-bold text-foreground">Issues</h1>
           <p className="text-muted-foreground">
-            {activeIssues} active • {resolvedIssues} resolved • {totalMessages} total messages
+            {stats.total} total issues • {stats.newIssues} new • {stats.inProgress} in progress • {stats.resolved} resolved
           </p>
         </div>
-        <Button className="gap-2">
-          <Plus className="h-4 w-4" />
-          Create Issue
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            variant="outline"
+            onClick={() => setBulkSelectMode(!bulkSelectMode)}
+            className="gap-2"
+          >
+            <Settings className="h-4 w-4" />
+            {bulkSelectMode ? 'Cancel Selection' : 'Select Multiple'}
+          </Button>
+          <Link to="/priorities">
+            <Button variant="outline" className="gap-2">
+              <BarChart3 className="h-4 w-4" />
+              View Priorities
+            </Button>
+          </Link>
+          <Button className="gap-2">
+            <Plus className="h-4 w-4" />
+            Create Issue
+          </Button>
+        </div>
       </div>
 
       {/* Quick Stats */}
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-4">
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-warning/10 rounded-lg">
-                <AlertTriangle className="h-5 w-5 text-warning" />
+              <div className="p-2 bg-yellow-100 rounded-lg">
+                <AlertTriangle className="h-5 w-5 text-yellow-600" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Open Issues</p>
-                <p className="text-2xl font-bold">{issuesData.filter(i => i.status === 'open').length}</p>
+                <p className="text-sm text-muted-foreground">New Issues</p>
+                <p className="text-2xl font-bold">{stats.newIssues}</p>
               </div>
             </div>
           </CardContent>
@@ -183,12 +225,12 @@ export default function Issues() {
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-primary/10 rounded-lg">
-                <Clock className="h-5 w-5 text-primary" />
+              <div className="p-2 bg-blue-100 rounded-lg">
+                <Clock className="h-5 w-5 text-blue-600" />
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">In Progress</p>
-                <p className="text-2xl font-bold">{issuesData.filter(i => i.status === 'in_progress').length}</p>
+                <p className="text-2xl font-bold">{stats.inProgress}</p>
               </div>
             </div>
           </CardContent>
@@ -197,120 +239,102 @@ export default function Issues() {
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-success/10 rounded-lg">
-                <CheckCircle className="h-5 w-5 text-success" />
+              <div className="p-2 bg-red-100 rounded-lg">
+                <TrendingUp className="h-5 w-5 text-red-600" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">High Priority</p>
+                <p className="text-2xl font-bold">{stats.highPriority}</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        
+        <Card>
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-green-100 rounded-lg">
+                <CheckCircle className="h-5 w-5 text-green-600" />
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Resolved</p>
-                <p className="text-2xl font-bold">{resolvedIssues}</p>
+                <p className="text-2xl font-bold">{stats.resolved}</p>
               </div>
             </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Search */}
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-        <Input
-          placeholder="Search issues..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="pl-10"
-        />
-      </div>
+      {/* Filters */}
+      <IssueFilters
+        searchTerm={searchTerm}
+        onSearchChange={setSearchTerm}
+        selectedSources={selectedSources}
+        onSourcesChange={setSelectedSources}
+        selectedStatuses={selectedStatuses}
+        onStatusesChange={setSelectedStatuses}
+        selectedPriorities={selectedPriorities}
+        onPrioritiesChange={setSelectedPriorities}
+        totalIssues={issues.length}
+        filteredCount={filteredIssues.length}
+      />
+
+      {/* Bulk Actions */}
+      <BulkActions
+        selectedIssues={selectedIssues}
+        onClearSelection={handleClearSelection}
+        onMoveToPriorities={handleMoveToPriorities}
+        onStatusChange={handleStatusChange}
+      />
+
+      {/* Bulk Select All */}
+      {bulkSelectMode && filteredIssues.length > 0 && (
+        <Card className="bg-muted/30">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3">
+              <Checkbox
+                checked={selectedIssues.length === filteredIssues.length}
+                onCheckedChange={handleSelectAll}
+              />
+              <span className="text-sm font-medium">
+                Select all {filteredIssues.length} issues
+              </span>
+              {selectedIssues.length > 0 && (
+                <Badge variant="secondary">
+                  {selectedIssues.length} selected
+                </Badge>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Issues List */}
       <div className="space-y-4">
-        {filteredIssues.map((issue) => {
-          const statusInfo = getStatusInfo(issue.status);
-          const StatusIcon = statusInfo.icon;
-          
-          return (
-            <Card key={issue.id} className="hover:shadow-md transition-shadow">
-              <CardHeader className="pb-3">
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <CardTitle className="text-lg font-semibold">{issue.title}</CardTitle>
-                      <Badge variant={statusInfo.variant} className="gap-1">
-                        <StatusIcon className="h-3 w-3" />
-                        {statusInfo.label}
-                      </Badge>
-                    </div>
-                    <p className="text-sm text-muted-foreground line-clamp-2">
-                      {issue.description}
-                    </p>
-                  </div>
-                </div>
-              </CardHeader>
-              
-              <CardContent className="space-y-4">
-                <div className="flex items-center gap-6 text-sm text-muted-foreground">
-                  <div className="flex items-center gap-1">
-                    <Calendar className="h-4 w-4" />
-                    <span>Created {issue.createdAt}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Calendar className="h-4 w-4" />
-                    <span>Updated {issue.updatedAt}</span>
-                  </div>
-                </div>
-                
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-3 border-t">
-                  <div className="text-center">
-                    <div className="flex items-center justify-center gap-1 text-sm text-muted-foreground mb-1">
-                      <MessageSquare className="h-4 w-4" />
-                      Messages
-                    </div>
-                    <p className="text-lg font-semibold">{issue.messageCount}</p>
-                  </div>
-                  
-                  <div className="text-center">
-                    <div className="flex items-center justify-center gap-1 text-sm text-muted-foreground mb-1">
-                      <BarChart3 className="h-4 w-4" />
-                      Polls
-                    </div>
-                    <p className="text-lg font-semibold">{issue.pollCount}</p>
-                  </div>
-                  
-                  <div className="text-center">
-                    <div className="flex items-center justify-center gap-1 text-sm text-muted-foreground mb-1">
-                      <MessageSquare className="h-4 w-4" />
-                      Surveys
-                    </div>
-                    <p className="text-lg font-semibold">{issue.surveyCount}</p>
-                  </div>
-                  
-                  <div className="text-center">
-                    <div className="flex items-center justify-center gap-1 text-sm text-muted-foreground mb-1">
-                      <Users className="h-4 w-4" />
-                      Interested
-                    </div>
-                    <p className="text-lg font-semibold">{issue.interestedCount}</p>
-                  </div>
-                </div>
-                
-                <div className="flex justify-end">
-                  <Link to={`/issues/${issue.id}`}>
-                    <Button variant="outline">
-                      View Details
-                    </Button>
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })}
+        {filteredIssues.map((issue) => (
+          <IssueCard
+            key={issue.id}
+            issue={issue}
+            isSelected={selectedIssues.includes(issue.id)}
+            onSelect={handleSelectIssue}
+            onMoveToPriorities={handleSingleMoveToPriorities}
+            showCheckbox={bulkSelectMode}
+          />
+        ))}
       </div>
 
-      {filteredIssues.length === 0 && (
+      {/* No Results */}
+      {filteredIssues.length === 0 && !isLoading && (
         <div className="text-center py-12">
           <AlertTriangle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
           <p className="text-lg font-medium text-muted-foreground">No issues found</p>
-          <p className="text-sm text-muted-foreground">
-            Try adjusting your search or create a new issue.
+          <p className="text-sm text-muted-foreground mb-4">
+            Try adjusting your search or filters, or create a new issue.
           </p>
+          <Button className="gap-2">
+            <Plus className="h-4 w-4" />
+            Create New Issue
+          </Button>
         </div>
       )}
     </div>

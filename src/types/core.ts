@@ -10,6 +10,7 @@ export interface ConstituentIssue {
   supportPercentage?: number; // for validated community issues
   mentions?: number; // for trending issues
   timeframe?: string; // "this week", "2 hours ago", etc.
+  relatedIssues?: string[]; // IDs of related issues
   constituent?: {
     name: string;
     email: string;

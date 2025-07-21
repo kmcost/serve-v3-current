@@ -357,6 +357,152 @@ export const mockPriorityItems: PriorityItem[] = [
   },
 ];
 
+// Enhanced comprehensive issues data for the Issues page
+export const mockAllIssues: ConstituentIssue[] = [
+  // From validated issues
+  ...mockValidatedIssues,
+  
+  // From trending issues  
+  ...mockTrendingIssues,
+  
+  // From individual issues
+  ...mockIndividualIssues,
+  
+  // Additional issues from different sources to demonstrate scale and variety
+  {
+    id: 'e1',
+    title: 'Parking meter hours extension downtown',
+    description: 'Business owners requesting extended parking meter hours to support evening customers',
+    type: 'community',
+    status: 'new',
+    source: 'email',
+    priority: 'medium',
+    supportPercentage: 45,
+    createdAt: '2025-07-15T09:30:00Z',
+    updatedAt: '2025-07-15T09:30:00Z',
+    relatedIssues: ['1'] // Related to parking enforcement issue
+  },
+  
+  {
+    id: 'e2',
+    title: 'Downtown parking availability concerns',
+    description: 'Multiple reports of insufficient parking spaces during peak hours',
+    type: 'trending',
+    status: 'new',
+    source: 'facebook',
+    priority: 'medium',
+    mentions: 7,
+    timeframe: 'past week',
+    createdAt: '2025-07-14T14:15:00Z',
+    updatedAt: '2025-07-19T10:30:00Z',
+    relatedIssues: ['1', 'e1'] // Related to other parking issues
+  },
+  
+  {
+    id: 'e3',
+    title: 'Street light maintenance on Pine St',
+    description: 'Flickering streetlight causing safety concerns for pedestrians',
+    type: 'individual',
+    status: 'new',
+    source: 'sms',
+    priority: 'high',
+    constituent: {
+      name: 'David Wilson',
+      email: 'david.w@email.com',
+      phone: '555-0198'
+    },
+    timeframe: '1 hour ago',
+    createdAt: '2025-07-20T11:00:00Z',
+    updatedAt: '2025-07-20T11:00:00Z',
+    relatedIssues: ['2'] // Related to street lighting issue
+  },
+  
+  {
+    id: 'e4',
+    title: 'Community garden space request',
+    description: 'Residents interested in creating community garden in vacant lot on Maple Ave',
+    type: 'community',
+    status: 'new',
+    source: 'website',
+    priority: 'low',
+    supportPercentage: 35,
+    createdAt: '2025-07-12T16:20:00Z',
+    updatedAt: '2025-07-18T09:45:00Z'
+  },
+  
+  {
+    id: 'e5',
+    title: 'Youth basketball court improvements',
+    description: 'Request for resurfacing and new hoops at Jefferson Park basketball court',
+    type: 'individual',
+    status: 'new',
+    source: 'website',
+    priority: 'medium',
+    constituent: {
+      name: 'Carlos Rodriguez',
+      email: 'carlos.r@email.com'
+    },
+    timeframe: '2 days ago',
+    createdAt: '2025-07-18T13:30:00Z',
+    updatedAt: '2025-07-18T13:30:00Z',
+    relatedIssues: ['3'] // Related to youth sports/recreation
+  },
+  
+  {
+    id: 'e6',
+    title: 'Crosswalk safety improvements',
+    description: 'Petition for better crosswalk lighting and signage at Main St intersection',
+    type: 'trending',
+    status: 'new',
+    source: 'ai-detected',
+    priority: 'high',
+    mentions: 9,
+    timeframe: 'this week',
+    createdAt: '2025-07-17T08:45:00Z',
+    updatedAt: '2025-07-20T07:30:00Z'
+  },
+  
+  {
+    id: 'e7',
+    title: 'Library WiFi connectivity issues',
+    description: 'Patrons reporting slow or unreliable internet access at main library branch',
+    type: 'individual',
+    status: 'in-progress',
+    source: 'email',
+    priority: 'medium',
+    constituent: {
+      name: 'Jennifer Lee',
+      email: 'j.lee@email.com'
+    },
+    timeframe: '4 days ago',
+    createdAt: '2025-07-16T10:15:00Z',
+    updatedAt: '2025-07-19T14:20:00Z'
+  },
+  
+  {
+    id: 'e8',
+    title: 'Snow removal equipment upgrade',
+    description: 'Community requests for better snow removal response and equipment',
+    type: 'community',
+    status: 'new',
+    source: 'facebook',
+    priority: 'low',
+    supportPercentage: 28,
+    createdAt: '2025-07-10T11:30:00Z',
+    updatedAt: '2025-07-15T16:45:00Z'
+  }
+];
+
+// Group issues by similarity (keyword-based grouping)
+export const issueGroups = {
+  'parking': ['1', 'e1', 'e2'],
+  'lighting': ['2', 'e3'],
+  'recreation': ['3', 'e5'],
+  'safety': ['e6'],
+  'infrastructure': ['4', '6', 'e7'],
+  'community-services': ['5', 'e4', 'e8']
+};
+
 // Export functions to get data (simulates API calls)
 export const getValidatedIssues = (): Promise<ConstituentIssue[]> => {
   return Promise.resolve(mockValidatedIssues);
@@ -411,5 +557,63 @@ export const addIssueToPriorities = (issue: ConstituentIssue): Promise<PriorityI
       mockPriorityItems.push(priorityItem);
       resolve(priorityItem);
     }, 300);
+  });
+};
+
+// Enhanced function to get all issues with grouping information
+export const getAllIssuesEnhanced = (): Promise<ConstituentIssue[]> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(mockAllIssues);
+    }, 300); // Simulate API delay
+  });
+};
+
+// Function to get issues by source
+export const getIssuesBySource = (source: string): Promise<ConstituentIssue[]> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const filtered = source === 'all' 
+        ? mockAllIssues 
+        : mockAllIssues.filter(issue => issue.source === source);
+      resolve(filtered);
+    }, 200);
+  });
+};
+
+// Function to get issues by status
+export const getIssuesByStatus = (status: string): Promise<ConstituentIssue[]> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const filtered = status === 'all' 
+        ? mockAllIssues 
+        : mockAllIssues.filter(issue => issue.status === status);
+      resolve(filtered);
+    }, 200);
+  });
+};
+
+// Function to get related issues for an issue
+export const getRelatedIssues = (issueId: string): ConstituentIssue[] => {
+  const issue = mockAllIssues.find(i => i.id === issueId);
+  if (!issue?.relatedIssues) return [];
+  
+  return mockAllIssues.filter(i => issue.relatedIssues?.includes(i.id));
+};
+
+// Function to move issues to priorities board
+export const moveIssuesToPriorities = (issueIds: string[]): Promise<void> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      // In a real app, this would update the backend
+      // For now, we'll just simulate the operation
+      issueIds.forEach(id => {
+        const issue = mockAllIssues.find(i => i.id === id);
+        if (issue) {
+          issue.status = 'in-progress'; // Mark as moved to priorities
+        }
+      });
+      resolve();
+    }, 500);
   });
 };
