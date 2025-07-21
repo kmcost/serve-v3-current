@@ -308,27 +308,6 @@ export default function Inbox() {
         onBulkStatusUpdate={handleBulkStatusUpdate}
       />
 
-      {/* Select All - Always visible when there are messages */}
-      {filteredMessages.length > 0 && (
-        <Card className="bg-muted/30">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <Checkbox
-                checked={selectedMessages.length === filteredMessages.length}
-                onCheckedChange={handleSelectAll}
-              />
-              <span className="text-sm font-medium">
-                Select all {filteredMessages.length} messages
-              </span>
-              {selectedMessages.length > 0 && (
-                <Badge variant="secondary">
-                  {selectedMessages.length} selected
-                </Badge>
-              )}
-            </div>
-          </CardContent>
-        </Card>
-      )}
 
       {/* Messages List - Clean list design */}
       <div className="bg-card rounded-lg border">
