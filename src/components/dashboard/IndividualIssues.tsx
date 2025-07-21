@@ -17,7 +17,7 @@ export function IndividualIssues() {
   if (isLoading) {
     return <Card>
         <CardHeader>
-          <CardTitle>High-Priority Requests</CardTitle>
+          <CardTitle>Individual Requests</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
@@ -35,7 +35,7 @@ export function IndividualIssues() {
   if (error) {
     return <Card>
         <CardHeader>
-          <CardTitle>High-Priority Requests</CardTitle>
+          <CardTitle>Individual Requests</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground text-sm">Unable to load individual requests</p>
@@ -56,7 +56,7 @@ export function IndividualIssues() {
   };
   return <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-        <CardTitle className="text-xl">High-Priority Requests</CardTitle>
+        <CardTitle className="text-xl">Individual Requests</CardTitle>
         <Link to="/inbox" className="text-primary hover:text-primary/80 text-sm font-medium">
           View all
         </Link>
