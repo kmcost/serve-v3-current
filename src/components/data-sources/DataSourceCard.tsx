@@ -1,9 +1,8 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, Clock, Globe, Mail, MessageSquare, Phone } from 'lucide-react';
+import { CheckCircle, Clock, Globe, Mail, MessageSquare, Database } from 'lucide-react';
 import { DataSource } from '@/types/core';
 
 interface DataSourceCardProps {
@@ -19,6 +18,8 @@ const getSourceIcon = (type: DataSource['type']) => {
       return Mail;
     case 'facebook':
       return MessageSquare;
+    case 'crm':
+      return Database;
     default:
       return Globe;
   }
@@ -66,6 +67,7 @@ export const DataSourceCard: React.FC<DataSourceCardProps> = ({ dataSource, onCo
             {dataSource.type === 'website' && "Automatically processes contact form submissions from your campaign website"}
             {dataSource.type === 'email' && "Monitor and analyze constituent emails for common issues and concerns"}
             {dataSource.type === 'facebook' && "Track mentions and discussions in community Facebook groups"}
+            {dataSource.type === 'crm' && "Connect your existing CRM system to import contact data and track constituent interactions"}
           </p>
 
           {dataSource.connected ? (
@@ -111,6 +113,7 @@ export const DataSourceCard: React.FC<DataSourceCardProps> = ({ dataSource, onCo
                   {dataSource.type === 'website' && "Connect your website forms to automatically capture constituent feedback"}
                   {dataSource.type === 'email' && "Connect your email to analyze constituent concerns and generate insights"}
                   {dataSource.type === 'facebook' && "Monitor community discussions and track public sentiment"}
+                  {dataSource.type === 'crm' && "Integrate with your CRM to centralize constituent management and issue tracking"}
                 </p>
               </div>
             </div>

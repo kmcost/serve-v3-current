@@ -1,4 +1,3 @@
-
 export interface ConstituentIssue {
   id: string;
   title: string;
@@ -34,7 +33,7 @@ export type BoardColumn = 'todo' | 'in-progress' | 'completed';
 
 export interface DataSource {
   id: string;
-  type: 'website' | 'email' | 'facebook';
+  type: 'website' | 'email' | 'facebook' | 'crm';
   name: string;
   connected: boolean;
   status: 'analyzing' | 'connected' | 'disconnected' | 'error';

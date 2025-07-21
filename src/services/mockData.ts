@@ -24,6 +24,13 @@ export const mockDataSources: DataSource[] = [
     connected: false,
     status: 'disconnected'
   },
+  {
+    id: '4',
+    type: 'crm',
+    name: 'CRM Integration',
+    connected: false,
+    status: 'disconnected'
+  }
 ];
 
 export const mockValidatedIssues: ConstituentIssue[] = [
