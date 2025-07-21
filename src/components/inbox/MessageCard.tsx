@@ -28,8 +28,8 @@ export function MessageCard({
     onCreateIssue?.(message.id);
   };
 
-  const handleCheckboxChange = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleCheckboxChange = (checked: boolean | 'indeterminate') => {
+    onSelect?.(message.id, !!checked);
   };
 
   return (
@@ -37,22 +37,22 @@ export function MessageCard({
       group border-b border-border hover:bg-accent/50 transition-colors
       ${!message.isRead ? 'border-l-4 border-l-primary bg-accent/20' : 'border-l-4 border-l-transparent'}
     `}>
-      <Link to={`/inbox/${message.id}`} className="block">
-        <div className="flex items-start gap-3 p-4">
-          {/* Checkbox */}
-          <div className="flex items-center pt-1" onClick={handleCheckboxChange}>
-            <Checkbox
-              checked={isSelected}
-              onCheckedChange={(checked) => onSelect?.(message.id, !!checked)}
-            />
-          </div>
+      <div className="flex items-start gap-3 p-4">
+        {/* Checkbox - separate click area */}
+        <div className="flex items-center pt-1">
+          <Checkbox
+            checked={isSelected}
+            onCheckedChange={handleCheckboxChange}
+          />
+        </div>
 
-          {/* Unread indicator dot */}
-          {!message.isRead && (
-            <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0" />
-          )}
+        {/* Unread indicator dot */}
+        {!message.isRead && (
+          <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0" />
+        )}
 
-          {/* Message content */}
+        {/* Clickable message content area */}
+        <Link to={`/inbox/${message.id}`} className="flex-1 min-w-0 block">
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-4 mb-1">
               {/* Sender name */}
@@ -110,8 +110,8 @@ export function MessageCard({
               )}
             </div>
           </div>
-        </div>
-      </Link>
+        </Link>
+      </div>
     </div>
   );
 }
