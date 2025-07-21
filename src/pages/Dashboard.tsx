@@ -6,12 +6,13 @@ import { ActiveOutreach } from '@/components/dashboard/ActiveOutreach';
 
 export default function Dashboard() {
   return (
-    <div className="space-y-8">
-      {/* Hero Section */}
-      <div className="space-y-6">
-        <div className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Welcome Back, Farhad</h1>
-        </div>
+    <div className="space-y-6">
+      {/* Header */}
+      <div>
+        <h1 className="text-2xl font-bold text-foreground">Dashboard</h1>
+        <p className="text-muted-foreground">
+          Overview of your constituent engagement and priorities
+        </p>
       </div>
 
       {/* Main Dashboard Sections */}

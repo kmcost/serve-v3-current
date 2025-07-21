@@ -41,18 +41,18 @@ const DataSources = () => {
   const totalIssues = dataSources.reduce((sum, ds) => sum + (ds.issuesGenerated || 0), 0);
 
   return (
-    <div className="container mx-auto p-6 max-w-6xl">
+    <div className="space-y-6">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold">Connect Your Data Sources</h1>
-        <p className="text-muted-foreground mt-1">
-          Centralize constituent feedback from all your communication channels
+      <div>
+        <h1 className="text-2xl font-bold text-foreground">Data Sources</h1>
+        <p className="text-muted-foreground">
+          Connect and manage your communication channels
         </p>
       </div>
 
       {/* Connection Status Summary */}
       {connectedCount > 0 && (
-        <Card className="mb-8 bg-green-50 border-green-200">
+        <Card className="bg-green-50 border-green-200">
           <CardContent className="pt-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex items-center space-x-3">
@@ -80,7 +80,7 @@ const DataSources = () => {
       )}
 
       {/* Data Sources Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {dataSources.map((dataSource) => (
           <DataSourceCard
             key={dataSource.id}

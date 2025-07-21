@@ -41,13 +41,13 @@ const Priorities = () => {
   const completedCount = priorityItems.filter(item => item.boardStatus === 'completed').length;
 
   return (
-    <div className="container mx-auto p-4 max-w-7xl">
+    <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold mb-2">Priorities Board</h1>
+          <h1 className="text-2xl font-bold text-foreground">Priorities Board</h1>
           <p className="text-muted-foreground">
-            Active projects and community priorities with transparent progress tracking
+            Manage and track community priorities with transparent progress
           </p>
         </div>
         <div className="flex flex-col sm:flex-row gap-2">
@@ -62,7 +62,7 @@ const Priorities = () => {
       </div>
 
       {/* Public Notice Banner */}
-      <Card className="mb-6 bg-blue-50 border-blue-200">
+      <Card className="bg-blue-50 border-blue-200">
         <CardContent className="pt-6">
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             <div className="flex items-center space-x-3">
@@ -93,7 +93,7 @@ const Priorities = () => {
       </Card>
 
       {/* Quick Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
@@ -138,7 +138,7 @@ const Priorities = () => {
       </div>
 
       {/* Board Actions */}
-      <div className="flex flex-col sm:flex-row gap-2 mb-6">
+      <div className="flex flex-col sm:flex-row gap-2">
         <Button variant="outline" className="gap-2">
           <Filter className="h-4 w-4" />
           Filter & Sort
@@ -161,7 +161,7 @@ const Priorities = () => {
       )}
 
       {/* Mobile instructions */}
-      <div className="mt-6 p-4 bg-gray-50 rounded-lg sm:hidden">
+      <div className="p-4 bg-gray-50 rounded-lg sm:hidden">
         <p className="text-sm text-muted-foreground text-center">
           💡 Tip: Swipe horizontally to scroll between board columns and drag cards to move them between stages
         </p>
