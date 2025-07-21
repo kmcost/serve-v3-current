@@ -194,8 +194,8 @@ export default function Issues() {
             <span className="hidden xs:inline">{bulkSelectMode ? 'Cancel Selection' : 'Select Multiple'}</span>
             <span className="xs:hidden">{bulkSelectMode ? 'Cancel' : 'Select'}</span>
           </Button>
-          <Link to="/priorities">
-            <Button variant="outline" className="gap-2 text-xs sm:text-sm">
+          <Link to="/priorities" className="w-full sm:w-auto">
+            <Button variant="outline" className="gap-2 text-xs sm:text-sm w-full">
               <BarChart3 className="h-4 w-4" />
               <span className="hidden xs:inline">View Priorities</span>
               <span className="xs:hidden">Priorities</span>
