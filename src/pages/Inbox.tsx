@@ -11,7 +11,6 @@ import {
   AlertTriangle,
   Clock,
   Mail,
-  Settings,
   Plus,
   CheckCircle
 } from 'lucide-react';
@@ -35,7 +34,6 @@ export default function Inbox() {
   const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
   const [selectedPriorities, setSelectedPriorities] = useState<string[]>([]);
   const [selectedMessages, setSelectedMessages] = useState<string[]>([]);
-  const [bulkSelectMode, setBulkSelectMode] = useState(false);
   const [createIssueModal, setCreateIssueModal] = useState<{
     isOpen: boolean;
     message: EnhancedMessage | null;
@@ -112,7 +110,6 @@ export default function Inbox() {
 
   const handleClearSelection = () => {
     setSelectedMessages([]);
-    setBulkSelectMode(false);
   };
 
   const handleCreateIssue = (messageId: string) => {
@@ -222,15 +219,6 @@ export default function Inbox() {
           </p>
         </div>
         <div className="flex flex-col sm:flex-row gap-2">
-          <Button
-            variant="outline"
-            onClick={() => setBulkSelectMode(!bulkSelectMode)}
-            className="gap-2 text-xs sm:text-sm"
-          >
-            <Settings className="h-4 w-4" />
-            <span className="hidden xs:inline">{bulkSelectMode ? 'Cancel Selection' : 'Select Multiple'}</span>
-            <span className="xs:hidden">{bulkSelectMode ? 'Cancel' : 'Select'}</span>
-          </Button>
           <Button className="gap-2 text-xs sm:text-sm">
             <Plus className="h-4 w-4" />
             <span className="hidden xs:inline">Compose Message</span>
@@ -320,8 +308,8 @@ export default function Inbox() {
         onBulkStatusUpdate={handleBulkStatusUpdate}
       />
 
-      {/* Bulk Select All */}
-      {bulkSelectMode && filteredMessages.length > 0 && (
+      {/* Select All - Always visible when there are messages */}
+      {filteredMessages.length > 0 && (
         <Card className="bg-muted/30">
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
@@ -352,7 +340,6 @@ export default function Inbox() {
               isSelected={selectedMessages.includes(message.id)}
               onSelect={handleSelectMessage}
               onCreateIssue={handleCreateIssue}
-              showCheckbox={bulkSelectMode}
             />
           ))
         ) : (
