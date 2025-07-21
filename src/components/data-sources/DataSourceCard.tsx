@@ -19,8 +19,6 @@ const getSourceIcon = (type: DataSource['type']) => {
       return Mail;
     case 'facebook':
       return MessageSquare;
-    case 'sms':
-      return Phone;
     default:
       return Globe;
   }
@@ -68,7 +66,6 @@ export const DataSourceCard: React.FC<DataSourceCardProps> = ({ dataSource, onCo
             {dataSource.type === 'website' && "Automatically processes contact form submissions from your campaign website"}
             {dataSource.type === 'email' && "Monitor and analyze constituent emails for common issues and concerns"}
             {dataSource.type === 'facebook' && "Track mentions and discussions in community Facebook groups"}
-            {dataSource.type === 'sms' && "Analyze text message conversations with constituents"}
           </p>
 
           {dataSource.connected ? (
@@ -114,7 +111,6 @@ export const DataSourceCard: React.FC<DataSourceCardProps> = ({ dataSource, onCo
                   {dataSource.type === 'website' && "Connect your website forms to automatically capture constituent feedback"}
                   {dataSource.type === 'email' && "Connect your email to analyze constituent concerns and generate insights"}
                   {dataSource.type === 'facebook' && "Monitor community discussions and track public sentiment"}
-                  {dataSource.type === 'sms' && "Analyze text conversations to identify constituent priorities"}
                 </p>
               </div>
             </div>
