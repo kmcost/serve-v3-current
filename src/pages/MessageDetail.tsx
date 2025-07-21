@@ -156,7 +156,25 @@ export default function MessageDetail() {
               </div>
 
               {/* Source-specific metadata */}
-              {message.metadata}
+              {message.metadata && (
+                <div className="space-y-2 p-3 bg-muted/50 rounded-lg">
+                  <p className="text-sm font-medium text-muted-foreground">Additional Information</p>
+                  {message.metadata.location && (
+                    <p className="text-sm">Location: {message.metadata.location}</p>
+                  )}
+                  {message.metadata.socialProfile && (
+                    <p className="text-sm">Social Profile: {message.metadata.socialProfile.name}</p>
+                  )}
+                  {message.metadata.formData && (
+                    <div className="text-sm">
+                      <p className="font-medium mb-1">Form Data:</p>
+                      {Object.entries(message.metadata.formData).map(([key, value]) => (
+                        <p key={key} className="ml-2">{key}: {String(value)}</p>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
               
               <div className="pt-4 border-t">
                 <p className="text-foreground leading-relaxed">
