@@ -238,3 +238,11 @@ export const bulkUpdateMessages = async (messageIds: string[], updates: Partial<
     }
   });
 };
+
+// Add this new function to handle website form submissions
+export const addWebsiteMessage = async (message: EnhancedMessage): Promise<void> => {
+  await new Promise(resolve => setTimeout(resolve, 300));
+  
+  // Add the new message to the beginning of the array (most recent first)
+  mockMessages.unshift(message);
+};
