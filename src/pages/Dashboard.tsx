@@ -1,13 +1,10 @@
-
 import { ValidatedIssues } from '@/components/dashboard/ValidatedIssues';
 import { TrendingIssues } from '@/components/dashboard/TrendingIssues';
 import { IndividualIssues } from '@/components/dashboard/IndividualIssues';
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
-
 export default function Dashboard() {
-  return (
-    <div className="space-y-6">
+  return <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
@@ -20,7 +17,7 @@ export default function Dashboard() {
           <Button className="gap-2 text-xs sm:text-sm">
             <Plus className="h-4 w-4" />
             <span className="hidden xs:inline">Create Issue</span>
-            <span className="xs:hidden">Create</span>
+            <span className="xs:hidden">Create Issue</span>
           </Button>
         </div>
       </div>
@@ -31,6 +28,5 @@ export default function Dashboard() {
         <TrendingIssues />
         <IndividualIssues />
       </div>
-    </div>
-  );
+    </div>;
 }
