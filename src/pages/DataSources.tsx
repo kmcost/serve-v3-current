@@ -50,7 +50,7 @@ const DataSources = () => {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex items-center space-x-3">
                 <div>
-                  <h3 className="text-base sm:text-lg font-semibold text-green-800">
+                  <h3 className="text-sm sm:text-base font-semibold text-green-800">
                     {connectedCount} of {dataSources.length} sources connected
                   </h3>
                   <p className="text-sm sm:text-base text-green-700">
