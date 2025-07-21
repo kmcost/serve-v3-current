@@ -30,9 +30,8 @@ export function MessageSourceBadge({ source, className = '' }: MessageSourceBadg
   const Icon = config.icon;
 
   return (
-    <Icon 
-      className={`h-4 w-4 text-muted-foreground ${className}`}
-      title={config.title}
-    />
+    <span title={config.title}>
+      <Icon className={`h-4 w-4 text-muted-foreground ${className}`} />
+    </span>
   );
 }
