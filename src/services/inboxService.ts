@@ -1,4 +1,3 @@
-
 import { EnhancedMessage, MessageThread } from '@/types/inbox';
 import { ConstituentIssue } from '@/types/core';
 
@@ -141,7 +140,19 @@ const mockMessages: EnhancedMessage[] = [
 export const getEnhancedMessages = async (): Promise<EnhancedMessage[]> => {
   // Simulate API delay
   await new Promise(resolve => setTimeout(resolve, 500));
-  return mockMessages;
+  
+  // Sort messages: unread first, then by newest date
+  const sortedMessages = [...mockMessages].sort((a, b) => {
+    // First sort by read status (unread first)
+    if (a.isRead !== b.isRead) {
+      return a.isRead ? 1 : -1;
+    }
+    
+    // Then sort by date (newest first)
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  });
+  
+  return sortedMessages;
 };
 
 export const getMessageById = async (id: string): Promise<EnhancedMessage | null> => {

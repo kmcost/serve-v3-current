@@ -178,17 +178,18 @@ export default function Inbox() {
             </Card>
           ))}
         </div>
-        <div className="space-y-4">
-          {Array.from({ length: 6 }, (_, i) => (
-            <Card key={i} className="animate-pulse">
-              <CardContent className="p-6">
-                <div className="space-y-3">
-                  <div className="h-6 bg-muted rounded w-3/4"></div>
-                  <div className="h-4 bg-muted rounded w-full"></div>
-                  <div className="h-4 bg-muted rounded w-2/3"></div>
+        <div className="space-y-2">
+          {Array.from({ length: 8 }, (_, i) => (
+            <div key={i} className="animate-pulse border-b border-border p-4">
+              <div className="flex items-start gap-3">
+                <div className="w-2 h-2 bg-muted rounded-full mt-2"></div>
+                <div className="flex-1 space-y-2">
+                  <div className="h-4 bg-muted rounded w-1/4"></div>
+                  <div className="h-3 bg-muted rounded w-3/4"></div>
+                  <div className="h-3 bg-muted rounded w-full"></div>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           ))}
         </div>
       </div>
@@ -215,7 +216,7 @@ export default function Inbox() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-foreground">Enhanced Inbox</h1>
+          <h1 className="text-2xl font-bold text-foreground">Inbox</h1>
           <p className="text-muted-foreground">
             {stats.total} messages • {stats.unread} unread • {stats.responded} responded • {stats.issuesCreated} issues created
           </p>
@@ -341,34 +342,33 @@ export default function Inbox() {
         </Card>
       )}
 
-      {/* Messages List */}
-      <div className="space-y-4">
-        {filteredMessages.map((message) => (
-          <MessageCard
-            key={message.id}
-            message={message}
-            isSelected={selectedMessages.includes(message.id)}
-            onSelect={handleSelectMessage}
-            onCreateIssue={handleCreateIssue}
-            showCheckbox={bulkSelectMode}
-          />
-        ))}
+      {/* Messages List - Clean list design */}
+      <div className="bg-card rounded-lg border">
+        {filteredMessages.length > 0 ? (
+          filteredMessages.map((message) => (
+            <MessageCard
+              key={message.id}
+              message={message}
+              isSelected={selectedMessages.includes(message.id)}
+              onSelect={handleSelectMessage}
+              onCreateIssue={handleCreateIssue}
+              showCheckbox={bulkSelectMode}
+            />
+          ))
+        ) : (
+          <div className="text-center py-12">
+            <MessageSquare className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+            <p className="text-lg font-medium text-muted-foreground">No messages found</p>
+            <p className="text-sm text-muted-foreground mb-4">
+              Try adjusting your search or filters, or check back later for new messages.
+            </p>
+            <Button className="gap-2">
+              <Plus className="h-4 w-4" />
+              Compose New Message
+            </Button>
+          </div>
+        )}
       </div>
-
-      {/* No Results */}
-      {filteredMessages.length === 0 && !isLoading && (
-        <div className="text-center py-12">
-          <MessageSquare className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-          <p className="text-lg font-medium text-muted-foreground">No messages found</p>
-          <p className="text-sm text-muted-foreground mb-4">
-            Try adjusting your search or filters, or check back later for new messages.
-          </p>
-          <Button className="gap-2">
-            <Plus className="h-4 w-4" />
-            Compose New Message
-          </Button>
-        </div>
-      )}
 
       {/* Create Issue Modal */}
       {createIssueModal.message && (

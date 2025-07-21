@@ -1,21 +1,13 @@
 
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Badge } from '@/components/ui/badge';
 import { 
-  Clock,
-  Mail,
-  Phone,
   Plus,
-  ArrowRight,
   MessageSquare,
   AlertTriangle
 } from 'lucide-react';
 import { MessageSourceBadge } from './MessageSourceBadge';
-import { MessageStatusBadge } from './MessageStatusBadge';
 import { EnhancedMessage } from '@/types/inbox';
 
 interface MessageCardProps {
@@ -33,21 +25,6 @@ export function MessageCard({
   onCreateIssue, 
   showCheckbox = false 
 }: MessageCardProps) {
-  const [isHovered, setIsHovered] = useState(false);
-
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case 'high':
-        return 'border-l-destructive';
-      case 'medium':
-        return 'border-l-warning';
-      case 'low':
-        return 'border-l-muted-foreground';
-      default:
-        return 'border-l-muted';
-    }
-  };
-
   const handleCreateIssue = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -55,111 +32,92 @@ export function MessageCard({
   };
 
   return (
-    <Card 
-      className={`hover:shadow-md transition-all border-l-4 ${getPriorityColor(message.priority)} ${
-        !message.isRead ? 'bg-blue-50/50' : ''
-      } ${isSelected ? 'ring-2 ring-primary' : ''}`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <CardContent className="p-3 md:p-4">
-        {/* Mobile Header with checkbox and sender */}
-        <div className="flex items-start gap-3 mb-3">
-          {showCheckbox && (
-            <div className="flex items-center pt-0.5">
-              <Checkbox
-                checked={isSelected}
-                onCheckedChange={(checked) => onSelect?.(message.id, !!checked)}
-              />
-            </div>
-          )}
-          
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-1">
-              <h3 className={`font-semibold truncate text-base ${!message.isRead ? 'text-primary' : 'text-foreground'}`}>
+    <div className={`
+      group border-b border-border hover:bg-accent/50 transition-colors
+      ${!message.isRead ? 'border-l-4 border-l-primary bg-accent/20' : 'border-l-4 border-l-transparent'}
+    `}>
+      <div className="flex items-start gap-3 p-4">
+        {/* Checkbox */}
+        {showCheckbox && (
+          <div className="flex items-center pt-1">
+            <Checkbox
+              checked={isSelected}
+              onCheckedChange={(checked) => onSelect?.(message.id, !!checked)}
+            />
+          </div>
+        )}
+
+        {/* Unread indicator dot */}
+        {!message.isRead && (
+          <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0" />
+        )}
+
+        {/* Message content */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-start justify-between gap-4 mb-1">
+            {/* Sender name */}
+            <div className="flex items-center gap-2 min-w-0">
+              <span className={`truncate text-sm ${!message.isRead ? 'font-semibold text-foreground' : 'font-medium text-foreground'}`}>
                 {message.from}
-              </h3>
-              {!message.isRead && (
-                <div className="w-2 h-2 bg-primary rounded-full flex-shrink-0"></div>
+              </span>
+              {message.priority === 'high' && (
+                <AlertTriangle className="h-3 w-3 text-orange-500 flex-shrink-0" />
               )}
             </div>
-            
-            <p className={`text-sm font-medium mb-2 ${!message.isRead ? 'text-primary' : 'text-foreground'}`}>
+
+            {/* Time and source */}
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <MessageSourceBadge source={message.source} />
+              <span className="text-xs text-muted-foreground whitespace-nowrap">
+                {message.time}
+              </span>
+            </div>
+          </div>
+
+          {/* Subject */}
+          <div className="mb-2">
+            <span className={`text-sm ${!message.isRead ? 'font-semibold text-foreground' : 'font-normal text-foreground'}`}>
               {message.subject}
+            </span>
+          </div>
+
+          {/* Preview */}
+          <div className="mb-3">
+            <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
+              {message.preview}
             </p>
           </div>
-        </div>
 
-        {/* Message preview */}
-        <div className="mb-3">
-          <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
-            {message.preview}
-          </p>
-        </div>
-
-        {/* Badges - Stack on mobile, inline on desktop */}
-        <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2 mb-3">
-          <div className="flex flex-wrap items-center gap-2">
-            <MessageSourceBadge source={message.source} />
-            <MessageStatusBadge status={message.status} />
-          </div>
-          
-          <div className="flex flex-wrap items-center gap-2">
-            {message.priority === 'high' && (
-              <Badge variant="outline" className="gap-1 text-xs bg-red-100 text-red-800 border-red-200 flex-shrink-0">
-                <AlertTriangle className="h-3 w-3" />
-                High Priority
-              </Badge>
-            )}
+          {/* Actions - only show on hover/mobile */}
+          <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity md:opacity-100">
+            <Link to={`/inbox/${message.id}`}>
+              <Button size="sm" variant="ghost" className="gap-1 text-xs h-7 px-2">
+                <MessageSquare className="h-3 w-3" />
+                View
+              </Button>
+            </Link>
             
+            {message.status !== 'issue-created' && (
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={handleCreateIssue}
+                className="gap-1 text-xs h-7 px-2"
+              >
+                <Plus className="h-3 w-3" />
+                Create Issue
+              </Button>
+            )}
+
+            {/* Issue indicator */}
             {message.relatedIssues && message.relatedIssues.length > 0 && (
-              <Badge variant="outline" className="gap-1 text-xs bg-green-100 text-green-800 border-green-200 flex-shrink-0">
-                <ArrowRight className="h-3 w-3" />
-                {message.relatedIssues.length} Issue{message.relatedIssues.length !== 1 ? 's' : ''}
-              </Badge>
+              <span className="text-xs text-muted-foreground ml-2">
+                {message.relatedIssues.length} issue{message.relatedIssues.length !== 1 ? 's' : ''}
+              </span>
             )}
           </div>
         </div>
-
-        {/* Contact info - Stack on mobile */}
-        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs text-muted-foreground mb-3">
-          <div className="flex items-center gap-1">
-            <Mail className="h-3 w-3 flex-shrink-0" />
-            <span className="truncate">{message.email}</span>
-          </div>
-          {message.phone && (
-            <div className="flex items-center gap-1">
-              <Phone className="h-3 w-3 flex-shrink-0" />
-              <span>{message.phone}</span>
-            </div>
-          )}
-          <div className="flex items-center gap-1">
-            <Clock className="h-3 w-3 flex-shrink-0" />
-            <span>{message.time}</span>
-          </div>
-        </div>
-
-        {/* Action Buttons - Full width on mobile, side by side on desktop */}
-        <div className="flex flex-col sm:flex-row gap-2">
-          <Link to={`/inbox/${message.id}`} className="flex-1 sm:flex-initial">
-            <Button size="sm" variant="outline" className="w-full sm:w-auto gap-2">
-              <MessageSquare className="h-4 w-4" />
-              View Message
-            </Button>
-          </Link>
-          
-          {message.status !== 'issue-created' && (
-            <Button
-              size="sm"
-              onClick={handleCreateIssue}
-              className="w-full sm:w-auto gap-2"
-            >
-              <Plus className="h-4 w-4" />
-              Create Issue
-            </Button>
-          )}
-        </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
