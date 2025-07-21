@@ -11,6 +11,7 @@ import { Search, Filter, Plus, BarChart3, MessageSquare, Clock, Users, CheckCirc
 import { pollData, Poll } from '@/data/pollData';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { QuestionInput } from '@/components/QuestionInput';
+import { ActiveOutreach } from '@/components/dashboard/ActiveOutreach';
 export default function Polls() {
   const [searchTerm, setSearchTerm] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -122,6 +123,9 @@ export default function Polls() {
 
       {/* Question Input */}
       <QuestionInput />
+
+      {/* Active Outreach */}
+      <ActiveOutreach />
 
       {/* Search, Filters, and View Toggle */}
       <div className="flex flex-col gap-4">

@@ -2,7 +2,6 @@
 import { ValidatedIssues } from '@/components/dashboard/ValidatedIssues';
 import { TrendingIssues } from '@/components/dashboard/TrendingIssues';
 import { IndividualIssues } from '@/components/dashboard/IndividualIssues';
-import { ActiveOutreach } from '@/components/dashboard/ActiveOutreach';
 
 export default function Dashboard() {
   return (
@@ -20,11 +19,6 @@ export default function Dashboard() {
         <ValidatedIssues />
         <TrendingIssues />
         <IndividualIssues />
-      </div>
-
-      {/* Active Outreach Section */}
-      <div className="space-y-6">
-        <ActiveOutreach />
       </div>
     </div>
   );
