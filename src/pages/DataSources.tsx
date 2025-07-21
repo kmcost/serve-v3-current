@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DataSourceCard } from "@/components/data-sources/DataSourceCard";
 import { ConnectionModal } from "@/components/data-sources/ConnectionModal";
-import { BarChart3, CheckCircle } from 'lucide-react';
+import { BarChart3 } from 'lucide-react';
 import { getDataSources } from '@/services/mockData';
 import { DataSource } from '@/types/core';
 
@@ -56,7 +56,6 @@ const DataSources = () => {
           <CardContent className="pt-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex items-center space-x-3">
-                <CheckCircle className="h-6 w-6 sm:h-8 sm:w-8 text-green-600 flex-shrink-0" />
                 <div>
                   <h3 className="text-base sm:text-lg font-semibold text-green-800">
                     {connectedCount} of {dataSources.length} sources connected
