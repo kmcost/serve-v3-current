@@ -59,7 +59,7 @@ const DataSources = () => {
                 <CheckCircle className="h-6 w-6 sm:h-8 sm:w-8 text-green-600 flex-shrink-0" />
                 <div>
                   <h3 className="text-base sm:text-lg font-semibold text-green-800">
-                    {connectedCount} of 4 sources connected
+                    {connectedCount} of {dataSources.length} sources connected
                   </h3>
                   <p className="text-sm sm:text-base text-green-700">
                     Monitoring {totalIssues} constituent issues across all channels
