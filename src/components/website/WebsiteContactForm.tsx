@@ -41,7 +41,7 @@ export function WebsiteContactForm() {
   const onSubmit = async (data: ContactFormData) => {
     try {
       setIsSubmitting(true);
-      await submitWebsiteContactForm(data);
+      await submitWebsiteContactForm(data as WebsiteContactFormData);
       setIsSubmitted(true);
       toast({
         title: "Message sent successfully!",
