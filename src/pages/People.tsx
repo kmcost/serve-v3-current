@@ -118,7 +118,7 @@ export default function People() {
             <Users className="h-4 w-4 text-muted-foreground" />
             <h3 className="text-sm font-medium text-muted-foreground">Total Constituents</h3>
           </div>
-          <p className="text-2xl font-bold text-foreground mt-2">{stats.totalConstituents}</p>
+          <p className="text-2xl font-bold text-foreground mt-2">{stats.totalConstituents.toLocaleString()}</p>
         </div>
         
         <div className="bg-card rounded-lg border p-6">
@@ -126,7 +126,7 @@ export default function People() {
             <Mail className="h-4 w-4 text-muted-foreground" />
             <h3 className="text-sm font-medium text-muted-foreground">Opt-In Email Count</h3>
           </div>
-          <p className="text-2xl font-bold text-foreground mt-2">{stats.optInEmailCount}</p>
+          <p className="text-2xl font-bold text-foreground mt-2">{stats.optInEmailCount.toLocaleString()}</p>
         </div>
         
         <div className="bg-card rounded-lg border p-6">
@@ -134,7 +134,7 @@ export default function People() {
             <MessageSquare className="h-4 w-4 text-muted-foreground" />
             <h3 className="text-sm font-medium text-muted-foreground">Opt-In SMS Count</h3>
           </div>
-          <p className="text-2xl font-bold text-foreground mt-2">{stats.optInSMSCount}</p>
+          <p className="text-2xl font-bold text-foreground mt-2">{stats.optInSMSCount.toLocaleString()}</p>
         </div>
       </div>
 
