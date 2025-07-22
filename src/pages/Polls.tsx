@@ -12,6 +12,7 @@ import { pollData, Poll } from '@/data/pollData';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { QuestionInput } from '@/components/QuestionInput';
 import { ActiveOutreach } from '@/components/dashboard/ActiveOutreach';
+
 export default function Polls() {
   const [searchTerm, setSearchTerm] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -156,15 +157,15 @@ export default function Polls() {
           <Table>
             <TableHeader>
               <TableRow className="hover:bg-transparent">
-                <TableHead>
-                  <Button variant="ghost" className="h-auto p-0 font-medium" onClick={() => handleSort('status')}>
-                    Status
+                <TableHead className="min-w-64">
+                  <Button variant="ghost" className="h-auto p-0 font-medium" onClick={() => handleSort('title')}>
+                    Name
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                   </Button>
                 </TableHead>
                 <TableHead>
-                  <Button variant="ghost" className="h-auto p-0 font-medium" onClick={() => handleSort('title')}>
-                    Name
+                  <Button variant="ghost" className="h-auto p-0 font-medium" onClick={() => handleSort('status')}>
+                    Status
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                   </Button>
                 </TableHead>
@@ -179,12 +180,12 @@ export default function Polls() {
             </TableHeader>
             <TableBody>
               {sortedAndFilteredPolls.map((poll, index) => <TableRow key={poll.id} className={`hover:bg-transparent ${index % 2 === 1 ? 'bg-gray-50' : 'bg-white'}`}>
-                  <TableCell>{getStatusBadge(poll.startDate, poll.endDate)}</TableCell>
                   <TableCell>
                     <Link to={`/polls/${poll.id}`} className="font-medium hover:text-primary transition-colors">
                       {poll.title}
                     </Link>
                   </TableCell>
+                  <TableCell>{getStatusBadge(poll.startDate, poll.endDate)}</TableCell>
                   <TableCell>
                     <span className="text-sm">{poll.responses}</span>
                   </TableCell>
