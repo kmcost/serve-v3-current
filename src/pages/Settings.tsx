@@ -1,13 +1,12 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { DataSourceCard } from "@/components/data-sources/DataSourceCard";
+import { Badge } from "@/components/ui/badge";
 import { ConnectionModal } from "@/components/data-sources/ConnectionModal";
-import { User, CreditCard, Database, Bell, Trash2, Save, Edit } from 'lucide-react';
+import { User, CreditCard, Database, Bell, Trash2, Save, Edit, Globe, Mail, MessageSquare, CheckCircle } from 'lucide-react';
 import { getDataSources } from '@/services/mockData';
 import { DataSource } from '@/types/core';
 
@@ -108,6 +107,36 @@ const Settings = () => {
   };
 
   const connectedCount = dataSources.filter(ds => ds.connected).length;
+
+  const getSourceIcon = (type: DataSource['type']) => {
+    switch (type) {
+      case 'website':
+        return Globe;
+      case 'email':
+        return Mail;
+      case 'facebook':
+        return MessageSquare;
+      case 'crm':
+        return Database;
+      default:
+        return Globe;
+    }
+  };
+
+  const getSourceDescription = (type: DataSource['type']) => {
+    switch (type) {
+      case 'website':
+        return "Automatically processes contact form submissions from your campaign website";
+      case 'email':
+        return "Monitor and analyze constituent emails for common issues and concerns";
+      case 'facebook':
+        return "Track mentions and discussions in community Facebook groups";
+      case 'crm':
+        return "Connect your existing CRM system to import contact data and track constituent interactions";
+      default:
+        return "Connect to monitor constituent feedback";
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -251,25 +280,57 @@ const Settings = () => {
           </div>
         </CardHeader>
         <CardContent>
-          {connectedCount > 0 && (
-            <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-              <p className="text-sm text-green-800 font-medium">
-                {connectedCount} of {dataSources.length} sources connected
-              </p>
-              <p className="text-sm text-green-700">
-                Monitoring constituent feedback across all channels
-              </p>
-            </div>
-          )}
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {dataSources.map(dataSource => (
-              <DataSourceCard 
-                key={dataSource.id} 
-                dataSource={dataSource} 
-                onConnect={handleConnect} 
-              />
-            ))}
+          <div className="space-y-0">
+            {dataSources.map((dataSource, index) => {
+              const IconComponent = getSourceIcon(dataSource.type);
+              const isLast = index === dataSources.length - 1;
+              
+              return (
+                <div key={dataSource.id} className={`flex items-center justify-between py-4 ${!isLast ? 'border-b border-border' : ''}`}>
+                  <div className="flex items-center space-x-3 flex-1">
+                    <div className="p-2 bg-muted rounded-lg">
+                      <IconComponent className="h-5 w-5 text-muted-foreground" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-2 mb-1">
+                        <h4 className="font-medium text-foreground">{dataSource.name}</h4>
+                        {dataSource.connected && (
+                          <div className="flex items-center space-x-1">
+                            <CheckCircle className="h-4 w-4 text-green-600" />
+                            <Badge className="bg-green-100 text-green-800 border-green-200 text-xs">
+                              Connected
+                            </Badge>
+                          </div>
+                        )}
+                      </div>
+                      <p className="text-sm text-muted-foreground">
+                        {getSourceDescription(dataSource.type)}
+                      </p>
+                      {dataSource.connected && dataSource.issuesGenerated && (
+                        <p className="text-xs text-green-700 mt-1">
+                          {dataSource.issuesGenerated} issues generated • Last sync: {dataSource.lastSync}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex-shrink-0">
+                    {dataSource.connected ? (
+                      <Button variant="outline" size="sm">
+                        Disconnect
+                      </Button>
+                    ) : (
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => handleConnect(dataSource.id)}
+                      >
+                        Connect
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </CardContent>
       </Card>
