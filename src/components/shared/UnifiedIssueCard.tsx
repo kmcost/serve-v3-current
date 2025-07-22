@@ -29,8 +29,8 @@ interface UnifiedIssueCardProps {
   issue: UnifiedIssueData;
   variant: 'issues' | 'dashboard' | 'priorities';
   isSelected?: boolean;
-  onSelect?: (issueId: string, selected: boolean) => void;
-  onMoveToPriorities?: (issueId: string) => void;
+  onSelect?: (issueId: string | number, selected: boolean) => void;
+  onMoveToPriorities?: (issueId: string | number) => void;
   onDragStart?: (e: React.DragEvent) => void;
   onDragEnd?: (e: React.DragEvent) => void;
   showCheckbox?: boolean;
@@ -64,8 +64,10 @@ export function UnifiedIssueCard({
   const [showRelated, setShowRelated] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   
-  const statusInfo = statusConfig[issue.status as keyof typeof statusConfig];
-  const priorityInfo = priorityConfig[issue.priority as keyof typeof priorityConfig];
+  // Handle different data types - only ConstituentIssue and PriorityItem have status/priority
+  const hasStatusAndPriority = 'status' in issue && 'priority' in issue;
+  const statusInfo = hasStatusAndPriority ? statusConfig[issue.status as keyof typeof statusConfig] : null;
+  const priorityInfo = hasStatusAndPriority ? priorityConfig[issue.priority as keyof typeof priorityConfig] : null;
   
   // Handle different data types
   const relatedIssues = 'relatedIssues' in issue ? getRelatedIssues(issue.id) : [];
@@ -96,7 +98,7 @@ export function UnifiedIssueCard({
     });
   };
 
-  const getTypeIcon = (type: string) => {
+  const getTypeIcon = (type?: string) => {
     switch (type) {
       case 'community': return <Users className="h-4 w-4" />;
       case 'individual': return <User className="h-4 w-4" />;
@@ -131,13 +133,15 @@ export function UnifiedIssueCard({
             <GripVertical className="h-4 w-4 text-gray-400 mt-1 flex-shrink-0" />
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-2">
-                {getTypeIcon(issue.type)}
-                <Badge 
-                  variant="outline" 
-                  className={cn("text-xs", getPriorityColor(issue.priority))}
-                >
-                  {issue.priority}
-                </Badge>
+                {getTypeIcon('type' in issue ? issue.type : undefined)}
+                {hasStatusAndPriority && (
+                  <Badge 
+                    variant="outline" 
+                    className={cn("text-xs", getPriorityColor(issue.priority))}
+                  >
+                    {issue.priority}
+                  </Badge>
+                )}
                 {boardStatus === 'completed' && (
                   <CheckCircle className="h-4 w-4 text-green-600" />
                 )}
@@ -295,12 +299,12 @@ export function UnifiedIssueCard({
       
       <CardContent className="space-y-4">
         <div className="flex items-center gap-6 text-sm text-muted-foreground">
-          <div className="flex items-center gap-1">
-            <Calendar className="h-4 w-4" />
-            <span>
-              {timeframe || new Date(issue.createdAt).toLocaleDateString()}
-            </span>
-          </div>
+            <div className="flex items-center gap-1">
+              <Calendar className="h-4 w-4" />
+              <span>
+                {timeframe || ('createdAt' in issue ? new Date(issue.createdAt).toLocaleDateString() : 'N/A')}
+              </span>
+            </div>
           
           {mentions && (
             <div className="flex items-center gap-1">
