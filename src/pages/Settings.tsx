@@ -246,26 +246,33 @@ const Settings = () => {
             <CardTitle>Account Details</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-4">
-            <div>
-              <h4 className="font-medium mb-2">Current Plan</h4>
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-3 border rounded-lg">
-                <div>
-                  <p className="font-medium">Basic Plan</p>
-                  <p className="text-sm text-muted-foreground">Access to core features</p>
-                </div>
-                <Button variant="outline">Upgrade Plan</Button>
+        <CardContent>
+          <div className="space-y-0">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 py-4 border-b border-border">
+              <div className="flex-1">
+                <h4 className="font-medium text-foreground mb-1">Manage Plan</h4>
+                <p className="text-sm text-muted-foreground">
+                  You are currently on the free plan for $0/month
+                </p>
+              </div>
+              <div className="w-full sm:w-auto">
+                <Button variant="outline" size="sm" className="w-full sm:w-auto">
+                  Upgrade
+                </Button>
               </div>
             </div>
             
-            <div>
-              <h4 className="font-medium mb-2">Password</h4>
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-3 border rounded-lg">
-                <div>
-                  <p className="text-sm">Password last updated 3 months ago</p>
-                </div>
-                <Button variant="outline">Change Password</Button>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 py-4">
+              <div className="flex-1">
+                <h4 className="font-medium text-foreground mb-1">Update Password</h4>
+                <p className="text-sm text-muted-foreground">
+                  Keep your account secure by updating your password regularly
+                </p>
+              </div>
+              <div className="w-full sm:w-auto">
+                <Button variant="outline" size="sm" className="w-full sm:w-auto">
+                  Update
+                </Button>
               </div>
             </div>
           </div>
