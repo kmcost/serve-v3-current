@@ -138,6 +138,33 @@ const Settings = () => {
     }
   };
 
+  const notificationItems = [
+    {
+      key: 'newIssues',
+      title: 'New Issues',
+      description: 'Get notified when new constituent issues are detected',
+      checked: notifications.newIssues
+    },
+    {
+      key: 'weeklySummaries', 
+      title: 'Weekly Summaries',
+      description: 'Receive weekly summary reports of constituent activity',
+      checked: notifications.weeklySummaries
+    },
+    {
+      key: 'pollResults',
+      title: 'Poll Results', 
+      description: 'Get notified when polls receive new responses',
+      checked: notifications.pollResults
+    },
+    {
+      key: 'systemUpdates',
+      title: 'System Updates',
+      description: 'Receive notifications about platform updates and maintenance', 
+      checked: notifications.systemUpdates
+    }
+  ];
+
   return <div className="space-y-6">
       {/* Header */}
       <div>
@@ -302,39 +329,23 @@ const Settings = () => {
             <CardTitle>Notifications</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div>
-                <p className="font-medium">New Issues</p>
-                <p className="text-sm text-muted-foreground">Get notified when new constituent issues are detected</p>
-              </div>
-              <Switch checked={notifications.newIssues} onCheckedChange={checked => handleNotificationChange('newIssues', checked)} />
-            </div>
-            
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div>
-                <p className="font-medium">Weekly Summaries</p>
-                <p className="text-sm text-muted-foreground">Receive weekly summary reports of constituent activity</p>
-              </div>
-              <Switch checked={notifications.weeklySummaries} onCheckedChange={checked => handleNotificationChange('weeklySummaries', checked)} />
-            </div>
-            
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div>
-                <p className="font-medium">Poll Results</p>
-                <p className="text-sm text-muted-foreground">Get notified when polls receive new responses</p>
-              </div>
-              <Switch checked={notifications.pollResults} onCheckedChange={checked => handleNotificationChange('pollResults', checked)} />
-            </div>
-            
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div>
-                <p className="font-medium">System Updates</p>
-                <p className="text-sm text-muted-foreground">Receive notifications about platform updates and maintenance</p>
-              </div>
-              <Switch checked={notifications.systemUpdates} onCheckedChange={checked => handleNotificationChange('systemUpdates', checked)} />
-            </div>
+        <CardContent>
+          <div className="space-y-0">
+            {notificationItems.map((item, index) => {
+              const isLast = index === notificationItems.length - 1;
+              return (
+                <div key={item.key} className={`flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 py-6 ${!isLast ? 'border-b border-border' : ''}`}>
+                  <div>
+                    <p className="font-medium">{item.title}</p>
+                    <p className="text-sm text-muted-foreground hidden sm:block">{item.description}</p>
+                  </div>
+                  <Switch 
+                    checked={item.checked} 
+                    onCheckedChange={checked => handleNotificationChange(item.key, checked)} 
+                  />
+                </div>
+              );
+            })}
           </div>
         </CardContent>
       </Card>
