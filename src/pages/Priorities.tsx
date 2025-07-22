@@ -55,7 +55,7 @@ const Priorities = () => {
           <Link to="/issues">
             <Button variant="outline" className="gap-2 w-full sm:w-auto">
               <Plus className="h-4 w-4" />
-              Add from Issues
+              Create Priority Issue
             </Button>
           </Link>
         </div>
