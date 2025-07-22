@@ -4,12 +4,9 @@ import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { IssueCard } from '@/components/issues/IssueCard';
 import { getPriorityItems } from '@/services/mockData';
 import { PriorityItem, ConstituentIssue } from '@/types/core';
-
 type StatusFilter = 'todo' | 'in-progress' | 'completed';
-
 export function WebsitePriorities() {
   const [activeFilter, setActiveFilter] = useState<StatusFilter>('in-progress');
-  
   const {
     data: priorityItems = [],
     isLoading,
@@ -41,7 +38,6 @@ export function WebsitePriorities() {
       email: ''
     } : undefined
   }));
-
   const getFilterLabel = (filter: StatusFilter) => {
     switch (filter) {
       case 'todo':
@@ -52,7 +48,6 @@ export function WebsitePriorities() {
         return 'Done';
     }
   };
-
   const getStatusDescription = (filter: StatusFilter) => {
     switch (filter) {
       case 'todo':
@@ -63,7 +58,6 @@ export function WebsitePriorities() {
         return 'Successfully completed initiatives';
     }
   };
-
   if (isLoading) {
     return <div className="space-y-6">
         <div className="text-center">
@@ -80,7 +74,6 @@ export function WebsitePriorities() {
         </div>
       </div>;
   }
-
   if (error) {
     return <div className="text-center py-12">
         <p className="text-lg text-muted-foreground">
@@ -88,9 +81,7 @@ export function WebsitePriorities() {
         </p>
       </div>;
   }
-
-  return (
-    <div className="space-y-8">
+  return <div className="space-y-8">
       {/* Section Header */}
       <div className="text-center">
         <h2 className="text-3xl font-bold text-foreground mb-4">Our Current Priorities</h2>
@@ -109,9 +100,8 @@ export function WebsitePriorities() {
           <ToggleGroupItem value="in-progress" className="data-[state=on]:bg-background data-[state=on]:shadow-sm transition-all">
             In Progress
           </ToggleGroupItem>
-          <ToggleGroupItem value="completed" className="data-[state=on]:bg-background data-[state=on]:shadow-sm transition-all">
-            Done
-          </ToggleGroupItem>
+          <ToggleGroupItem value="completed" className="data-[state=on]:bg-background data-[state=on]:shadow-sm transition-all">Resolved
+        </ToggleGroupItem>
         </ToggleGroup>
       </div>
 
@@ -123,16 +113,11 @@ export function WebsitePriorities() {
       </div>
 
       {/* Issues Grid */}
-      {transformedIssues.length > 0 ? (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
-          {transformedIssues.map(issue => (
-            <div key={issue.id} className="w-full">
+      {transformedIssues.length > 0 ? <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
+          {transformedIssues.map(issue => <div key={issue.id} className="w-full">
               <IssueCard issue={issue} variant="dashboard" showCheckbox={false} />
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className="text-center py-12">
+            </div>)}
+        </div> : <div className="text-center py-12">
           <div className="text-muted-foreground">
             <p className="text-lg font-medium mb-2">
               No items in "{getFilterLabel(activeFilter)}"
@@ -141,8 +126,6 @@ export function WebsitePriorities() {
               {activeFilter === 'in-progress' ? "We're currently organizing our priorities. Check back soon!" : `No items are currently marked as ${getFilterLabel(activeFilter).toLowerCase()}.`}
             </p>
           </div>
-        </div>
-      )}
-    </div>
-  );
+        </div>}
+    </div>;
 }
