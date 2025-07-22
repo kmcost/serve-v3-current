@@ -74,15 +74,15 @@ export function UnifiedIssueCard({
   const isBasicIssue = (item: UnifiedIssueData): item is Issue =>
     'supportPercentage' in item && !('status' in item);
 
-  // Safe property access
+  // Safe property access with fallbacks
   const statusInfo = isConstituentIssue(issue) ? statusConfig[issue.status as keyof typeof statusConfig] : null;
   const priorityInfo = isConstituentIssue(issue) ? priorityConfig[issue.priority as keyof typeof priorityConfig] : null;
-  const supportPercentage = isBasicIssue(issue) ? issue.supportPercentage : 
-                           isConstituentIssue(issue) ? issue.supportPercentage : undefined;
+  const supportPercentage = 'supportPercentage' in issue ? issue.supportPercentage : undefined;
   const mentions = isConstituentIssue(issue) ? issue.mentions : undefined;
   const constituent = isConstituentIssue(issue) ? issue.constituent : undefined;
   const timeframe = isConstituentIssue(issue) ? issue.timeframe : undefined;
   const issueType = isConstituentIssue(issue) ? issue.type : undefined;
+  const createdAt = isConstituentIssue(issue) ? issue.createdAt : undefined;
   
   // Priority-specific fields
   const assignee = isPriorityItem(issue) ? issue.assignee : undefined;
@@ -120,133 +120,24 @@ export function UnifiedIssueCard({
     }
   };
 
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case 'high': return 'bg-red-100 text-red-800 border-red-200';
-      case 'medium': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'low': return 'bg-green-100 text-green-800 border-green-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
-    }
-  };
-
-  // Priorities variant - compact mobile-style layout
-  if (variant === 'priorities') {
-    return (
-      <Card 
-        draggable={true}
-        onDragStart={onDragStart}
-        onDragEnd={onDragEnd}
-        className={cn(
-          "cursor-move select-none transition-all hover:shadow-md",
-          isDragging && "opacity-50 transform rotate-2 shadow-lg"
-        )}
-      >
-        <CardHeader className="pb-2">
-          <div className="flex items-start gap-2">
-            <GripVertical className="h-4 w-4 text-gray-400 mt-1 flex-shrink-0" />
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-2">
-                {getTypeIcon(issueType)}
-                {priorityInfo && (
-                  <Badge 
-                    variant="outline" 
-                    className={cn("text-xs", getPriorityColor(isConstituentIssue(issue) ? issue.priority : 'low'))}
-                  >
-                    {isConstituentIssue(issue) ? issue.priority : 'low'}
-                  </Badge>
-                )}
-                {boardStatus === 'completed' && (
-                  <CheckCircle className="h-4 w-4 text-green-600" />
-                )}
-              </div>
-              <CardTitle className="text-sm font-medium line-clamp-2">
-                {issue.title}
-              </CardTitle>
-            </div>
-          </div>
-        </CardHeader>
-        
-        <CardContent className="pt-0">
-          <p className="text-xs text-muted-foreground line-clamp-2 mb-3">
-            {issue.description}
-          </p>
-          
-          {/* Key metrics */}
-          <div className="space-y-2 mb-3">
-            {supportPercentage && (
-              <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                <Users className="h-3 w-3" />
-                <span>{supportPercentage}% support</span>
-              </div>
-            )}
-            
-            {assignee && (
-              <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                <User className="h-3 w-3" />
-                <span>{assignee}</span>
-              </div>
-            )}
-            
-            {estimatedDuration && (
-              <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                <Clock className="h-3 w-3" />
-                <span>{estimatedDuration}</span>
-              </div>
-            )}
-          </div>
-          
-          {/* Dates */}
-          <div className="flex items-center justify-between text-xs text-muted-foreground mb-3">
-            {addedToBoardAt && (
-              <div className="flex items-center gap-1">
-                <Calendar className="h-3 w-3" />
-                <span>Added {formatDate(addedToBoardAt)}</span>
-              </div>
-            )}
-            {completedAt && (
-              <div className="text-green-600">
-                ✓ {formatDate(completedAt)}
-              </div>
-            )}
-          </div>
-          
-          {/* Public notes - expandable */}
-          {publicNotes && (
-            <div className="pt-2 border-t">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setIsExpanded(!isExpanded)}
-                className="h-auto p-0 text-xs text-blue-600 hover:text-blue-800 mb-2"
-              >
-                {isExpanded ? 'Hide' : 'Show'} public notes
-              </Button>
-              {isExpanded && (
-                <p className="text-xs text-muted-foreground p-2 bg-blue-50 rounded">
-                  {publicNotes}
-                </p>
-              )}
-            </div>
-          )}
-
-          {/* View Details button at bottom for priorities */}
-          <div className="mt-3 pt-2 border-t">
-            <Link to={`/issues/${issue.id}`}>
-              <Button variant="outline" size="sm" className="w-full">
-                View Details
-              </Button>
-            </Link>
-          </div>
-        </CardContent>
-      </Card>
-    );
-  }
-
-  // Default layout for issues and dashboard variants
+  // Single consistent layout for all variants
   return (
-    <Card className="hover:shadow-md transition-shadow">
+    <Card 
+      draggable={variant === 'priorities'}
+      onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
+      className={cn(
+        "hover:shadow-md transition-shadow",
+        variant === 'priorities' && "cursor-move select-none",
+        isDragging && "opacity-50 transform rotate-2 shadow-lg"
+      )}
+    >
       <CardHeader className="pb-3">
         <div className="flex items-start gap-3">
+          {variant === 'priorities' && (
+            <GripVertical className="h-4 w-4 text-gray-400 mt-1 flex-shrink-0" />
+          )}
+          
           {showCheckbox && (
             <Checkbox
               checked={isSelected}
@@ -292,6 +183,12 @@ export function UnifiedIssueCard({
                   {priorityInfo.label} Priority
                 </Badge>
               )}
+              {boardStatus === 'completed' && (
+                <Badge className="bg-green-100 text-green-800 text-xs gap-1">
+                  <CheckCircle className="h-3 w-3" />
+                  Completed
+                </Badge>
+              )}
             </div>
             
             <p className="text-sm text-muted-foreground line-clamp-3 mb-3">
@@ -306,6 +203,12 @@ export function UnifiedIssueCard({
                 )}
               </div>
             )}
+
+            {assignee && (
+              <div className="text-sm text-muted-foreground mb-2">
+                <strong>Assigned to:</strong> {assignee}
+              </div>
+            )}
           </div>
         </div>
       </CardHeader>
@@ -315,7 +218,10 @@ export function UnifiedIssueCard({
           <div className="flex items-center gap-1">
             <Calendar className="h-4 w-4" />
             <span>
-              {timeframe || (isConstituentIssue(issue) ? new Date(issue.createdAt).toLocaleDateString() : 'N/A')}
+              {timeframe || 
+               (addedToBoardAt && formatDate(addedToBoardAt)) ||
+               (createdAt && new Date(createdAt).toLocaleDateString()) || 
+               'N/A'}
             </span>
           </div>
           
@@ -332,7 +238,39 @@ export function UnifiedIssueCard({
               <span>{supportPercentage}% support</span>
             </div>
           )}
+
+          {estimatedDuration && (
+            <div className="flex items-center gap-1">
+              <Clock className="h-4 w-4" />
+              <span>{estimatedDuration}</span>
+            </div>
+          )}
         </div>
+
+        {completedAt && (
+          <div className="text-sm text-green-600 font-medium">
+            Completed on {formatDate(completedAt)}
+          </div>
+        )}
+
+        {/* Public notes - expandable for priorities */}
+        {publicNotes && (
+          <div className="pt-2 border-t">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="h-auto p-0 text-xs text-blue-600 hover:text-blue-800 mb-2"
+            >
+              {isExpanded ? 'Hide' : 'Show'} public notes
+            </Button>
+            {isExpanded && (
+              <p className="text-xs text-muted-foreground p-2 bg-blue-50 rounded">
+                {publicNotes}
+              </p>
+            )}
+          </div>
+        )}
         
         {hasRelatedIssues && (
           <div className="border-t pt-3">
@@ -361,9 +299,9 @@ export function UnifiedIssueCard({
           </div>
         )}
         
-        {/* Button section */}
+        {/* Button section - different button based on variant */}
         <div className="flex justify-between items-center pt-2">
-          {variant === 'dashboard' ? (
+          {variant === 'dashboard' || variant === 'priorities' ? (
             <div className="w-full flex justify-end">
               <Link to={`/issues/${issue.id}`}>
                 <Button variant="outline" size="sm">
