@@ -214,8 +214,8 @@ export const mockIndividualIssues: ConstituentIssue[] = [
       email: 'mdavis@email.com'
     },
     timeframe: '4 hours ago',
-    createdAt: '2025-07-20T08:00:00Z',
-    updatedAt: '2025-07-20T08:00:00Z'
+    createdAt: '2024-11-15T08:00:00Z',
+    updatedAt: '2024-11-15T08:00:00Z'
   },
   {
     id: 'i5',
@@ -488,8 +488,8 @@ export const mockAllIssues: ConstituentIssue[] = [
     source: 'facebook',
     priority: 'low',
     supportPercentage: 28,
-    createdAt: '2025-07-10T11:30:00Z',
-    updatedAt: '2025-07-15T16:45:00Z'
+    createdAt: '2024-10-20T11:30:00Z',
+    updatedAt: '2024-10-25T16:45:00Z'
   }
 ];
 
