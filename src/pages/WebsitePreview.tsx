@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import { WebsiteHeader } from '@/components/website/WebsiteHeader';
 import { WebsiteHero } from '@/components/website/WebsiteHero';
 import { WebsiteContactForm } from '@/components/website/WebsiteContactForm';
+import { WebsitePriorities } from '@/components/website/WebsitePriorities';
 
 const WebsitePreview = () => {
   const aboutRef = useRef<HTMLDivElement>(null);
@@ -68,13 +69,10 @@ const WebsitePreview = () => {
         </div>
       </section>
       
-      {/* Priorities Section - Placeholder */}
+      {/* Priorities Section */}
       <section ref={prioritiesRef} className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-foreground mb-4">Our Current Priorities</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Coming soon: Real-time public board showing community priorities and progress.
-          </p>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <WebsitePriorities />
         </div>
       </section>
       
