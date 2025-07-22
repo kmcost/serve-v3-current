@@ -20,16 +20,15 @@ export function PriorityCard({ item, isDragging, onDragStart, onDragEnd }: Prior
     status: item.boardStatus === 'completed' ? 'resolved' : 
             item.boardStatus === 'in-progress' ? 'in-progress' : 'new',
     type: item.type,
+    source: item.source,
     createdAt: item.addedToBoardAt,
+    updatedAt: item.updatedAt,
     timeframe: item.estimatedDuration,
     supportPercentage: item.supportPercentage,
     mentions: 0, // Default for non-trending items
     constituent: item.assignee ? {
-      id: '1',
       name: item.assignee,
-      email: '',
-      location: '',
-      demographics: {}
+      email: ''
     } : undefined
   };
 
