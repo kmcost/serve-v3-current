@@ -98,7 +98,7 @@ export default function Polls() {
             <TableRow className="hover:bg-transparent">
               <TableHead>Status</TableHead>
               <TableHead>Name</TableHead>
-              <TableHead># of Responses</TableHead>
+              <TableHead className="whitespace-nowrap">Responses</TableHead>
               <TableHead>Progress</TableHead>
             </TableRow>
           </TableHeader>
