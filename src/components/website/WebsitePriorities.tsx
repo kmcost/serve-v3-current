@@ -131,7 +131,7 @@ export function WebsitePriorities() {
 
       {/* Status Description */}
       <div className="text-center">
-        <p className="text-muted-foreground">
+        <p className="text-muted-foreground py-6">
           {getStatusDescription(activeFilter)}
         </p>
       </div>
