@@ -334,10 +334,10 @@ const Settings = () => {
             {notificationItems.map((item, index) => {
               const isLast = index === notificationItems.length - 1;
               return (
-                <div key={item.key} className={`flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 py-6 ${!isLast ? 'border-b border-border' : ''}`}>
-                  <div>
+                <div key={item.key} className={`flex items-center justify-between gap-2 sm:gap-4 py-6 ${!isLast ? 'border-b border-border' : ''}`}>
+                  <div className="flex-1">
                     <p className="font-medium">{item.title}</p>
-                    <p className="text-sm text-muted-foreground hidden sm:block">{item.description}</p>
+                    <p className="text-sm text-muted-foreground">{item.description}</p>
                   </div>
                   <Switch 
                     checked={item.checked} 
