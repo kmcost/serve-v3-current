@@ -162,7 +162,7 @@ export default function Polls() {
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                   </Button>
                 </TableHead>
-                <TableHead className="w-64">
+                <TableHead>
                   <Button variant="ghost" className="h-auto p-0 font-medium" onClick={() => handleSort('title')}>
                     Name
                     <ArrowUpDown className="ml-2 h-4 w-4" />
