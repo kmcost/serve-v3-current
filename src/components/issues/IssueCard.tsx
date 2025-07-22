@@ -111,19 +111,9 @@ export function IssueCard({
             )}
           </div>
           
-          {/* Desktop: Button in top-right corner */}
-          <div className="hidden md:block absolute top-4 right-4">
-            {variant === 'dashboard' ? (
-              <Button 
-                asChild
-                variant="outline"
-                size="sm"
-              >
-                <Link to={`/issues/${issue.id}`}>
-                  View Details
-                </Link>
-              </Button>
-            ) : (
+          {/* Desktop: Button in top-right corner (only for issues variant) */}
+          {variant === 'issues' && (
+            <div className="hidden md:block absolute top-4 right-4">
               <Button 
                 onClick={handleMoveToPriorities}
                 size="sm"
@@ -132,8 +122,8 @@ export function IssueCard({
                 <ArrowRight className="h-4 w-4" />
                 Move to Priorities
               </Button>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </CardHeader>
       
@@ -188,8 +178,8 @@ export function IssueCard({
           </div>
         )}
         
-        {/* Mobile: Button at bottom of card */}
-        <div className="md:hidden pt-2">
+        {/* Bottom button: Always shown for dashboard variant, mobile-only for issues variant */}
+        <div className={variant === 'dashboard' ? 'pt-2' : 'md:hidden pt-2'}>
           {variant === 'dashboard' ? (
             <Button 
               asChild
