@@ -11,12 +11,7 @@ import {
   Users, 
   ChevronDown, 
   ChevronUp,
-  ArrowRight,
-  Globe,
-  Mail,
-  Facebook,
-  Smartphone,
-  Bot
+  ArrowRight
 } from 'lucide-react';
 import { ConstituentIssue } from '@/types/core';
 import { getRelatedIssues } from '@/services/mockData';
@@ -28,14 +23,6 @@ interface IssueCardProps {
   onMoveToPriorities?: (issueId: string) => void;
   showCheckbox?: boolean;
 }
-
-const sourceConfig = {
-  'website': { icon: Globe, label: 'Website', color: 'bg-blue-100 text-blue-800' },
-  'email': { icon: Mail, label: 'Email', color: 'bg-green-100 text-green-800' },
-  'facebook': { icon: Facebook, label: 'Facebook', color: 'bg-blue-100 text-blue-800' },
-  'sms': { icon: Smartphone, label: 'SMS', color: 'bg-purple-100 text-purple-800' },
-  'ai-detected': { icon: Bot, label: 'AI Detected', color: 'bg-orange-100 text-orange-800' }
-};
 
 const statusConfig = {
   'new': { label: 'New', color: 'bg-yellow-100 text-yellow-800' },
@@ -59,10 +46,8 @@ export function IssueCard({
 }: IssueCardProps) {
   const [showRelated, setShowRelated] = useState(false);
   
-  const sourceInfo = sourceConfig[issue.source as keyof typeof sourceConfig];
   const statusInfo = statusConfig[issue.status as keyof typeof statusConfig];
   const priorityInfo = priorityConfig[issue.priority as keyof typeof priorityConfig];
-  const SourceIcon = sourceInfo?.icon;
   
   const relatedIssues = getRelatedIssues(issue.id);
   const hasRelatedIssues = relatedIssues.length > 0;
@@ -76,7 +61,7 @@ export function IssueCard({
   };
 
   return (
-    <Card className="hover:shadow-md transition-shadow">
+    <Card className="hover:shadow-md transition-shadow relative">
       <CardHeader className="pb-3">
         <div className="flex items-start gap-3">
           {showCheckbox && (
@@ -87,20 +72,13 @@ export function IssueCard({
             />
           )}
           
-          <div className="flex-1">
+          <div className="flex-1 pr-4 md:pr-0">
             <div className="flex items-start justify-between gap-2 mb-2">
-              <CardTitle className="text-lg font-semibold line-clamp-2">
-                {issue.title}
-              </CardTitle>
-              
-              <div className="flex flex-col gap-1 flex-shrink-0">
-                {sourceInfo && (
-                  <Badge className={`${sourceInfo.color} gap-1 text-xs whitespace-nowrap`}>
-                    <SourceIcon className="h-3 w-3" />
-                    {sourceInfo.label}
-                  </Badge>
-                )}
-              </div>
+              <Link to={`/issues/${issue.id}`} className="flex-1">
+                <CardTitle className="text-lg font-semibold line-clamp-2 hover:text-primary transition-colors cursor-pointer">
+                  {issue.title}
+                </CardTitle>
+              </Link>
             </div>
             
             <div className="flex flex-wrap gap-2 mb-2">
@@ -112,11 +90,6 @@ export function IssueCard({
               {priorityInfo && (
                 <Badge className={`${priorityInfo.color} text-xs`}>
                   {priorityInfo.label} Priority
-                </Badge>
-              )}
-              {issue.type === 'community' && issue.supportPercentage && (
-                <Badge variant="outline" className="text-xs">
-                  {issue.supportPercentage}% Support
                 </Badge>
               )}
             </div>
@@ -133,6 +106,18 @@ export function IssueCard({
                 )}
               </div>
             )}
+          </div>
+          
+          {/* Desktop: Button in top-right corner */}
+          <div className="hidden md:block absolute top-4 right-4">
+            <Button 
+              onClick={handleMoveToPriorities}
+              size="sm"
+              className="gap-2"
+            >
+              <ArrowRight className="h-4 w-4" />
+              Move to Priorities
+            </Button>
           </div>
         </div>
       </CardHeader>
@@ -188,17 +173,12 @@ export function IssueCard({
           </div>
         )}
         
-        <div className="flex justify-between items-center pt-2">
-          <Link to={`/issues/${issue.id}`}>
-            <Button variant="outline" size="sm">
-              View Details
-            </Button>
-          </Link>
-          
+        {/* Mobile: Button at bottom of card */}
+        <div className="md:hidden pt-2">
           <Button 
             onClick={handleMoveToPriorities}
             size="sm"
-            className="gap-2"
+            className="gap-2 w-full"
           >
             <ArrowRight className="h-4 w-4" />
             Move to Priorities
