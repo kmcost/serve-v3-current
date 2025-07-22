@@ -1,4 +1,4 @@
-import { ConstituentIssue, DataSource, Poll, PriorityItem } from '../types/core';
+import { ConstituentIssue, DataSource, Poll, PriorityItem, StatusChange, generateUniqueId } from '../types/core';
 
 export const mockDataSources: DataSource[] = [
   {
@@ -36,209 +36,7 @@ export const mockDataSources: DataSource[] = [
 export const mockValidatedIssues: ConstituentIssue[] = [
   {
     id: 'v1',
-    title: 'Youth Sports Program Expansion',
-    description: 'Expanding youth sports programs and facility improvements at local parks',
-    type: 'community',
-    status: 'validated',
-    source: 'ai-detected',
-    priority: 'high',
-    supportPercentage: 82,
-    createdAt: '2025-07-01',
-    updatedAt: '2025-07-15'
-  },
-  {
-    id: 'v2',
-    title: 'Community Center Funding',
-    description: 'Increased funding for community center improvements and programs',
-    type: 'community',
-    status: 'validated', 
-    source: 'ai-detected',
-    priority: 'high',
-    supportPercentage: 74,
-    createdAt: '2025-07-02',
-    updatedAt: '2025-07-14'
-  },
-  {
-    id: 'v3',
-    title: 'Community Pool Reopening',
-    description: 'Reopening community pool facility for summer recreation',
-    type: 'community',
-    status: 'validated',
-    source: 'ai-detected',
-    priority: 'high',
-    supportPercentage: 70,
-    createdAt: '2025-07-03',
-    updatedAt: '2025-07-16'
-  },
-  {
-    id: 'v4',
-    title: 'Main Street Bike Lane Development',
-    description: 'Installation of dedicated bike lanes along Main Street corridor',
-    type: 'community',
-    status: 'validated',
-    source: 'ai-detected',
-    priority: 'medium',
-    supportPercentage: 65,
-    createdAt: '2025-07-04',
-    updatedAt: '2025-07-17'
-  },
-  {
-    id: 'v5',
-    title: 'Downtown Parking Solutions',
-    description: 'Implementation of new parking meters and expanded public parking areas',
-    type: 'community',
-    status: 'validated',
-    source: 'ai-detected',
-    priority: 'medium',
-    supportPercentage: 58,
-    createdAt: '2025-07-05',
-    updatedAt: '2025-07-18'
-  }
-];
-
-export const mockTrendingIssues: ConstituentIssue[] = [
-  {
-    id: 't1',
-    title: 'Extended Library Hours',
-    description: 'Requests for extended evening and weekend library hours',
-    type: 'trending',
-    status: undefined,
-    source: 'ai-detected',
-    priority: undefined,
-    mentions: 12,
-    timeframe: 'this week',
-    createdAt: '2025-07-18',
-    updatedAt: '2025-07-20'
-  },
-  {
-    id: 't2',
-    title: 'Dog Park Construction',
-    description: 'Multiple requests for a dedicated dog park in the downtown area',
-    type: 'trending',
-    status: undefined,
-    source: 'ai-detected',
-    priority: 'medium',
-    mentions: 8,
-    timeframe: 'this week',
-    createdAt: '2025-07-17',
-    updatedAt: '2025-07-20'
-  },
-  {
-    id: 't3',
-    title: 'Food Truck Permit Simplification',
-    description: 'Streamlining the permit process for food truck vendors',
-    type: 'trending',
-    status: 'in-progress',
-    source: 'ai-detected',
-    priority: 'low',
-    mentions: 6,
-    timeframe: 'past 2 weeks',
-    createdAt: '2025-07-10',
-    updatedAt: '2025-07-19'
-  },
-  {
-    id: 't4',
-    title: 'Street Festival Organization',
-    description: 'Community interest in organizing regular street festivals',
-    type: 'trending',
-    status: undefined,
-    source: 'ai-detected',
-    priority: 'low',
-    mentions: 5,
-    timeframe: 'past month',
-    createdAt: '2025-06-25',
-    updatedAt: '2025-07-15'
-  }
-];
-
-export const mockIndividualIssues: ConstituentIssue[] = [
-  {
-    id: 'i1',
-    title: 'Broken streetlight on Elm St',
-    description: 'Streetlight has been out for a week, making intersection dangerous',
-    type: 'individual',
-    status: undefined,
-    source: 'website',
-    priority: undefined,
-    constituent: {
-      name: 'Maria Rodriguez',
-      email: 'maria.r@email.com'
-    },
-    timeframe: '2 hours ago',
-    createdAt: '2025-07-20T10:00:00Z',
-    updatedAt: '2025-07-20T10:00:00Z'
-  },
-  {
-    id: 'i2',
-    title: 'Pothole on Oak Avenue',
-    description: 'Large pothole near the school causing traffic issues',
-    type: 'individual',
-    status: undefined,
-    source: 'website',
-    priority: undefined,
-    constituent: {
-      name: 'John Smith',
-      email: 'j.smith@email.com',
-      phone: '555-0123'
-    },
-    timeframe: '1 day ago',
-    createdAt: '2025-07-19T14:30:00Z',
-    updatedAt: '2025-07-19T14:30:00Z'
-  },
-  {
-    id: 'i3',
-    title: 'Noise complaint - construction hours',
-    description: 'Construction starting too early in residential area',
-    type: 'individual',
-    status: 'in-progress',
-    source: 'email',
-    priority: 'low',
-    constituent: {
-      name: 'Sarah Johnson',
-      email: 'sarah.johnson@email.com'
-    },
-    timeframe: '3 days ago',
-    createdAt: '2025-07-17T08:15:00Z',
-    updatedAt: '2025-07-18T16:45:00Z'
-  },
-  {
-    id: 'i4',
-    title: 'Sidewalk accessibility issue',
-    description: 'Broken sidewalk making it difficult for wheelchair access',
-    type: 'individual',
-    status: undefined,
-    source: 'website',
-    priority: undefined,
-    constituent: {
-      name: 'Michael Davis',
-      email: 'mdavis@email.com'
-    },
-    timeframe: '4 hours ago',
-    createdAt: '2025-07-20T08:00:00Z',
-    updatedAt: '2025-07-20T08:00:00Z'
-  },
-  {
-    id: 'i5',
-    title: 'Tree trimming request',
-    description: 'Overgrown tree blocking street signs on Maple Street',
-    type: 'individual',
-    status: 'resolved',
-    source: 'website',
-    priority: 'low',
-    constituent: {
-      name: 'Lisa Chen',
-      email: 'lisa.chen@email.com'
-    },
-    timeframe: '1 week ago',
-    createdAt: '2024-11-13T11:20:00Z',
-    updatedAt: '2024-11-13T11:20:00Z'
-  }
-];
-
-export const mockPriorityItems: PriorityItem[] = [
-  // TODO Column
-  {
-    id: 'p1',
+    uniqueId: 'ISU-001',
     title: 'Youth Sports Program Expansion',
     description: 'Expanding youth sports programs and facility improvements at local parks',
     type: 'community',
@@ -248,13 +46,197 @@ export const mockPriorityItems: PriorityItem[] = [
     supportPercentage: 82,
     createdAt: '2025-07-01',
     updatedAt: '2025-07-15',
-    boardStatus: 'todo',
-    addedToBoardAt: '2025-07-18T09:00:00Z',
-    estimatedDuration: '3-4 months',
-    publicNotes: 'Community strongly supports this initiative. Working with Parks Department on feasibility study.',
+    tags: ['Parks & Recreation', 'Community Services'],
+    location: 'Central Park District',
+    timeline: [
+      { id: '1', status: 'submitted', timestamp: '2025-07-01T09:00:00Z', changedBy: 'AI System' },
+      { id: '2', status: 'reviewed', timestamp: '2025-07-02T14:30:00Z', changedBy: 'Parks Department' },
+      { id: '3', status: 'validated', timestamp: '2025-07-15T10:00:00Z', changedBy: 'City Council', notes: 'Approved for community validation poll' }
+    ],
+    assignedTo: 'Parks & Recreation Department',
+    internalNotes: ['Community strongly supports this initiative', 'Budget allocation approved'],
+    estimatedResolution: '3-4 months'
   },
   {
-    id: 'p2',
+    id: 'v2',
+    uniqueId: 'ISU-002',
+    title: 'Community Center Funding',
+    description: 'Increased funding for community center improvements and programs',
+    type: 'community',
+    status: 'validated', 
+    source: 'ai-detected',
+    priority: 'high',
+    supportPercentage: 74,
+    createdAt: '2025-07-02',
+    updatedAt: '2025-07-14',
+    tags: ['Community Services', 'Budget & Finance'],
+    location: 'Downtown Community Center',
+    timeline: [
+      { id: '1', status: 'submitted', timestamp: '2025-07-02T09:00:00Z', changedBy: 'AI System' },
+      { id: '2', status: 'validated', timestamp: '2025-07-14T11:00:00Z', changedBy: 'Budget Committee' }
+    ],
+    assignedTo: 'Budget Committee',
+    internalNotes: ['Funding proposal submitted', 'Community impact assessment completed'],
+    estimatedResolution: '2-3 months'
+  },
+  {
+    id: 'v3',
+    uniqueId: 'ISU-003',
+    title: 'Community Pool Reopening',
+    description: 'Reopening community pool facility for summer recreation',
+    type: 'community',
+    status: 'validated',
+    source: 'ai-detected',
+    priority: 'high',
+    supportPercentage: 70,
+    createdAt: '2025-07-03',
+    updatedAt: '2025-07-16',
+    tags: ['Parks & Recreation', 'Public Safety'],
+    location: 'Riverside Pool Complex',
+    timeline: [
+      { id: '1', status: 'submitted', timestamp: '2025-07-03T09:00:00Z', changedBy: 'AI System' },
+      { id: '2', status: 'validated', timestamp: '2025-07-16T15:00:00Z', changedBy: 'Parks Department' }
+    ],
+    assignedTo: 'Parks & Recreation Department',
+    internalNotes: ['Safety inspection scheduled', 'Lifeguard hiring in progress'],
+    estimatedResolution: '1 month'
+  },
+  {
+    id: 'v4',
+    uniqueId: 'ISU-004',
+    title: 'Main Street Bike Lane Development',
+    description: 'Installation of dedicated bike lanes along Main Street corridor',
+    type: 'community',
+    status: 'validated',
+    source: 'ai-detected',
+    priority: 'medium',
+    supportPercentage: 65,
+    createdAt: '2025-07-04',
+    updatedAt: '2025-07-17',
+    tags: ['Transportation', 'Infrastructure & Roads'],
+    location: 'Main Street Corridor',
+    timeline: [
+      { id: '1', status: 'submitted', timestamp: '2025-07-04T09:00:00Z', changedBy: 'AI System' },
+      { id: '2', status: 'validated', timestamp: '2025-07-17T12:00:00Z', changedBy: 'Transportation Committee' }
+    ],
+    assignedTo: 'Transportation Department',
+    internalNotes: ['Traffic impact study required', 'Public consultation scheduled'],
+    estimatedResolution: '6-8 months'
+  },
+  {
+    id: 'v5',
+    uniqueId: 'ISU-005',
+    title: 'Downtown Parking Solutions',
+    description: 'Implementation of new parking meters and expanded public parking areas',
+    type: 'community',
+    status: 'validated',
+    source: 'ai-detected',
+    priority: 'medium',
+    supportPercentage: 58,
+    createdAt: '2025-07-05',
+    updatedAt: '2025-07-18',
+    tags: ['Transportation', 'Economic Development'],
+    location: 'Downtown District',
+    timeline: [
+      { id: '1', status: 'submitted', timestamp: '2025-07-05T09:00:00Z', changedBy: 'AI System' },
+      { id: '2', status: 'validated', timestamp: '2025-07-18T10:00:00Z', changedBy: 'Planning Committee' }
+    ],
+    assignedTo: 'Planning Department',
+    internalNotes: ['Merchant feedback collected', 'Parking study completed'],
+    estimatedResolution: '4-5 months'
+  }
+];
+
+export const mockTrendingIssues: ConstituentIssue[] = [
+  {
+    id: 't1',
+    uniqueId: 'ISU-006',
+    title: 'Extended Library Hours',
+    description: 'Requests for extended evening and weekend library hours',
+    type: 'trending',
+    status: undefined,
+    source: 'ai-detected',
+    priority: undefined,
+    mentions: 12,
+    timeframe: 'this week',
+    createdAt: '2025-07-18',
+    updatedAt: '2025-07-20',
+    tags: ['Community Services', 'Education'],
+    timeline: [
+      { id: '1', status: 'submitted', timestamp: '2025-07-18T09:00:00Z', changedBy: 'AI System' }
+    ],
+    internalNotes: ['Multiple social media mentions', 'Library board notified'],
+    estimatedResolution: '2-3 weeks'
+  },
+  {
+    id: 't2',
+    uniqueId: 'ISU-007',
+    title: 'Dog Park Construction',
+    description: 'Multiple requests for a dedicated dog park in the downtown area',
+    type: 'trending',
+    status: undefined,
+    source: 'ai-detected',
+    priority: 'medium',
+    mentions: 8,
+    timeframe: 'this week',
+    createdAt: '2025-07-17',
+    updatedAt: '2025-07-20',
+    tags: ['Parks & Recreation', 'Community Services'],
+    location: 'Downtown Area',
+    timeline: [
+      { id: '1', status: 'submitted', timestamp: '2025-07-17T09:00:00Z', changedBy: 'AI System' }
+    ],
+    internalNotes: ['Site survey needed', 'Pet owner community engaged'],
+    estimatedResolution: '6-8 months'
+  },
+  {
+    id: 't3',
+    uniqueId: 'ISU-008',
+    title: 'Food Truck Permit Simplification',
+    description: 'Streamlining the permit process for food truck vendors',
+    type: 'trending',
+    status: 'in-progress',
+    source: 'ai-detected',
+    priority: 'low',
+    mentions: 6,
+    timeframe: 'past 2 weeks',
+    createdAt: '2025-07-10',
+    updatedAt: '2025-07-19',
+    tags: ['Economic Development', 'Budget & Finance'],
+    timeline: [
+      { id: '1', status: 'submitted', timestamp: '2025-07-10T09:00:00Z', changedBy: 'AI System' },
+      { id: '2', status: 'in-progress', timestamp: '2025-07-19T14:00:00Z', changedBy: 'Business Licensing' }
+    ],
+    assignedTo: 'Business Licensing Department',
+    internalNotes: ['Vendor feedback collected', 'Process review initiated'],
+    estimatedResolution: '1-2 months'
+  },
+  {
+    id: 't4',
+    uniqueId: 'ISU-009',
+    title: 'Street Festival Organization',
+    description: 'Community interest in organizing regular street festivals',
+    type: 'trending',
+    status: undefined,
+    source: 'ai-detected',
+    priority: 'low',
+    mentions: 5,
+    timeframe: 'past month',
+    createdAt: '2025-06-25',
+    updatedAt: '2025-07-15',
+    tags: ['Community Services', 'Economic Development'],
+    timeline: [
+      { id: '1', status: 'submitted', timestamp: '2025-06-25T09:00:00Z', changedBy: 'AI System' }
+    ],
+    internalNotes: ['Local business interest high', 'Event planning committee contacted'],
+    estimatedResolution: '3-4 months'
+  }
+];
+
+export const mockIndividualIssues: ConstituentIssue[] = [
+  {
+    id: 'i1',
+    uniqueId: 'ISU-010',
     title: 'Broken streetlight on Elm St',
     description: 'Streetlight has been out for a week, making intersection dangerous',
     type: 'individual',
@@ -268,6 +250,168 @@ export const mockPriorityItems: PriorityItem[] = [
     timeframe: '2 hours ago',
     createdAt: '2025-07-20T10:00:00Z',
     updatedAt: '2025-07-20T10:00:00Z',
+    tags: ['Infrastructure & Roads', 'Public Safety'],
+    location: 'Elm Street & Oak Avenue Intersection',
+    timeline: [
+      { id: '1', status: 'submitted', timestamp: '2025-07-20T10:00:00Z', changedBy: 'Maria Rodriguez' }
+    ],
+    internalNotes: ['Safety hazard reported', 'Utilities department contacted'],
+    estimatedResolution: '1-2 weeks'
+  },
+  {
+    id: 'i2',
+    uniqueId: 'ISU-011',
+    title: 'Pothole on Oak Avenue',
+    description: 'Large pothole near the school causing traffic issues',
+    type: 'individual',
+    status: undefined,
+    source: 'website',
+    priority: undefined,
+    constituent: {
+      name: 'John Smith',
+      email: 'j.smith@email.com',
+      phone: '555-0123'
+    },
+    timeframe: '1 day ago',
+    createdAt: '2025-07-19T14:30:00Z',
+    updatedAt: '2025-07-19T14:30:00Z',
+    tags: ['Infrastructure & Roads', 'Public Safety'],
+    location: 'Oak Avenue near Elementary School',
+    timeline: [
+      { id: '1', status: 'submitted', timestamp: '2025-07-19T14:30:00Z', changedBy: 'John Smith' }
+    ],
+    internalNotes: ['School zone priority', 'Road crew scheduled'],
+    estimatedResolution: '3-5 days'
+  },
+  {
+    id: 'i3',
+    uniqueId: 'ISU-012',
+    title: 'Noise complaint - construction hours',
+    description: 'Construction starting too early in residential area',
+    type: 'individual',
+    status: 'in-progress',
+    source: 'email',
+    priority: 'low',
+    constituent: {
+      name: 'Sarah Johnson',
+      email: 'sarah.johnson@email.com'
+    },
+    timeframe: '3 days ago',
+    createdAt: '2025-07-17T08:15:00Z',
+    updatedAt: '2025-07-18T16:45:00Z',
+    tags: ['Public Safety', 'Community Services'],
+    location: 'Maple Street Residential Area',
+    timeline: [
+      { id: '1', status: 'submitted', timestamp: '2025-07-17T08:15:00Z', changedBy: 'Sarah Johnson' },
+      { id: '2', status: 'in-progress', timestamp: '2025-07-18T16:45:00Z', changedBy: 'Code Enforcement' }
+    ],
+    assignedTo: 'Code Enforcement',
+    internalNotes: ['Contractor contacted', 'New hours policy needed'],
+    estimatedResolution: '1 week'
+  },
+  {
+    id: 'i4',
+    uniqueId: 'ISU-013',
+    title: 'Sidewalk accessibility issue',
+    description: 'Broken sidewalk making it difficult for wheelchair access',
+    type: 'individual',
+    status: undefined,
+    source: 'website',
+    priority: undefined,
+    constituent: {
+      name: 'Michael Davis',
+      email: 'mdavis@email.com'
+    },
+    timeframe: '4 hours ago',
+    createdAt: '2025-07-20T08:00:00Z',
+    updatedAt: '2025-07-20T08:00:00Z',
+    tags: ['Infrastructure & Roads', 'Public Safety'],
+    location: 'Pine Street Sidewalk',
+    timeline: [
+      { id: '1', status: 'submitted', timestamp: '2025-07-20T08:00:00Z', changedBy: 'Michael Davis' }
+    ],
+    internalNotes: ['ADA compliance issue', 'Priority repair needed'],
+    estimatedResolution: '2-3 weeks'
+  },
+  {
+    id: 'i5',
+    uniqueId: 'ISU-014',
+    title: 'Tree trimming request',
+    description: 'Overgrown tree blocking street signs on Maple Street',
+    type: 'individual',
+    status: 'resolved',
+    source: 'website',
+    priority: 'low',
+    constituent: {
+      name: 'Lisa Chen',
+      email: 'lisa.chen@email.com'
+    },
+    timeframe: '1 week ago',
+    createdAt: '2024-11-13T11:20:00Z',
+    updatedAt: '2024-11-13T11:20:00Z',
+    tags: ['Parks & Recreation', 'Public Safety'],
+    location: 'Maple Street',
+    timeline: [
+      { id: '1', status: 'submitted', timestamp: '2024-11-13T11:20:00Z', changedBy: 'Lisa Chen' },
+      { id: '2', status: 'resolved', timestamp: '2024-11-20T10:00:00Z', changedBy: 'Parks Department' }
+    ],
+    assignedTo: 'Parks Department',
+    internalNotes: ['Tree crew dispatched', 'Work completed successfully'],
+    estimatedResolution: '1 week'
+  }
+];
+
+export const mockPriorityItems: PriorityItem[] = [
+  // TODO Column
+  {
+    id: 'p1',
+    uniqueId: 'ISU-015',
+    title: 'Youth Sports Program Expansion',
+    description: 'Expanding youth sports programs and facility improvements at local parks',
+    type: 'community',
+    status: 'validated',
+    source: 'ai-detected',
+    priority: 'high',
+    supportPercentage: 82,
+    createdAt: '2025-07-01',
+    updatedAt: '2025-07-15',
+    tags: ['Parks & Recreation', 'Community Services'],
+    location: 'Central Park District',
+    timeline: [
+      { id: '1', status: 'submitted', timestamp: '2025-07-01T09:00:00Z', changedBy: 'AI System' },
+      { id: '2', status: 'validated', timestamp: '2025-07-15T10:00:00Z', changedBy: 'City Council' }
+    ],
+    assignedTo: 'Parks & Recreation Department',
+    internalNotes: ['Community strongly supports this initiative', 'Working with Parks Department on feasibility study'],
+    estimatedResolution: '3-4 months',
+    boardStatus: 'todo',
+    addedToBoardAt: '2025-07-18T09:00:00Z',
+    estimatedDuration: '3-4 months',
+    publicNotes: 'Community strongly supports this initiative. Working with Parks Department on feasibility study.',
+  },
+  {
+    id: 'p2',
+    uniqueId: 'ISU-016',
+    title: 'Broken streetlight on Elm St',
+    description: 'Streetlight has been out for a week, making intersection dangerous',
+    type: 'individual',
+    status: undefined,
+    source: 'website',
+    priority: undefined,
+    constituent: {
+      name: 'Maria Rodriguez',
+      email: 'maria.r@email.com'
+    },
+    timeframe: '2 hours ago',
+    createdAt: '2025-07-20T10:00:00Z',
+    updatedAt: '2025-07-20T10:00:00Z',
+    tags: ['Infrastructure & Roads', 'Public Safety'],
+    location: 'Elm Street & Oak Avenue Intersection',
+    timeline: [
+      { id: '1', status: 'submitted', timestamp: '2025-07-20T10:00:00Z', changedBy: 'Maria Rodriguez' }
+    ],
+    internalNotes: ['Safety hazard reported', 'Utilities department contacted'],
+    estimatedResolution: '1-2 weeks',
     boardStatus: 'todo',
     addedToBoardAt: '2025-07-20T11:00:00Z',
     estimatedDuration: '1-2 weeks',
@@ -276,6 +420,7 @@ export const mockPriorityItems: PriorityItem[] = [
   // IN PROGRESS Column
   {
     id: 'p3',
+    uniqueId: 'ISU-017',
     title: 'Community Center Funding',
     description: 'Increased funding for community center improvements and programs',
     type: 'community',
@@ -285,6 +430,15 @@ export const mockPriorityItems: PriorityItem[] = [
     supportPercentage: 74,
     createdAt: '2025-07-02',
     updatedAt: '2025-07-14',
+    tags: ['Community Services', 'Budget & Finance'],
+    location: 'Downtown Community Center',
+    timeline: [
+      { id: '1', status: 'submitted', timestamp: '2025-07-02T09:00:00Z', changedBy: 'AI System' },
+      { id: '2', status: 'validated', timestamp: '2025-07-14T11:00:00Z', changedBy: 'Budget Committee' }
+    ],
+    assignedTo: 'Budget Committee',
+    internalNotes: ['Funding proposal submitted', 'Community impact assessment completed'],
+    estimatedResolution: '2-3 months',
     boardStatus: 'in-progress',
     addedToBoardAt: '2025-07-16T14:00:00Z',
     assignee: 'City Council Budget Committee',
@@ -293,6 +447,7 @@ export const mockPriorityItems: PriorityItem[] = [
   },
   {
     id: 'p4',
+    uniqueId: 'ISU-018',
     title: 'Sidewalk accessibility issue',
     description: 'Broken sidewalk making it difficult for wheelchair access',
     type: 'individual',
@@ -306,15 +461,22 @@ export const mockPriorityItems: PriorityItem[] = [
     timeframe: '4 hours ago',
     createdAt: '2025-07-20T08:00:00Z',
     updatedAt: '2025-07-20T08:00:00Z',
+    tags: ['Infrastructure & Roads', 'Public Safety'],
+    location: 'Pine Street Sidewalk',
+    timeline: [
+      { id: '1', status: 'submitted', timestamp: '2025-07-20T08:00:00Z', changedBy: 'Michael Davis' },
+      { id: '2', status: 'in-progress', timestamp: '2025-07-21T09:00:00Z', changedBy: 'Public Works Department' }
+    ],
+    assignedTo: 'Public Works Department',
+    estimatedDuration: '2-3 weeks',
     boardStatus: 'in-progress',
     addedToBoardAt: '2025-07-20T09:00:00Z',
-    assignee: 'Public Works Department',
-    estimatedDuration: '2-3 weeks',
     publicNotes: 'Site inspection completed. Contractor scheduled for accessibility improvements.',
   },
   // COMPLETED Column
   {
     id: 'p5',
+    uniqueId: 'ISU-019',
     title: 'Community Pool Reopening',
     description: 'Reopening community pool facility for summer recreation',
     type: 'community',
@@ -324,6 +486,15 @@ export const mockPriorityItems: PriorityItem[] = [
     supportPercentage: 70,
     createdAt: '2025-07-03',
     updatedAt: '2025-07-16',
+    tags: ['Parks & Recreation', 'Public Safety'],
+    location: 'Riverside Pool Complex',
+    timeline: [
+      { id: '1', status: 'submitted', timestamp: '2025-07-03T09:00:00Z', changedBy: 'AI System' },
+      { id: '2', status: 'resolved', timestamp: '2025-07-19T16:00:00Z', changedBy: 'Parks and Recreation' }
+    ],
+    assignedTo: 'Parks and Recreation',
+    internalNotes: ['Safety inspections passed', 'Lifeguards hired and trained'],
+    estimatedResolution: '1 month',
     boardStatus: 'completed',
     addedToBoardAt: '2025-07-10T10:00:00Z',
     completedAt: '2025-07-19T16:00:00Z',
@@ -334,6 +505,7 @@ export const mockPriorityItems: PriorityItem[] = [
   },
   {
     id: 'p6',
+    uniqueId: 'ISU-020',
     title: 'Noise complaint - construction hours',
     description: 'Construction starting too early in residential area - RESOLVED',
     type: 'individual',
@@ -347,6 +519,15 @@ export const mockPriorityItems: PriorityItem[] = [
     timeframe: '3 days ago',
     createdAt: '2025-07-17T08:15:00Z',
     updatedAt: '2025-07-18T16:45:00Z',
+    tags: ['Public Safety', 'Community Services'],
+    location: 'Maple Street Residential Area',
+    timeline: [
+      { id: '1', status: 'submitted', timestamp: '2025-07-17T08:15:00Z', changedBy: 'Sarah Johnson' },
+      { id: '2', status: 'resolved', timestamp: '2025-07-18T17:00:00Z', changedBy: 'Code Enforcement' }
+    ],
+    assignedTo: 'Code Enforcement',
+    internalNotes: ['Contractor contacted', 'New hours policy implemented'],
+    estimatedResolution: '1 week',
     boardStatus: 'completed',
     addedToBoardAt: '2025-07-17T09:00:00Z',
     completedAt: '2025-07-18T17:00:00Z',
@@ -357,153 +538,33 @@ export const mockPriorityItems: PriorityItem[] = [
   },
 ];
 
-// Enhanced comprehensive issues data for the Issues page
 export const mockAllIssues: ConstituentIssue[] = [
-  // From validated issues
   ...mockValidatedIssues,
-  
-  // From trending issues  
   ...mockTrendingIssues,
-  
-  // From individual issues
   ...mockIndividualIssues,
-  
-  // Additional issues from different sources to demonstrate scale and variety
-  {
-    id: 'e1',
-    title: 'Parking meter hours extension downtown',
-    description: 'Business owners requesting extended parking meter hours to support evening customers',
-    type: 'community',
-    status: undefined,
-    source: 'email',
-    priority: 'medium',
-    supportPercentage: 45,
-    createdAt: '2025-07-15T09:30:00Z',
-    updatedAt: '2025-07-15T09:30:00Z',
-    relatedIssues: ['1'] // Related to parking enforcement issue
-  },
-  
-  {
-    id: 'e2',
-    title: 'Downtown parking availability concerns',
-    description: 'Multiple reports of insufficient parking spaces during peak hours',
-    type: 'trending',
-    status: undefined,
-    source: 'facebook',
-    priority: 'medium',
-    mentions: 7,
-    timeframe: 'past week',
-    createdAt: '2025-07-14T14:15:00Z',
-    updatedAt: '2025-07-19T10:30:00Z',
-    relatedIssues: ['1', 'e1'] // Related to other parking issues
-  },
-  
-  {
-    id: 'e3',
-    title: 'Street light maintenance on Pine St',
-    description: 'Flickering streetlight causing safety concerns for pedestrians',
-    type: 'individual',
-    status: undefined,
-    source: 'website',
-    priority: undefined,
-    constituent: {
-      name: 'David Wilson',
-      email: 'david.w@email.com',
-      phone: '555-0198'
-    },
-    timeframe: '1 hour ago',
-    createdAt: '2025-07-20T11:00:00Z',
-    updatedAt: '2025-07-20T11:00:00Z',
-    relatedIssues: ['2'] // Related to street lighting issue
-  },
-  
-  {
-    id: 'e4',
-    title: 'Community garden space request',
-    description: 'Residents interested in creating community garden in vacant lot on Maple Ave',
-    type: 'community',
-    status: undefined,
-    source: 'website',
-    priority: undefined,
-    supportPercentage: 35,
-    createdAt: '2025-07-12T16:20:00Z',
-    updatedAt: '2025-07-18T09:45:00Z'
-  },
-  
-  {
-    id: 'e5',
-    title: 'Youth basketball court improvements',
-    description: 'Request for resurfacing and new hoops at Jefferson Park basketball court',
-    type: 'individual',
-    status: undefined,
-    source: 'website',
-    priority: undefined,
-    constituent: {
-      name: 'Carlos Rodriguez',
-      email: 'carlos.r@email.com'
-    },
-    timeframe: '2 days ago',
-    createdAt: '2025-07-18T13:30:00Z',
-    updatedAt: '2025-07-18T13:30:00Z',
-    relatedIssues: ['3'] // Related to youth sports/recreation
-  },
-  
-  {
-    id: 'e6',
-    title: 'Crosswalk safety improvements',
-    description: 'Petition for better crosswalk lighting and signage at Main St intersection',
-    type: 'trending',
-    status: undefined,
-    source: 'ai-detected',
-    priority: undefined,
-    mentions: 9,
-    timeframe: 'this week',
-    createdAt: '2025-07-17T08:45:00Z',
-    updatedAt: '2025-07-20T07:30:00Z'
-  },
-  
-  {
-    id: 'e7',
-    title: 'Library WiFi connectivity issues',
-    description: 'Patrons reporting slow or unreliable internet access at main library branch',
-    type: 'individual',
-    status: 'in-progress',
-    source: 'email',
-    priority: 'medium',
-    constituent: {
-      name: 'Jennifer Lee',
-      email: 'j.lee@email.com'
-    },
-    timeframe: '4 days ago',
-    createdAt: '2025-07-16T10:15:00Z',
-    updatedAt: '2025-07-19T14:20:00Z'
-  },
-  
-  {
-    id: 'e8',
-    title: 'Snow removal equipment upgrade',
-    description: 'Community requests for better snow removal response and equipment',
-    type: 'community',
-    status: 'resolved',
-    source: 'facebook',
-    priority: 'low',
-    supportPercentage: 28,
-    createdAt: '2024-10-20T11:30:00Z',
-    updatedAt: '2024-10-25T16:45:00Z'
-  }
 ];
 
-// Group issues by similarity (keyword-based grouping)
-export const issueGroups = {
-  'parking': ['1', 'e1', 'e2'],
-  'lighting': ['2', 'e3'],
-  'recreation': ['3', 'e5'],
-  'safety': ['e6'],
-  'infrastructure': ['4', '6', 'e7'],
-  'community-services': ['5', 'e4', 'e8']
+export const getIssueById = (id: string): Promise<ConstituentIssue | PriorityItem | null> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const allIssues = [...mockValidatedIssues, ...mockTrendingIssues, ...mockIndividualIssues];
+      const regularIssue = allIssues.find(issue => issue.id === id);
+      
+      if (regularIssue) {
+        resolve(regularIssue);
+        return;
+      }
+      
+      const priorityItem = mockPriorityItems.find(item => item.id === id);
+      if (priorityItem) {
+        resolve(priorityItem);
+        return;
+      }
+      
+      resolve(null);
+    }, 200);
+  });
 };
-
-// Export functions to get data (simulates API calls)
 export const getValidatedIssues = (): Promise<ConstituentIssue[]> => {
   return Promise.resolve(mockValidatedIssues);
 };
@@ -524,7 +585,6 @@ export const getAllIssues = (): Promise<ConstituentIssue[]> => {
   return Promise.resolve([...mockValidatedIssues, ...mockTrendingIssues, ...mockIndividualIssues]);
 };
 
-// Priority board functions
 export const getPriorityItems = (): Promise<PriorityItem[]> => {
   return Promise.resolve(mockPriorityItems);
 };
@@ -541,7 +601,7 @@ export const updatePriorityItemStatus = (itemId: string, newStatus: 'todo' | 'in
         }
         resolve(item);
       }
-    }, 500); // Simulate API delay
+    }, 500);
   });
 };
 
@@ -560,57 +620,55 @@ export const addIssueToPriorities = (issue: ConstituentIssue): Promise<PriorityI
   });
 };
 
-// Enhanced function to get all issues with grouping information
 export const getAllIssuesEnhanced = (): Promise<ConstituentIssue[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(mockAllIssues);
-    }, 300); // Simulate API delay
+      const allIssues = [...mockValidatedIssues, ...mockTrendingIssues, ...mockIndividualIssues];
+      resolve(allIssues);
+    }, 300);
   });
 };
 
-// Function to get issues by source
 export const getIssuesBySource = (source: string): Promise<ConstituentIssue[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {
+      const allIssues = [...mockValidatedIssues, ...mockTrendingIssues, ...mockIndividualIssues];
       const filtered = source === 'all' 
-        ? mockAllIssues 
-        : mockAllIssues.filter(issue => issue.source === source);
+        ? allIssues 
+        : allIssues.filter(issue => issue.source === source);
       resolve(filtered);
     }, 200);
   });
 };
 
-// Function to get issues by status
 export const getIssuesByStatus = (status: string): Promise<ConstituentIssue[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {
+      const allIssues = [...mockValidatedIssues, ...mockTrendingIssues, ...mockIndividualIssues];
       const filtered = status === 'all' 
-        ? mockAllIssues 
-        : mockAllIssues.filter(issue => issue.status === status);
+        ? allIssues 
+        : allIssues.filter(issue => issue.status === status);
       resolve(filtered);
     }, 200);
   });
 };
 
-// Function to get related issues for an issue
 export const getRelatedIssues = (issueId: string): ConstituentIssue[] => {
-  const issue = mockAllIssues.find(i => i.id === issueId);
+  const allIssues = [...mockValidatedIssues, ...mockTrendingIssues, ...mockIndividualIssues];
+  const issue = allIssues.find(i => i.id === issueId);
   if (!issue?.relatedIssues) return [];
   
-  return mockAllIssues.filter(i => issue.relatedIssues?.includes(i.id));
+  return allIssues.filter(i => issue.relatedIssues?.includes(i.id));
 };
 
-// Function to move issues to priorities board
 export const moveIssuesToPriorities = (issueIds: string[]): Promise<void> => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      // In a real app, this would update the backend
-      // For now, we'll just simulate the operation
+      const allIssues = [...mockValidatedIssues, ...mockTrendingIssues, ...mockIndividualIssues];
       issueIds.forEach(id => {
-        const issue = mockAllIssues.find(i => i.id === id);
+        const issue = allIssues.find(i => i.id === id);
         if (issue) {
-          issue.status = 'in-progress'; // Mark as moved to priorities
+          issue.status = 'in-progress';
         }
       });
       resolve();

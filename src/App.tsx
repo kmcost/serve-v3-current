@@ -1,53 +1,56 @@
 
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Layout from "./components/Layout";
-import Dashboard from "./pages/Dashboard";
-import Polls from "./pages/Polls";
-import CreatePoll from "./pages/CreatePoll";
-import AIRecommendations from "./pages/AIRecommendations";
-import PollDetail from "./pages/PollDetail";
-import Inbox from "./pages/Inbox";
-import MessageDetail from "./pages/MessageDetail";
-import Issues from "./pages/Issues";
-import People from "./pages/People";
-import Priorities from "./pages/Priorities";
-import WebsitePreview from "./pages/WebsitePreview";
-import Settings from "./pages/Settings";
-import NotFound from "./pages/NotFound";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ThemeProvider } from 'next-themes';
+import { Toaster } from '@/components/ui/toaster';
+import Layout from '@/components/Layout';
+
+// Pages
+import Dashboard from '@/pages/Dashboard';
+import Issues from '@/pages/Issues';
+import IssueDetail from '@/pages/IssueDetail';
+import Priorities from '@/pages/Priorities';
+import Polls from '@/pages/Polls';
+import CreatePoll from '@/pages/CreatePoll';
+import PollDetail from '@/pages/PollDetail';
+import People from '@/pages/People';
+import Inbox from '@/pages/Inbox';
+import MessageDetail from '@/pages/MessageDetail';
+import Settings from '@/pages/Settings';
+import WebsitePreview from '@/pages/WebsitePreview';
+import AIRecommendations from '@/pages/AIRecommendations';
+import NotFound from '@/pages/NotFound';
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Layout>
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <Router>
           <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/polls" element={<Polls />} />
-            <Route path="/polls/edit" element={<CreatePoll />} />
-            <Route path="/polls/ai-recommendations" element={<AIRecommendations />} />
-            <Route path="/polls/:id" element={<PollDetail />} />
-            <Route path="/inbox" element={<Inbox />} />
-            <Route path="/inbox/:id" element={<MessageDetail />} />
-            <Route path="/issues" element={<Issues />} />
-            <Route path="/people" element={<People />} />
-            <Route path="/priorities" element={<Priorities />} />
-            <Route path="/website" element={<WebsitePreview />} />
-            <Route path="/settings" element={<Settings />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Dashboard />} />
+              <Route path="issues" element={<Issues />} />
+              <Route path="issues/:id" element={<IssueDetail />} />
+              <Route path="priorities" element={<Priorities />} />
+              <Route path="polls" element={<Polls />} />
+              <Route path="polls/create" element={<CreatePoll />} />
+              <Route path="polls/:id" element={<PollDetail />} />
+              <Route path="people" element={<People />} />
+              <Route path="inbox" element={<Inbox />} />
+              <Route path="inbox/:id" element={<MessageDetail />} />
+              <Route path="settings" element={<Settings />} />
+              <Route path="website" element={<WebsitePreview />} />
+              <Route path="ai-recommendations" element={<AIRecommendations />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
           </Routes>
-        </Layout>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+        </Router>
+        <Toaster />
+      </ThemeProvider>
+    </QueryClientProvider>
+  );
+}
 
 export default App;

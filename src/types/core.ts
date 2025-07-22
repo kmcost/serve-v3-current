@@ -1,15 +1,25 @@
+
+export interface StatusChange {
+  id: string;
+  status: 'submitted' | 'reviewed' | 'assigned' | 'in-progress' | 'completed' | 'resolved' | 'validated';
+  timestamp: string;
+  changedBy: string;
+  notes?: string;
+}
+
 export interface ConstituentIssue {
   id: string;
+  uniqueId: string; // ISU-001 format
   title: string;
   description: string;
   type: 'individual' | 'community' | 'trending';
-  status?: 'in-progress' | 'resolved' | 'validated'; // Made optional for undefined status
+  status?: 'in-progress' | 'resolved' | 'validated';
   source: 'website' | 'email' | 'facebook' | 'ai-detected';
-  priority?: 'low' | 'medium' | 'high'; // Made optional for undefined priority
-  supportPercentage?: number; // for validated community issues
-  mentions?: number; // for trending issues
-  timeframe?: string; // "this week", "2 hours ago", etc.
-  relatedIssues?: string[]; // IDs of related issues
+  priority?: 'low' | 'medium' | 'high';
+  supportPercentage?: number;
+  mentions?: number;
+  timeframe?: string;
+  relatedIssues?: string[];
   constituent?: {
     name: string;
     email: string;
@@ -17,6 +27,14 @@ export interface ConstituentIssue {
   };
   createdAt: string;
   updatedAt: string;
+  
+  // Enhanced fields
+  tags: string[];
+  location?: string;
+  timeline: StatusChange[];
+  assignedTo?: string;
+  internalNotes: string[];
+  estimatedResolution?: string;
 }
 
 export interface PriorityItem extends ConstituentIssue {
@@ -57,11 +75,15 @@ export function isValidConstituentIssue(issue: unknown): issue is ConstituentIss
     typeof issue === 'object' &&
     issue !== null &&
     typeof (issue as ConstituentIssue).id === 'string' &&
+    typeof (issue as ConstituentIssue).uniqueId === 'string' &&
     typeof (issue as ConstituentIssue).title === 'string' &&
     typeof (issue as ConstituentIssue).description === 'string' &&
     ['individual', 'community', 'trending'].includes((issue as ConstituentIssue).type) &&
     (typeof (issue as ConstituentIssue).status === 'undefined' || ['in-progress', 'resolved', 'validated'].includes((issue as ConstituentIssue).status)) &&
-    ['website', 'email', 'facebook', 'ai-detected'].includes((issue as ConstituentIssue).source)
+    ['website', 'email', 'facebook', 'ai-detected'].includes((issue as ConstituentIssue).source) &&
+    Array.isArray((issue as ConstituentIssue).tags) &&
+    Array.isArray((issue as ConstituentIssue).timeline) &&
+    Array.isArray((issue as ConstituentIssue).internalNotes)
   );
 }
 
@@ -124,4 +146,34 @@ export function isValidConstituentRecord(record: unknown): record is Constituent
     typeof (record as ConstituentRecord).hasEngaged === 'boolean' &&
     typeof (record as ConstituentRecord).createdAt === 'string'
   );
+}
+
+// Standard tags for categorization
+export const STANDARD_TAGS = [
+  'Infrastructure & Roads',
+  'Parks & Recreation',
+  'Public Safety',
+  'Transportation',
+  'Environmental',
+  'Housing',
+  'Economic Development',
+  'Education',
+  'Healthcare',
+  'Community Services',
+  'Technology',
+  'Budget & Finance'
+] as const;
+
+export type StandardTag = typeof STANDARD_TAGS[number];
+
+// Utility functions
+export function generateUniqueId(): string {
+  const timestamp = Date.now().toString(36);
+  const randomStr = Math.random().toString(36).substring(2, 8);
+  return `ISU-${timestamp}-${randomStr}`.toUpperCase();
+}
+
+export function formatUniqueId(id: string): string {
+  if (id.startsWith('ISU-')) return id;
+  return `ISU-${id.substring(0, 3).toUpperCase()}`;
 }
