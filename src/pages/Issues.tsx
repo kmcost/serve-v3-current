@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -57,13 +58,29 @@ export default function Issues() {
       }
 
       // Status filter
-      if (selectedStatuses.length > 0 && !selectedStatuses.includes(issue.status)) {
-        return false;
+      if (selectedStatuses.length > 0) {
+        if (selectedStatuses.includes('not-defined')) {
+          // Include issues with undefined status OR other selected statuses
+          const hasDefinedStatus = issue.status && selectedStatuses.includes(issue.status);
+          const hasUndefinedStatus = !issue.status;
+          if (!hasDefinedStatus && !hasUndefinedStatus) return false;
+        } else {
+          // Only include issues with defined statuses that match selection
+          if (!issue.status || !selectedStatuses.includes(issue.status)) return false;
+        }
       }
 
       // Priority filter
-      if (selectedPriorities.length > 0 && !selectedPriorities.includes(issue.priority)) {
-        return false;
+      if (selectedPriorities.length > 0) {
+        if (selectedPriorities.includes('not-defined')) {
+          // Include issues with undefined priority OR other selected priorities
+          const hasDefinedPriority = issue.priority && selectedPriorities.includes(issue.priority);
+          const hasUndefinedPriority = !issue.priority;
+          if (!hasDefinedPriority && !hasUndefinedPriority) return false;
+        } else {
+          // Only include issues with defined priorities that match selection
+          if (!issue.priority || !selectedPriorities.includes(issue.priority)) return false;
+        }
       }
 
       return true;

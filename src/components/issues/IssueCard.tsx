@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { differenceInDays, parseISO } from 'date-fns';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -38,6 +39,13 @@ const priorityConfig = {
   'low': { label: 'Low', color: 'bg-green-100 text-green-800' }
 };
 
+// Helper function to determine if issue is new (< 7 days old)
+const isNewIssue = (createdAt: string): boolean => {
+  const issueDate = parseISO(createdAt);
+  const daysDifference = differenceInDays(new Date(), issueDate);
+  return daysDifference < 7;
+};
+
 export function IssueCard({ 
   issue, 
   isSelected = false, 
@@ -48,9 +56,10 @@ export function IssueCard({
 }: IssueCardProps) {
   const [showRelated, setShowRelated] = useState(false);
   
-  const statusInfo = statusConfig[issue.status as keyof typeof statusConfig];
-  const priorityInfo = priorityConfig[issue.priority as keyof typeof priorityConfig];
+  const statusInfo = issue.status ? statusConfig[issue.status as keyof typeof statusConfig] : null;
+  const priorityInfo = issue.priority ? priorityConfig[issue.priority as keyof typeof priorityConfig] : null;
   const isAIDetected = issue.source === 'ai-detected';
+  const isNew = isNewIssue(issue.createdAt);
   
   const relatedIssues = getRelatedIssues(issue.id);
   const hasRelatedIssues = relatedIssues.length > 0;
@@ -95,7 +104,8 @@ export function IssueCard({
                   {statusInfo.label}
                 </Badge>
               )}
-              {priorityInfo && (
+              {/* Only show priority badge if issue is NOT new (>= 7 days old) */}
+              {!isNew && priorityInfo && (
                 <Badge className={`${priorityInfo.color} text-xs`}>
                   {priorityInfo.label} Priority
                 </Badge>

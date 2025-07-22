@@ -3,9 +3,9 @@ export interface ConstituentIssue {
   title: string;
   description: string;
   type: 'individual' | 'community' | 'trending';
-  status: 'new' | 'in-progress' | 'resolved' | 'validated';
+  status?: 'in-progress' | 'resolved' | 'validated'; // Made optional for undefined status
   source: 'website' | 'email' | 'facebook' | 'ai-detected';
-  priority: 'low' | 'medium' | 'high';
+  priority?: 'low' | 'medium' | 'high'; // Made optional for undefined priority
   supportPercentage?: number; // for validated community issues
   mentions?: number; // for trending issues
   timeframe?: string; // "this week", "2 hours ago", etc.
@@ -60,7 +60,7 @@ export function isValidConstituentIssue(issue: unknown): issue is ConstituentIss
     typeof (issue as ConstituentIssue).title === 'string' &&
     typeof (issue as ConstituentIssue).description === 'string' &&
     ['individual', 'community', 'trending'].includes((issue as ConstituentIssue).type) &&
-    ['new', 'in-progress', 'resolved', 'validated'].includes((issue as ConstituentIssue).status) &&
+    (typeof (issue as ConstituentIssue).status === 'undefined' || ['in-progress', 'resolved', 'validated'].includes((issue as ConstituentIssue).status)) &&
     ['website', 'email', 'facebook', 'ai-detected'].includes((issue as ConstituentIssue).source)
   );
 }
