@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -6,20 +5,21 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Eye, ExternalLink, Users, Calendar, CheckCircle } from 'lucide-react';
 import { PriorityItem } from '@/types/core';
-
 interface PublicBoardPreviewProps {
   items: PriorityItem[];
 }
-
-export function PublicBoardPreview({ items }: PublicBoardPreviewProps) {
+export function PublicBoardPreview({
+  items
+}: PublicBoardPreviewProps) {
   const [isOpen, setIsOpen] = useState(false);
-
   const publicItems = items.filter(item => item.publicNotes);
   const completedCount = items.filter(item => item.boardStatus === 'completed').length;
   const activeCount = items.filter(item => item.boardStatus !== 'completed').length;
-
-  const PublicCard = ({ item }: { item: PriorityItem }) => (
-    <Card className="mb-3">
+  const PublicCard = ({
+    item
+  }: {
+    item: PriorityItem;
+  }) => <Card className="mb-3">
       <CardHeader className="pb-2">
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1">
@@ -28,36 +28,24 @@ export function PublicBoardPreview({ items }: PublicBoardPreviewProps) {
               {item.type === 'community' ? 'Community Priority' : 'Constituent Service'}
             </Badge>
           </div>
-          {item.boardStatus === 'completed' && (
-            <CheckCircle className="h-4 w-4 text-green-600" />
-          )}
+          {item.boardStatus === 'completed' && <CheckCircle className="h-4 w-4 text-green-600" />}
         </div>
         <CardTitle className="text-sm">{item.title}</CardTitle>
       </CardHeader>
       <CardContent className="pt-0">
         <p className="text-xs text-muted-foreground mb-2">{item.description}</p>
-        {item.publicNotes && (
-          <div className="bg-blue-50 p-2 rounded text-xs">
+        {item.publicNotes && <div className="bg-blue-50 p-2 rounded text-xs">
             <strong>Update:</strong> {item.publicNotes}
-          </div>
-        )}
+          </div>}
         <div className="flex items-center justify-between mt-2 text-xs text-muted-foreground">
           <span>Status: {item.boardStatus.replace('-', ' ')}</span>
-          {item.supportPercentage && (
-            <span>{item.supportPercentage}% community support</span>
-          )}
+          {item.supportPercentage && <span>{item.supportPercentage}% community support</span>}
         </div>
       </CardContent>
-    </Card>
-  );
-
-  return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    </Card>;
+  return <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="gap-2">
-          <Eye className="h-4 w-4" />
-          Preview Public Board
-        </Button>
+        
       </DialogTrigger>
       <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
@@ -93,9 +81,7 @@ export function PublicBoardPreview({ items }: PublicBoardPreviewProps) {
         <div>
           <h3 className="text-lg font-semibold mb-4">Current Priorities & Progress</h3>
           <div className="space-y-3">
-            {publicItems.map(item => (
-              <PublicCard key={item.id} item={item} />
-            ))}
+            {publicItems.map(item => <PublicCard key={item.id} item={item} />)}
           </div>
         </div>
 
@@ -108,6 +94,5 @@ export function PublicBoardPreview({ items }: PublicBoardPreviewProps) {
           </p>
         </div>
       </DialogContent>
-    </Dialog>
-  );
+    </Dialog>;
 }
