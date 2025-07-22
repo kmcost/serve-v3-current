@@ -76,7 +76,7 @@ export function IssueDetailHeader({ issue, onBack }: IssueDetailHeaderProps) {
           )}
           
           {issue.tags.map((tag) => (
-            <Badge key={tag} variant="secondary" className="gap-1">
+            <Badge key={tag} className="gap-1 bg-white text-gray-700 border border-gray-300">
               <Tag className="h-3 w-3" />
               {tag}
             </Badge>
