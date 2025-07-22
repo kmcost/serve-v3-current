@@ -115,7 +115,7 @@ export function WebsitePriorities() {
 
       {/* Issues Grid */}
       {transformedIssues.length > 0 ? <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {transformedIssues.map(issue => <IssueCard key={issue.id} issue={issue} variant="dashboard" showCheckbox={false} />)}
+          {transformedIssues.map(issue => <div key={issue.id} className="w-full"><IssueCard issue={issue} variant="dashboard" showCheckbox={false} /></div>)}
         </div> : <div className="text-center py-12">
           <div className="text-muted-foreground">
             <p className="text-lg font-medium mb-2">
