@@ -4,9 +4,11 @@ import { Calendar, Send, TrendingUp, StopCircle, Edit, Play, Copy } from 'lucide
 import { Poll } from '@/data/pollData';
 import { getPollStatus, calculateTimeLeft } from '@/utils/pollUtils';
 import { StatusBadge } from '@/components/ui/status-badge';
+
 interface PollSidebarProps {
   poll: Poll;
 }
+
 export default function PollSidebar({
   poll
 }: PollSidebarProps) {
@@ -72,6 +74,10 @@ export default function PollSidebar({
               <Button variant="outline" size="sm" className="w-full gap-2">
                 <Copy className="h-4 w-4" />
                 Duplicate Poll
+              </Button>
+              <Button variant="outline" size="sm" className="w-full gap-2">
+                <Play className="h-4 w-4" />
+                Create Priority Issue
               </Button>
             </>
           ) : pollStatus === 'Active' ? (
