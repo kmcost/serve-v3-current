@@ -155,10 +155,10 @@ const Settings = () => {
               
               <CardTitle>Personal Information</CardTitle>
             </div>
-            {!isEditingPersonal ? <Button variant="outline" size="sm" onClick={() => setIsEditingPersonal(true)}>
+            {!isEditingPersonal ? <Button variant="outline" size="sm" onClick={() => setIsEditingPersonal(true)} className="hidden sm:flex">
                 <Edit className="h-4 w-4 mr-2" />
                 Edit
-              </Button> : <div className="flex space-x-2">
+              </Button> : <div className="hidden sm:flex space-x-2">
                 <Button variant="outline" size="sm" onClick={cancelPersonalEdit}>
                   Cancel
                 </Button>
@@ -191,6 +191,22 @@ const Settings = () => {
               <Label htmlFor="zipCode">Zip Code</Label>
               <Input id="zipCode" value={personalInfo.zipCode} onChange={e => handlePersonalInfoChange('zipCode', e.target.value)} disabled={!isEditingPersonal} />
             </div>
+          </div>
+          
+          {/* Mobile buttons */}
+          <div className="flex sm:hidden justify-end">
+            {!isEditingPersonal ? <Button variant="outline" size="sm" onClick={() => setIsEditingPersonal(true)} className="w-full">
+                <Edit className="h-4 w-4 mr-2" />
+                Edit
+              </Button> : <div className="flex space-x-2 w-full">
+                <Button variant="outline" size="sm" onClick={cancelPersonalEdit} className="flex-1">
+                  Cancel
+                </Button>
+                <Button size="sm" onClick={savePersonalInfo} className="flex-1">
+                  <Save className="h-4 w-4 mr-2" />
+                  Save
+                </Button>
+              </div>}
           </div>
         </CardContent>
       </Card>
