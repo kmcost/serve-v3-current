@@ -150,7 +150,7 @@ const Settings = () => {
       {/* Personal Information Section */}
       <Card>
         <CardHeader>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="flex items-center space-x-2">
               
               <CardTitle>Personal Information</CardTitle>
@@ -207,7 +207,7 @@ const Settings = () => {
           <div className="space-y-4">
             <div>
               <h4 className="font-medium mb-2">Current Plan</h4>
-              <div className="flex items-center justify-between p-3 border rounded-lg">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-3 border rounded-lg">
                 <div>
                   <p className="font-medium">Basic Plan</p>
                   <p className="text-sm text-muted-foreground">Access to core features</p>
@@ -218,7 +218,7 @@ const Settings = () => {
             
             <div>
               <h4 className="font-medium mb-2">Password</h4>
-              <div className="flex items-center justify-between p-3 border rounded-lg">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-3 border rounded-lg">
                 <div>
                   <p className="text-sm">Password last updated 3 months ago</p>
                 </div>
@@ -242,7 +242,7 @@ const Settings = () => {
             {dataSources.map((dataSource, index) => {
             const IconComponent = getSourceIcon(dataSource.type);
             const isLast = index === dataSources.length - 1;
-            return <div key={dataSource.id} className={`flex items-center justify-between py-8 ${!isLast ? 'border-b border-border' : ''}`}>
+            return <div key={dataSource.id} className={`flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 py-8 ${!isLast ? 'border-b border-border' : ''}`}>
                   <div className="flex items-center space-x-3 flex-1">
                     <div className="p-2 bg-muted rounded-lg">
                       <IconComponent className="h-5 w-5 text-muted-foreground" />
@@ -288,7 +288,7 @@ const Settings = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-4">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
                 <p className="font-medium">New Issues</p>
                 <p className="text-sm text-muted-foreground">Get notified when new constituent issues are detected</p>
@@ -296,7 +296,7 @@ const Settings = () => {
               <Switch checked={notifications.newIssues} onCheckedChange={checked => handleNotificationChange('newIssues', checked)} />
             </div>
             
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
                 <p className="font-medium">Weekly Summaries</p>
                 <p className="text-sm text-muted-foreground">Receive weekly summary reports of constituent activity</p>
@@ -304,7 +304,7 @@ const Settings = () => {
               <Switch checked={notifications.weeklySummaries} onCheckedChange={checked => handleNotificationChange('weeklySummaries', checked)} />
             </div>
             
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
                 <p className="font-medium">Poll Results</p>
                 <p className="text-sm text-muted-foreground">Get notified when polls receive new responses</p>
@@ -312,7 +312,7 @@ const Settings = () => {
               <Switch checked={notifications.pollResults} onCheckedChange={checked => handleNotificationChange('pollResults', checked)} />
             </div>
             
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
                 <p className="font-medium">System Updates</p>
                 <p className="text-sm text-muted-foreground">Receive notifications about platform updates and maintenance</p>
@@ -329,7 +329,7 @@ const Settings = () => {
           <CardTitle>Delete Account</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <p className="font-medium text-foreground mb-2">
                 Permanently delete your account and all of its content.
