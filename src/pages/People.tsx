@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
-import { Search, Plus, Users, Mail, MessageSquare, TrendingUp, ArrowUpDown } from 'lucide-react';
+import { Search, Plus, Users, Mail, MessageSquare, ArrowUpDown } from 'lucide-react';
 import { getConstituents, getConstituentStats, searchConstituents } from '@/services/constituentsService';
 import type { ConstituentRecord } from '@/types/core';
 
@@ -64,7 +64,7 @@ export default function People() {
     return (
       <div className="flex flex-wrap gap-1">
         {displayIssues.map((issue, index) => (
-          <Badge key={index} variant="secondary" className="text-xs">
+          <Badge key={index} variant="secondary" className="text-xs whitespace-nowrap">
             {issue}
           </Badge>
         ))}
@@ -83,6 +83,12 @@ export default function People() {
     </Badge>
   );
 
+  const renderBusinessOwner = (isBusinessOwner: boolean) => (
+    <Badge variant={isBusinessOwner ? "default" : "secondary"} className="text-xs">
+      {isBusinessOwner ? "Yes" : "No"}
+    </Badge>
+  );
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -94,7 +100,7 @@ export default function People() {
       </div>
 
       {/* Statistics Cards */}
-      <div className="grid gap-4 md:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-3">
         <div className="bg-card rounded-lg border p-6">
           <div className="flex items-center gap-2">
             <Users className="h-4 w-4 text-muted-foreground" />
@@ -117,14 +123,6 @@ export default function People() {
             <h3 className="text-sm font-medium text-muted-foreground">Opt-In SMS Count</h3>
           </div>
           <p className="text-2xl font-bold text-foreground mt-2">{stats.optInSMSCount}</p>
-        </div>
-        
-        <div className="bg-card rounded-lg border p-6">
-          <div className="flex items-center gap-2">
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
-            <h3 className="text-sm font-medium text-muted-foreground">% of Engaged Constituents</h3>
-          </div>
-          <p className="text-2xl font-bold text-foreground mt-2">{stats.engagementPercentage}%</p>
         </div>
       </div>
 
@@ -152,32 +150,25 @@ export default function People() {
       </div>
 
       {/* Table */}
-      <div className="border rounded-lg bg-white">
+      <div className="border rounded-lg bg-white overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow className="hover:bg-transparent">
-              <TableHead>
-                <Button
-                  variant="ghost"
-                  className="h-auto p-0 font-medium"
-                  onClick={() => handleSort('firstName')}
-                >
-                  First Name
-                  <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-              </TableHead>
-              <TableHead>
+              <TableHead className="whitespace-nowrap min-w-[200px]">
                 <Button
                   variant="ghost"
                   className="h-auto p-0 font-medium"
                   onClick={() => handleSort('lastName')}
                 >
-                  Last Name
+                  Name
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
               </TableHead>
-              <TableHead>Priority Issues</TableHead>
-              <TableHead>
+              <TableHead className="whitespace-nowrap min-w-[100px]">Age</TableHead>
+              <TableHead className="whitespace-nowrap min-w-[220px]">Family Status</TableHead>
+              <TableHead className="whitespace-nowrap min-w-[120px]">Ward/District</TableHead>
+              <TableHead className="whitespace-nowrap min-w-[250px]">Priority Issues</TableHead>
+              <TableHead className="whitespace-nowrap min-w-[150px]">
                 <Button
                   variant="ghost"
                   className="h-auto p-0 font-medium"
@@ -187,8 +178,8 @@ export default function People() {
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
               </TableHead>
-              <TableHead>Phone Number</TableHead>
-              <TableHead>
+              <TableHead className="whitespace-nowrap min-w-[150px]">Phone Number</TableHead>
+              <TableHead className="whitespace-nowrap min-w-[250px]">
                 <Button
                   variant="ghost"
                   className="h-auto p-0 font-medium"
@@ -198,8 +189,9 @@ export default function People() {
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
               </TableHead>
-              <TableHead>Opt-In Phone</TableHead>
-              <TableHead>Opt-In Email</TableHead>
+              <TableHead className="whitespace-nowrap min-w-[120px]">Business Owner</TableHead>
+              <TableHead className="whitespace-nowrap min-w-[120px]">Opt-In Phone</TableHead>
+              <TableHead className="whitespace-nowrap min-w-[120px]">Opt-In Email</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -211,12 +203,18 @@ export default function People() {
                 }`}
               >
                 <TableCell className="font-medium">
-                  {constituent.firstName}
-                </TableCell>
-                <TableCell className="font-medium">
-                  {constituent.lastName}
+                  {constituent.firstName} {constituent.lastName}
                 </TableCell>
                 <TableCell>
+                  {constituent.age}
+                </TableCell>
+                <TableCell>
+                  {constituent.familyStatus}
+                </TableCell>
+                <TableCell>
+                  {constituent.ward}
+                </TableCell>
+                <TableCell className="min-w-[250px]">
                   {constituent.priorityIssues.length > 0 ? (
                     renderPriorityIssues(constituent.priorityIssues)
                   ) : (
@@ -226,11 +224,14 @@ export default function People() {
                 <TableCell>
                   {constituent.politicalAffiliation}
                 </TableCell>
-                <TableCell>
+                <TableCell className="whitespace-nowrap">
                   {constituent.phone}
                 </TableCell>
                 <TableCell>
                   {constituent.email}
+                </TableCell>
+                <TableCell>
+                  {renderBusinessOwner(constituent.isBusinessOwner)}
                 </TableCell>
                 <TableCell>
                   {renderOptInStatus(constituent.optInSMS)}

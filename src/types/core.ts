@@ -95,13 +95,16 @@ export interface ConstituentRecord {
   optInSMS: boolean;
   hasEngaged: boolean;
   createdAt: string;
+  age: '18-25' | '25-35' | '35-50' | '50+';
+  familyStatus: 'Parent/Guardian (Under 18)' | 'Not a parent/guardian' | 'Unknown';
+  ward: string;
+  isBusinessOwner: boolean;
 }
 
 export interface ConstituentStats {
   totalConstituents: number;
   optInEmailCount: number;
   optInSMSCount: number;
-  engagementPercentage: number;
 }
 
 // Type guards for constituents

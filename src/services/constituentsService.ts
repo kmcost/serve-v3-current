@@ -1,4 +1,3 @@
-
 export interface ConstituentRecord {
   id: string;
   firstName: string;
@@ -11,6 +10,10 @@ export interface ConstituentRecord {
   optInSMS: boolean;
   hasEngaged: boolean;
   createdAt: string;
+  age: '18-25' | '25-35' | '35-50' | '50+';
+  familyStatus: 'Parent/Guardian (Under 18)' | 'Not a parent/guardian' | 'Unknown';
+  ward: string;
+  isBusinessOwner: boolean;
 }
 
 const priorityIssueCategories = [
@@ -28,6 +31,19 @@ const priorityIssueCategories = [
 
 const politicalAffiliations: ConstituentRecord['politicalAffiliation'][] = [
   'Democrat', 'Republican', 'Independent', 'Other'
+];
+
+const ageGroups: ConstituentRecord['age'][] = [
+  '18-25', '25-35', '35-50', '50+'
+];
+
+const familyStatuses: ConstituentRecord['familyStatus'][] = [
+  'Parent/Guardian (Under 18)', 'Not a parent/guardian', 'Unknown'
+];
+
+const wards = [
+  'Ward 1', 'Ward 2', 'Ward 3', 'Ward 4', 'Ward 5', 
+  'Ward 6', 'Ward 7', 'Ward 8', 'Ward 9', 'Ward 10'
 ];
 
 const firstNames = [
@@ -79,10 +95,14 @@ function generateConstituents(): ConstituentRecord[] {
     const email = generateEmail(firstName, lastName);
     const phone = generatePhoneNumber();
     const politicalAffiliation = politicalAffiliations[Math.floor(Math.random() * politicalAffiliations.length)];
-    const priorityIssues = getRandomItems(priorityIssueCategories, 0, 4);
+    const priorityIssues = getRandomItems(priorityIssueCategories, 0, 3);
     const optInEmail = Math.random() > 0.2; // 80% opt-in rate
     const optInSMS = Math.random() > 0.4; // 60% opt-in rate
     const hasEngaged = Math.random() > 0.3; // 70% engagement rate
+    const age = ageGroups[Math.floor(Math.random() * ageGroups.length)];
+    const familyStatus = familyStatuses[Math.floor(Math.random() * familyStatuses.length)];
+    const ward = wards[Math.floor(Math.random() * wards.length)];
+    const isBusinessOwner = Math.random() > 0.7; // 30% business owner rate
     
     constituents.push({
       id: `constituent-${i + 1}`,
@@ -95,7 +115,11 @@ function generateConstituents(): ConstituentRecord[] {
       optInEmail,
       optInSMS,
       hasEngaged,
-      createdAt: new Date(Date.now() - Math.random() * 365 * 24 * 60 * 60 * 1000).toISOString()
+      createdAt: new Date(Date.now() - Math.random() * 365 * 24 * 60 * 60 * 1000).toISOString(),
+      age,
+      familyStatus,
+      ward,
+      isBusinessOwner
     });
   }
   
@@ -112,14 +136,11 @@ export function getConstituentStats() {
   const total = constituentsData.length;
   const optInEmail = constituentsData.filter(c => c.optInEmail).length;
   const optInSMS = constituentsData.filter(c => c.optInSMS).length;
-  const engaged = constituentsData.filter(c => c.hasEngaged).length;
-  const engagementPercentage = Math.round((engaged / total) * 100);
   
   return {
     totalConstituents: total,
     optInEmailCount: optInEmail,
-    optInSMSCount: optInSMS,
-    engagementPercentage
+    optInSMSCount: optInSMS
   };
 }
 
