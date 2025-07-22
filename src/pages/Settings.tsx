@@ -1,0 +1,372 @@
+
+import React, { useState, useEffect } from 'react';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { DataSourceCard } from "@/components/data-sources/DataSourceCard";
+import { ConnectionModal } from "@/components/data-sources/ConnectionModal";
+import { User, CreditCard, Database, Bell, Trash2, Save, Edit } from 'lucide-react';
+import { getDataSources } from '@/services/mockData';
+import { DataSource } from '@/types/core';
+
+const Settings = () => {
+  // Personal Information State
+  const [personalInfo, setPersonalInfo] = useState({
+    firstName: 'Sarah',
+    lastName: 'Mitchell',
+    email: 'sarah.mitchell@citycouncil.gov',
+    phone: '(555) 123-4567',
+    zipCode: '90210'
+  });
+  const [isEditingPersonal, setIsEditingPersonal] = useState(false);
+
+  // Data Sources State
+  const [dataSources, setDataSources] = useState<DataSource[]>([]);
+  const [selectedSource, setSelectedSource] = useState<DataSource | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Notifications State
+  const [notifications, setNotifications] = useState({
+    newIssues: true,
+    weeklySummaries: true,
+    pollResults: false,
+    systemUpdates: true
+  });
+
+  // Load data on component mount
+  useEffect(() => {
+    // Load personal info from localStorage
+    const savedPersonalInfo = localStorage.getItem('personalInfo');
+    if (savedPersonalInfo) {
+      setPersonalInfo(JSON.parse(savedPersonalInfo));
+    }
+
+    // Load notification preferences from localStorage
+    const savedNotifications = localStorage.getItem('notificationPreferences');
+    if (savedNotifications) {
+      setNotifications(JSON.parse(savedNotifications));
+    }
+
+    // Load data sources
+    getDataSources().then(setDataSources);
+  }, []);
+
+  // Personal Information Handlers
+  const handlePersonalInfoChange = (field: string, value: string) => {
+    setPersonalInfo(prev => ({ ...prev, [field]: value }));
+  };
+
+  const savePersonalInfo = () => {
+    localStorage.setItem('personalInfo', JSON.stringify(personalInfo));
+    setIsEditingPersonal(false);
+  };
+
+  const cancelPersonalEdit = () => {
+    const savedPersonalInfo = localStorage.getItem('personalInfo');
+    if (savedPersonalInfo) {
+      setPersonalInfo(JSON.parse(savedPersonalInfo));
+    } else {
+      setPersonalInfo({
+        firstName: 'Sarah',
+        lastName: 'Mitchell',
+        email: 'sarah.mitchell@citycouncil.gov',
+        phone: '(555) 123-4567',
+        zipCode: '90210'
+      });
+    }
+    setIsEditingPersonal(false);
+  };
+
+  // Data Sources Handlers
+  const handleConnect = (id: string) => {
+    const source = dataSources.find(ds => ds.id === id);
+    if (source) {
+      setSelectedSource(source);
+      setIsModalOpen(true);
+    }
+  };
+
+  const handleConnectionComplete = (id: string) => {
+    setDataSources(prev => prev.map(ds => ds.id === id ? {
+      ...ds,
+      connected: true,
+      status: 'connected' as const,
+      issuesGenerated: 3,
+      lastSync: 'just now'
+    } : ds));
+    setIsModalOpen(false);
+    setSelectedSource(null);
+  };
+
+  // Notifications Handlers
+  const handleNotificationChange = (key: string, value: boolean) => {
+    const newNotifications = { ...notifications, [key]: value };
+    setNotifications(newNotifications);
+    localStorage.setItem('notificationPreferences', JSON.stringify(newNotifications));
+  };
+
+  const connectedCount = dataSources.filter(ds => ds.connected).length;
+
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div>
+        <h1 className="text-2xl font-bold text-foreground">Settings</h1>
+        <p className="text-muted-foreground">
+          Manage your account settings and preferences
+        </p>
+      </div>
+
+      {/* Personal Information Section */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <User className="h-5 w-5 text-muted-foreground" />
+              <CardTitle>Personal Information</CardTitle>
+            </div>
+            {!isEditingPersonal ? (
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => setIsEditingPersonal(true)}
+              >
+                <Edit className="h-4 w-4 mr-2" />
+                Edit
+              </Button>
+            ) : (
+              <div className="flex space-x-2">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={cancelPersonalEdit}
+                >
+                  Cancel
+                </Button>
+                <Button 
+                  size="sm" 
+                  onClick={savePersonalInfo}
+                >
+                  <Save className="h-4 w-4 mr-2" />
+                  Save
+                </Button>
+              </div>
+            )}
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="firstName">First Name</Label>
+              <Input
+                id="firstName"
+                value={personalInfo.firstName}
+                onChange={(e) => handlePersonalInfoChange('firstName', e.target.value)}
+                disabled={!isEditingPersonal}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="lastName">Last Name</Label>
+              <Input
+                id="lastName"
+                value={personalInfo.lastName}
+                onChange={(e) => handlePersonalInfoChange('lastName', e.target.value)}
+                disabled={!isEditingPersonal}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                value={personalInfo.email}
+                onChange={(e) => handlePersonalInfoChange('email', e.target.value)}
+                disabled={!isEditingPersonal}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="phone">Phone</Label>
+              <Input
+                id="phone"
+                value={personalInfo.phone}
+                onChange={(e) => handlePersonalInfoChange('phone', e.target.value)}
+                disabled={!isEditingPersonal}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="zipCode">Zip Code</Label>
+              <Input
+                id="zipCode"
+                value={personalInfo.zipCode}
+                onChange={(e) => handlePersonalInfoChange('zipCode', e.target.value)}
+                disabled={!isEditingPersonal}
+              />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Account Details Section */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center space-x-2">
+            <CreditCard className="h-5 w-5 text-muted-foreground" />
+            <CardTitle>Account Details</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-medium mb-2">Current Plan</h4>
+              <div className="flex items-center justify-between p-3 border rounded-lg">
+                <div>
+                  <p className="font-medium">Basic Plan</p>
+                  <p className="text-sm text-muted-foreground">Access to core features</p>
+                </div>
+                <Button variant="outline">Upgrade Plan</Button>
+              </div>
+            </div>
+            
+            <div>
+              <h4 className="font-medium mb-2">Password</h4>
+              <div className="flex items-center justify-between p-3 border rounded-lg">
+                <div>
+                  <p className="text-sm">Password last updated 3 months ago</p>
+                </div>
+                <Button variant="outline">Change Password</Button>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Data Sources Section */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center space-x-2">
+            <Database className="h-5 w-5 text-muted-foreground" />
+            <CardTitle>Data Sources</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent>
+          {connectedCount > 0 && (
+            <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+              <p className="text-sm text-green-800 font-medium">
+                {connectedCount} of {dataSources.length} sources connected
+              </p>
+              <p className="text-sm text-green-700">
+                Monitoring constituent feedback across all channels
+              </p>
+            </div>
+          )}
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {dataSources.map(dataSource => (
+              <DataSourceCard 
+                key={dataSource.id} 
+                dataSource={dataSource} 
+                onConnect={handleConnect} 
+              />
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Notifications Section */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center space-x-2">
+            <Bell className="h-5 w-5 text-muted-foreground" />
+            <CardTitle>Notifications</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="font-medium">New Issues</p>
+                <p className="text-sm text-muted-foreground">Get notified when new constituent issues are detected</p>
+              </div>
+              <Switch 
+                checked={notifications.newIssues}
+                onCheckedChange={(checked) => handleNotificationChange('newIssues', checked)}
+              />
+            </div>
+            
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="font-medium">Weekly Summaries</p>
+                <p className="text-sm text-muted-foreground">Receive weekly summary reports of constituent activity</p>
+              </div>
+              <Switch 
+                checked={notifications.weeklySummaries}
+                onCheckedChange={(checked) => handleNotificationChange('weeklySummaries', checked)}
+              />
+            </div>
+            
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="font-medium">Poll Results</p>
+                <p className="text-sm text-muted-foreground">Get notified when polls receive new responses</p>
+              </div>
+              <Switch 
+                checked={notifications.pollResults}
+                onCheckedChange={(checked) => handleNotificationChange('pollResults', checked)}
+              />
+            </div>
+            
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="font-medium">System Updates</p>
+                <p className="text-sm text-muted-foreground">Receive notifications about platform updates and maintenance</p>
+              </div>
+              <Switch 
+                checked={notifications.systemUpdates}
+                onCheckedChange={(checked) => handleNotificationChange('systemUpdates', checked)}
+              />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Delete Account Section */}
+      <Card className="border-red-200">
+        <CardHeader>
+          <div className="flex items-center space-x-2">
+            <Trash2 className="h-5 w-5 text-red-600" />
+            <CardTitle className="text-red-900">Delete Account</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-sm text-red-800 font-medium mb-2">Warning: This action cannot be undone</p>
+              <p className="text-sm text-red-700">
+                Deleting your account will permanently remove all your data, including constituent feedback, 
+                poll responses, and connected data sources. This action cannot be reversed.
+              </p>
+            </div>
+            <Button variant="destructive">
+              Delete My Account
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Connection Modal */}
+      <ConnectionModal 
+        isOpen={isModalOpen} 
+        onClose={() => {
+          setIsModalOpen(false);
+          setSelectedSource(null);
+        }} 
+        dataSource={selectedSource} 
+        onConnectionComplete={handleConnectionComplete} 
+      />
+    </div>
+  );
+};
+
+export default Settings;

@@ -2,7 +2,7 @@
 import { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { Home, BarChart3, Inbox, AlertTriangle, Database, Kanban, Globe, Users, Menu, X } from 'lucide-react';
+import { Home, BarChart3, Inbox, AlertTriangle, Kanban, Globe, Users, Menu, X, Settings } from 'lucide-react';
 import { useState } from 'react';
 
 interface LayoutProps {
@@ -44,11 +44,14 @@ const navigation = [
     name: 'Website',
     href: '/website',
     icon: Globe
-  },
+  }
+];
+
+const bottomNavigation = [
   {
-    name: 'Data Sources',
-    href: '/data-sources',
-    icon: Database
+    name: 'Settings',
+    href: '/settings',
+    icon: Settings
   }
 ];
 
@@ -68,8 +71,8 @@ export default function Layout({ children }: LayoutProps) {
               <X className="h-5 w-5" />
             </button>
           </div>
-          <nav className="p-4">
-            <ul className="space-y-2">
+          <nav className="p-4 flex flex-col h-full">
+            <ul className="space-y-2 flex-1">
               {navigation.map(item => {
                 const Icon = item.icon;
                 const isActive = location.pathname === item.href;
@@ -92,6 +95,33 @@ export default function Layout({ children }: LayoutProps) {
                 );
               })}
             </ul>
+            
+            {/* Bottom navigation for mobile */}
+            <div className="border-t pt-4">
+              <ul className="space-y-2">
+                {bottomNavigation.map(item => {
+                  const Icon = item.icon;
+                  const isActive = location.pathname === item.href;
+                  return (
+                    <li key={item.name}>
+                      <Link 
+                        to={item.href} 
+                        onClick={() => setMobileMenuOpen(false)} 
+                        className={cn(
+                          "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
+                          isActive 
+                            ? "bg-primary text-primary-foreground" 
+                            : "text-muted-foreground hover:text-foreground hover:bg-accent"
+                        )}
+                      >
+                        <Icon className="h-4 w-4" />
+                        {item.name}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
           </nav>
         </div>
       </div>
@@ -127,6 +157,34 @@ export default function Layout({ children }: LayoutProps) {
                     );
                   })}
                 </ul>
+              </li>
+              
+              {/* Bottom navigation for desktop */}
+              <li className="mt-auto">
+                <div className="border-t pt-4 -mx-2">
+                  <ul className="space-y-1">
+                    {bottomNavigation.map(item => {
+                      const Icon = item.icon;
+                      const isActive = location.pathname === item.href;
+                      return (
+                        <li key={item.name}>
+                          <Link 
+                            to={item.href} 
+                            className={cn(
+                              "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold transition-colors",
+                              isActive 
+                                ? "bg-primary text-primary-foreground" 
+                                : "text-muted-foreground hover:text-foreground hover:bg-accent"
+                            )}
+                          >
+                            <Icon className="h-5 w-5 shrink-0" />
+                            {item.name}
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
               </li>
             </ul>
           </nav>
