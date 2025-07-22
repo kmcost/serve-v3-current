@@ -161,7 +161,7 @@ export default function Layout({ children }: LayoutProps) {
               
               {/* Bottom navigation for desktop */}
               <li className="mt-auto">
-                <div className="border-t pt-4 -mx-2">
+                <div className="border-t pt-4 pb-6 -mx-2">
                   <ul className="space-y-1">
                     {bottomNavigation.map(item => {
                       const Icon = item.icon;
