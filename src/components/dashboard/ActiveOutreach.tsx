@@ -31,46 +31,5 @@ export function ActiveOutreach() {
         </CardContent>
       </Card>;
   }
-  return <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-        <CardTitle className="text-xl">Active Outreach</CardTitle>
-        <Link to="/polls" className="text-primary hover:text-primary/80 text-sm font-medium">
-          View all
-        </Link>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          {activePolls.map(poll => <div key={poll.id} className="space-y-3 p-3 rounded-lg border bg-card">
-              {/* Status and Progress Row */}
-              <div className="flex items-center justify-between">
-                <StatusBadge startDate={poll.startDate} endDate={poll.endDate} />
-                <span className="text-xs text-muted-foreground">
-                  {calculateProgress(poll.responses)}% complete
-                </span>
-              </div>
-              
-              {/* Poll Title */}
-              <div>
-                <Link to={`/polls/${poll.id}`} className="hover:text-primary transition-colors">
-                  <h3 className="font-medium text-foreground leading-tight">
-                    {poll.question}
-                  </h3>
-                </Link>
-              </div>
-              
-              {/* Channels */}
-              <p className="text-sm text-muted-foreground">
-                {poll.channels.join(', ')}
-              </p>
-              
-              {/* View Details Button */}
-              <Link to={`/polls/${poll.id}`} className="block">
-                <Button variant="outline" size="sm" className="w-full">
-                  View Details
-                </Button>
-              </Link>
-            </div>)}
-        </div>
-      </CardContent>
-    </Card>;
+  return;
 }
