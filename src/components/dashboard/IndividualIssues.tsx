@@ -57,9 +57,11 @@ export function IndividualIssues() {
   return <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
         <CardTitle className="text-xl">Individual Requests</CardTitle>
-        <Link to="/inbox" className="text-primary hover:text-primary/80 text-sm font-medium">
-          View all
-        </Link>
+        <Button asChild size="sm">
+          <Link to="/inbox">
+            View All
+          </Link>
+        </Button>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
