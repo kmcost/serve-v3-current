@@ -287,7 +287,7 @@ const Settings = () => {
             const isLast = index === dataSources.length - 1;
             return <div key={dataSource.id} className={`flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 py-8 ${!isLast ? 'border-b border-border' : ''}`}>
                   <div className="flex flex-col sm:flex-row sm:items-center space-y-3 sm:space-y-0 sm:space-x-3 flex-1">
-                    <div className="p-2 bg-muted rounded-lg w-fit">
+                    <div className="p-2 bg-muted rounded-lg w-fit hidden sm:block">
                       <IconComponent className="h-5 w-5 text-muted-foreground" />
                     </div>
                     <div className="flex-1">
