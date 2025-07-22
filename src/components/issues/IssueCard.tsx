@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
@@ -14,6 +15,7 @@ import {
 } from 'lucide-react';
 import { ConstituentIssue } from '@/types/core';
 import { getRelatedIssues } from '@/services/mockData';
+import { cn } from '@/lib/utils';
 
 interface IssueCardProps {
   issue: ConstituentIssue;
@@ -62,7 +64,7 @@ export function IssueCard({
   };
 
   return (
-    <Card className="hover:shadow-md transition-shadow relative">
+    <Card className={cn("relative", variant !== 'dashboard' && "hover:shadow-md transition-shadow")}>
       <CardHeader className="pb-3">
         <div className="flex items-start gap-3">
           {showCheckbox && (
