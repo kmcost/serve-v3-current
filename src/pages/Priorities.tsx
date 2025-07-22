@@ -1,30 +1,19 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { 
-  Plus, 
-  Eye, 
-  Filter,
-  BarChart3,
-  Globe,
-  ArrowRight
-} from 'lucide-react';
+import { Plus, Eye, Filter, BarChart3, Globe, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { KanbanBoard } from '@/components/kanban/KanbanBoard';
 import { PublicBoardPreview } from '@/components/kanban/PublicBoardPreview';
 import { getPriorityItems } from '@/services/mockData';
 import { PriorityItem } from '@/types/core';
-
 const Priorities = () => {
   const [priorityItems, setPriorityItems] = useState<PriorityItem[]>([]);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     loadPriorityItems();
   }, []);
-
   const loadPriorityItems = async () => {
     try {
       const items = await getPriorityItems();
@@ -35,13 +24,10 @@ const Priorities = () => {
       setLoading(false);
     }
   };
-
   const todoCount = priorityItems.filter(item => item.boardStatus === 'todo').length;
   const inProgressCount = priorityItems.filter(item => item.boardStatus === 'in-progress').length;
   const completedCount = priorityItems.filter(item => item.boardStatus === 'completed').length;
-
-  return (
-    <div className="space-y-6">
+  return <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
@@ -78,11 +64,7 @@ const Priorities = () => {
             </div>
             <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
               <Link to="/website-preview">
-                <Button
-                  variant="outline"
-                  className="border-blue-300 text-blue-700 hover:bg-blue-100 w-full sm:w-auto"
-                  size="sm"
-                >
+                <Button variant="outline" className="border-blue-300 text-blue-700 hover:bg-blue-100 w-full sm:w-auto" size="sm">
                   <Eye className="h-4 w-4 mr-2" />
                   View Public Site
                 </Button>
@@ -138,27 +120,12 @@ const Priorities = () => {
       </div>
 
       {/* Board Actions */}
-      <div className="flex flex-col sm:flex-row gap-2">
-        <Button variant="outline" className="gap-2">
-          <Filter className="h-4 w-4" />
-          Filter & Sort
-        </Button>
-        <Link to="/dashboard">
-          <Button variant="outline" className="gap-2 w-full sm:w-auto">
-            <Plus className="h-4 w-4" />
-            Add from Dashboard
-          </Button>
-        </Link>
-      </div>
+      
 
       {/* Kanban Board */}
-      {loading ? (
-        <div className="flex justify-center items-center h-96">
+      {loading ? <div className="flex justify-center items-center h-96">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-        </div>
-      ) : (
-        <KanbanBoard />
-      )}
+        </div> : <KanbanBoard />}
 
       {/* Mobile instructions */}
       <div className="p-4 bg-gray-50 rounded-lg sm:hidden">
@@ -166,8 +133,6 @@ const Priorities = () => {
           💡 Tip: Swipe horizontally to scroll between board columns and drag cards to move them between stages
         </p>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Priorities;
