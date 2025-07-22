@@ -9,6 +9,7 @@ import { ConnectionModal } from "@/components/data-sources/ConnectionModal";
 import { User, CreditCard, Database, Bell, Trash2, Save, Edit, Globe, Mail, MessageSquare, CheckCircle } from 'lucide-react';
 import { getDataSources } from '@/services/mockData';
 import { DataSource } from '@/types/core';
+
 const Settings = () => {
   // Personal Information State
   const [personalInfo, setPersonalInfo] = useState({
@@ -136,6 +137,7 @@ const Settings = () => {
         return "Connect to monitor constituent feedback";
     }
   };
+
   return <div className="space-y-6">
       {/* Header */}
       <div>
@@ -240,7 +242,7 @@ const Settings = () => {
             {dataSources.map((dataSource, index) => {
             const IconComponent = getSourceIcon(dataSource.type);
             const isLast = index === dataSources.length - 1;
-            return <div key={dataSource.id} className={`flex items-center justify-between py-6 ${!isLast ? 'border-b border-border' : ''}`}>
+            return <div key={dataSource.id} className={`flex items-center justify-between py-8 ${!isLast ? 'border-b border-border' : ''}`}>
                   <div className="flex items-center space-x-3 flex-1">
                     <div className="p-2 bg-muted rounded-lg">
                       <IconComponent className="h-5 w-5 text-muted-foreground" />
@@ -326,18 +328,20 @@ const Settings = () => {
         <CardHeader>
           <CardTitle>Delete Account</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div>
-            <p className="font-medium text-foreground mb-2">
-              Permanently delete your account and all of its content.
-            </p>
-            <p className="text-sm text-muted-foreground">
-              This action is not reversible - proceed with caution
-            </p>
+        <CardContent>
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="font-medium text-foreground mb-2">
+                Permanently delete your account and all of its content.
+              </p>
+              <p className="text-sm text-muted-foreground">
+                This action is not reversible - proceed with caution
+              </p>
+            </div>
+            <Button variant="destructive">
+              Delete Account
+            </Button>
           </div>
-          <Button variant="destructive">
-            Delete Account
-          </Button>
         </CardContent>
       </Card>
 
@@ -348,4 +352,5 @@ const Settings = () => {
     }} dataSource={selectedSource} onConnectionComplete={handleConnectionComplete} />
     </div>;
 };
+
 export default Settings;
