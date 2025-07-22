@@ -1,5 +1,5 @@
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from 'next-themes';
 import { Toaster } from '@/components/ui/toaster';
@@ -29,7 +29,7 @@ function App() {
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <Router>
           <Routes>
-            <Route path="/" element={<Layout />}>
+            <Route path="/" element={<Layout><Outlet /></Layout>}>
               <Route index element={<Dashboard />} />
               <Route path="issues" element={<Issues />} />
               <Route path="issues/:id" element={<IssueDetail />} />

@@ -22,6 +22,7 @@ export function WebsitePriorities() {
   // Transform PriorityItem to ConstituentIssue for IssueCard compatibility
   const transformedIssues: ConstituentIssue[] = filteredItems.map(item => ({
     id: item.id,
+    uniqueId: item.uniqueId,
     title: item.title,
     description: item.description,
     priority: item.priority,
@@ -33,6 +34,12 @@ export function WebsitePriorities() {
     timeframe: item.estimatedDuration,
     supportPercentage: item.supportPercentage,
     mentions: 0,
+    tags: item.tags,
+    timeline: item.timeline,
+    internalNotes: item.internalNotes,
+    assignedTo: item.assignedTo,
+    estimatedResolution: item.estimatedResolution,
+    location: item.location,
     constituent: item.assignee ? {
       name: item.assignee,
       email: ''

@@ -57,7 +57,7 @@ export function IssueCard({
   const [showRelated, setShowRelated] = useState(false);
   
   const statusInfo = issue.status ? statusConfig[issue.status as keyof typeof statusConfig] : null;
-  const priorityInfo = issue.priority ? priorityConfig[issue.priority as keyof priorityConfig] : null;
+  const priorityInfo = issue.priority ? priorityConfig[issue.priority as keyof typeof priorityConfig] : null;
   const isAIDetected = issue.source === 'ai-detected';
   const isNew = isNewIssue(issue.createdAt);
   

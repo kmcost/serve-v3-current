@@ -454,6 +454,24 @@ export const mockPriorityItems: PriorityItem[] = [
     status: 'in-progress',
     source: 'website',
     priority: 'high',
+    tags: ['Infrastructure & Roads', 'Accessibility'],
+    timeline: [
+      {
+        id: '1',
+        status: 'submitted',
+        timestamp: '2025-07-12T09:00:00Z',
+        changedBy: 'Michael Davis',
+        notes: 'Initial report submitted'
+      },
+      {
+        id: '2',
+        status: 'in-progress',
+        timestamp: '2025-07-13T10:30:00Z',
+        changedBy: 'Public Works Department',
+        notes: 'Site inspection completed, repair scheduled'
+      }
+    ],
+    internalNotes: ['Site inspection needed', 'Contact ADA compliance officer'],
     constituent: {
       name: 'Michael Davis',
       email: 'mdavis@email.com'
@@ -461,14 +479,9 @@ export const mockPriorityItems: PriorityItem[] = [
     timeframe: '4 hours ago',
     createdAt: '2025-07-20T08:00:00Z',
     updatedAt: '2025-07-20T08:00:00Z',
-    tags: ['Infrastructure & Roads', 'Public Safety'],
     location: 'Pine Street Sidewalk',
-    timeline: [
-      { id: '1', status: 'submitted', timestamp: '2025-07-20T08:00:00Z', changedBy: 'Michael Davis' },
-      { id: '2', status: 'in-progress', timestamp: '2025-07-21T09:00:00Z', changedBy: 'Public Works Department' }
-    ],
     assignedTo: 'Public Works Department',
-    estimatedDuration: '2-3 weeks',
+    estimatedResolution: '2-3 weeks',
     boardStatus: 'in-progress',
     addedToBoardAt: '2025-07-20T09:00:00Z',
     publicNotes: 'Site inspection completed. Contractor scheduled for accessibility improvements.',

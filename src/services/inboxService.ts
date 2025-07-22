@@ -193,12 +193,22 @@ export const createIssueFromMessage = async (messageId: string, issueData: Parti
   
   const newIssue: ConstituentIssue = {
     id: `issue-${Date.now()}`,
+    uniqueId: `ISU-${Date.now().toString(36).toUpperCase()}`,
     title: issueData.title || message.subject,
     description: issueData.description || message.message,
     type: issueData.type || 'individual',
     status: undefined,
     source: message.source,
     priority: message.priority,
+    tags: [],
+    timeline: [{
+      id: '1',
+      status: 'submitted',
+      timestamp: new Date().toISOString(),
+      changedBy: 'System',
+      notes: 'Issue created from message'
+    }],
+    internalNotes: [],
     constituent: {
       name: message.from,
       email: message.email,
