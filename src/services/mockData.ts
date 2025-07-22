@@ -214,8 +214,8 @@ export const mockIndividualIssues: ConstituentIssue[] = [
       email: 'mdavis@email.com'
     },
     timeframe: '4 hours ago',
-    createdAt: '2024-11-15T08:00:00Z',
-    updatedAt: '2024-11-15T08:00:00Z'
+    createdAt: '2025-07-20T08:00:00Z',
+    updatedAt: '2025-07-20T08:00:00Z'
   },
   {
     id: 'i5',
@@ -230,8 +230,8 @@ export const mockIndividualIssues: ConstituentIssue[] = [
       email: 'lisa.chen@email.com'
     },
     timeframe: '1 week ago',
-    createdAt: '2025-07-13T11:20:00Z',
-    updatedAt: '2025-07-13T11:20:00Z'
+    createdAt: '2024-11-13T11:20:00Z',
+    updatedAt: '2024-11-13T11:20:00Z'
   }
 ];
 
