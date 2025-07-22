@@ -9,7 +9,6 @@ import { ConnectionModal } from "@/components/data-sources/ConnectionModal";
 import { User, CreditCard, Database, Bell, Trash2, Save, Edit, Globe, Mail, MessageSquare, CheckCircle } from 'lucide-react';
 import { getDataSources } from '@/services/mockData';
 import { DataSource } from '@/types/core';
-
 const Settings = () => {
   // Personal Information State
   const [personalInfo, setPersonalInfo] = useState({
@@ -54,14 +53,15 @@ const Settings = () => {
 
   // Personal Information Handlers
   const handlePersonalInfoChange = (field: string, value: string) => {
-    setPersonalInfo(prev => ({ ...prev, [field]: value }));
+    setPersonalInfo(prev => ({
+      ...prev,
+      [field]: value
+    }));
   };
-
   const savePersonalInfo = () => {
     localStorage.setItem('personalInfo', JSON.stringify(personalInfo));
     setIsEditingPersonal(false);
   };
-
   const cancelPersonalEdit = () => {
     const savedPersonalInfo = localStorage.getItem('personalInfo');
     if (savedPersonalInfo) {
@@ -86,7 +86,6 @@ const Settings = () => {
       setIsModalOpen(true);
     }
   };
-
   const handleConnectionComplete = (id: string) => {
     setDataSources(prev => prev.map(ds => ds.id === id ? {
       ...ds,
@@ -101,13 +100,14 @@ const Settings = () => {
 
   // Notifications Handlers
   const handleNotificationChange = (key: string, value: boolean) => {
-    const newNotifications = { ...notifications, [key]: value };
+    const newNotifications = {
+      ...notifications,
+      [key]: value
+    };
     setNotifications(newNotifications);
     localStorage.setItem('notificationPreferences', JSON.stringify(newNotifications));
   };
-
   const connectedCount = dataSources.filter(ds => ds.connected).length;
-
   const getSourceIcon = (type: DataSource['type']) => {
     switch (type) {
       case 'website':
@@ -122,7 +122,6 @@ const Settings = () => {
         return Globe;
     }
   };
-
   const getSourceDescription = (type: DataSource['type']) => {
     switch (type) {
       case 'website':
@@ -137,9 +136,7 @@ const Settings = () => {
         return "Connect to monitor constituent feedback";
     }
   };
-
-  return (
-    <div className="space-y-6">
+  return <div className="space-y-6">
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-foreground">Settings</h1>
@@ -153,85 +150,44 @@ const Settings = () => {
         <CardHeader>
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <User className="h-5 w-5 text-muted-foreground" />
+              
               <CardTitle>Personal Information</CardTitle>
             </div>
-            {!isEditingPersonal ? (
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={() => setIsEditingPersonal(true)}
-              >
+            {!isEditingPersonal ? <Button variant="outline" size="sm" onClick={() => setIsEditingPersonal(true)}>
                 <Edit className="h-4 w-4 mr-2" />
                 Edit
-              </Button>
-            ) : (
-              <div className="flex space-x-2">
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  onClick={cancelPersonalEdit}
-                >
+              </Button> : <div className="flex space-x-2">
+                <Button variant="outline" size="sm" onClick={cancelPersonalEdit}>
                   Cancel
                 </Button>
-                <Button 
-                  size="sm" 
-                  onClick={savePersonalInfo}
-                >
+                <Button size="sm" onClick={savePersonalInfo}>
                   <Save className="h-4 w-4 mr-2" />
                   Save
                 </Button>
-              </div>
-            )}
+              </div>}
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="firstName">First Name</Label>
-              <Input
-                id="firstName"
-                value={personalInfo.firstName}
-                onChange={(e) => handlePersonalInfoChange('firstName', e.target.value)}
-                disabled={!isEditingPersonal}
-              />
+              <Input id="firstName" value={personalInfo.firstName} onChange={e => handlePersonalInfoChange('firstName', e.target.value)} disabled={!isEditingPersonal} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="lastName">Last Name</Label>
-              <Input
-                id="lastName"
-                value={personalInfo.lastName}
-                onChange={(e) => handlePersonalInfoChange('lastName', e.target.value)}
-                disabled={!isEditingPersonal}
-              />
+              <Input id="lastName" value={personalInfo.lastName} onChange={e => handlePersonalInfoChange('lastName', e.target.value)} disabled={!isEditingPersonal} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                value={personalInfo.email}
-                onChange={(e) => handlePersonalInfoChange('email', e.target.value)}
-                disabled={!isEditingPersonal}
-              />
+              <Input id="email" type="email" value={personalInfo.email} onChange={e => handlePersonalInfoChange('email', e.target.value)} disabled={!isEditingPersonal} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="phone">Phone</Label>
-              <Input
-                id="phone"
-                value={personalInfo.phone}
-                onChange={(e) => handlePersonalInfoChange('phone', e.target.value)}
-                disabled={!isEditingPersonal}
-              />
+              <Input id="phone" value={personalInfo.phone} onChange={e => handlePersonalInfoChange('phone', e.target.value)} disabled={!isEditingPersonal} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="zipCode">Zip Code</Label>
-              <Input
-                id="zipCode"
-                value={personalInfo.zipCode}
-                onChange={(e) => handlePersonalInfoChange('zipCode', e.target.value)}
-                disabled={!isEditingPersonal}
-              />
+              <Input id="zipCode" value={personalInfo.zipCode} onChange={e => handlePersonalInfoChange('zipCode', e.target.value)} disabled={!isEditingPersonal} />
             </div>
           </div>
         </CardContent>
@@ -241,7 +197,7 @@ const Settings = () => {
       <Card>
         <CardHeader>
           <div className="flex items-center space-x-2">
-            <CreditCard className="h-5 w-5 text-muted-foreground" />
+            
             <CardTitle>Account Details</CardTitle>
           </div>
         </CardHeader>
@@ -275,18 +231,16 @@ const Settings = () => {
       <Card>
         <CardHeader>
           <div className="flex items-center space-x-2">
-            <Database className="h-5 w-5 text-muted-foreground" />
+            
             <CardTitle>Data Sources</CardTitle>
           </div>
         </CardHeader>
         <CardContent>
           <div className="space-y-0">
             {dataSources.map((dataSource, index) => {
-              const IconComponent = getSourceIcon(dataSource.type);
-              const isLast = index === dataSources.length - 1;
-              
-              return (
-                <div key={dataSource.id} className={`flex items-center justify-between py-6 ${!isLast ? 'border-b border-border' : ''}`}>
+            const IconComponent = getSourceIcon(dataSource.type);
+            const isLast = index === dataSources.length - 1;
+            return <div key={dataSource.id} className={`flex items-center justify-between py-6 ${!isLast ? 'border-b border-border' : ''}`}>
                   <div className="flex items-center space-x-3 flex-1">
                     <div className="p-2 bg-muted rounded-lg">
                       <IconComponent className="h-5 w-5 text-muted-foreground" />
@@ -294,43 +248,30 @@ const Settings = () => {
                     <div className="flex-1">
                       <div className="flex items-center space-x-2 mb-1">
                         <h4 className="font-medium text-foreground">{dataSource.name}</h4>
-                        {dataSource.connected && (
-                          <div className="flex items-center space-x-1">
-                            <CheckCircle className="h-4 w-4 text-green-600" />
+                        {dataSource.connected && <div className="flex items-center space-x-1">
+                            
                             <Badge className="bg-green-100 text-green-800 border-green-200 text-xs">
                               Connected
                             </Badge>
-                          </div>
-                        )}
+                          </div>}
                       </div>
                       <p className="text-sm text-muted-foreground">
                         {getSourceDescription(dataSource.type)}
                       </p>
-                      {dataSource.connected && dataSource.issuesGenerated && (
-                        <p className="text-xs text-green-700 mt-1">
+                      {dataSource.connected && dataSource.issuesGenerated && <p className="text-xs text-green-700 mt-1">
                           {dataSource.issuesGenerated} issues generated • Last sync: {dataSource.lastSync}
-                        </p>
-                      )}
+                        </p>}
                     </div>
                   </div>
                   <div className="flex-shrink-0">
-                    {dataSource.connected ? (
-                      <Button variant="outline" size="sm">
+                    {dataSource.connected ? <Button variant="outline" size="sm">
                         Disconnect
-                      </Button>
-                    ) : (
-                      <Button 
-                        variant="outline" 
-                        size="sm"
-                        onClick={() => handleConnect(dataSource.id)}
-                      >
+                      </Button> : <Button variant="outline" size="sm" onClick={() => handleConnect(dataSource.id)}>
                         Connect
-                      </Button>
-                    )}
+                      </Button>}
                   </div>
-                </div>
-              );
-            })}
+                </div>;
+          })}
           </div>
         </CardContent>
       </Card>
@@ -339,7 +280,7 @@ const Settings = () => {
       <Card>
         <CardHeader>
           <div className="flex items-center space-x-2">
-            <Bell className="h-5 w-5 text-muted-foreground" />
+            
             <CardTitle>Notifications</CardTitle>
           </div>
         </CardHeader>
@@ -350,10 +291,7 @@ const Settings = () => {
                 <p className="font-medium">New Issues</p>
                 <p className="text-sm text-muted-foreground">Get notified when new constituent issues are detected</p>
               </div>
-              <Switch 
-                checked={notifications.newIssues}
-                onCheckedChange={(checked) => handleNotificationChange('newIssues', checked)}
-              />
+              <Switch checked={notifications.newIssues} onCheckedChange={checked => handleNotificationChange('newIssues', checked)} />
             </div>
             
             <div className="flex items-center justify-between">
@@ -361,10 +299,7 @@ const Settings = () => {
                 <p className="font-medium">Weekly Summaries</p>
                 <p className="text-sm text-muted-foreground">Receive weekly summary reports of constituent activity</p>
               </div>
-              <Switch 
-                checked={notifications.weeklySummaries}
-                onCheckedChange={(checked) => handleNotificationChange('weeklySummaries', checked)}
-              />
+              <Switch checked={notifications.weeklySummaries} onCheckedChange={checked => handleNotificationChange('weeklySummaries', checked)} />
             </div>
             
             <div className="flex items-center justify-between">
@@ -372,10 +307,7 @@ const Settings = () => {
                 <p className="font-medium">Poll Results</p>
                 <p className="text-sm text-muted-foreground">Get notified when polls receive new responses</p>
               </div>
-              <Switch 
-                checked={notifications.pollResults}
-                onCheckedChange={(checked) => handleNotificationChange('pollResults', checked)}
-              />
+              <Switch checked={notifications.pollResults} onCheckedChange={checked => handleNotificationChange('pollResults', checked)} />
             </div>
             
             <div className="flex items-center justify-between">
@@ -383,10 +315,7 @@ const Settings = () => {
                 <p className="font-medium">System Updates</p>
                 <p className="text-sm text-muted-foreground">Receive notifications about platform updates and maintenance</p>
               </div>
-              <Switch 
-                checked={notifications.systemUpdates}
-                onCheckedChange={(checked) => handleNotificationChange('systemUpdates', checked)}
-              />
+              <Switch checked={notifications.systemUpdates} onCheckedChange={checked => handleNotificationChange('systemUpdates', checked)} />
             </div>
           </div>
         </CardContent>
@@ -396,7 +325,7 @@ const Settings = () => {
       <Card className="border-red-200">
         <CardHeader>
           <div className="flex items-center space-x-2">
-            <Trash2 className="h-5 w-5 text-red-600" />
+            
             <CardTitle className="text-red-900">Delete Account</CardTitle>
           </div>
         </CardHeader>
@@ -417,17 +346,10 @@ const Settings = () => {
       </Card>
 
       {/* Connection Modal */}
-      <ConnectionModal 
-        isOpen={isModalOpen} 
-        onClose={() => {
-          setIsModalOpen(false);
-          setSelectedSource(null);
-        }} 
-        dataSource={selectedSource} 
-        onConnectionComplete={handleConnectionComplete} 
-      />
-    </div>
-  );
+      <ConnectionModal isOpen={isModalOpen} onClose={() => {
+      setIsModalOpen(false);
+      setSelectedSource(null);
+    }} dataSource={selectedSource} onConnectionComplete={handleConnectionComplete} />
+    </div>;
 };
-
 export default Settings;
