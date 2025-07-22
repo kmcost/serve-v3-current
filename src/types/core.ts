@@ -81,3 +81,44 @@ export function validateConstituentIssues(issues: unknown[]): ConstituentIssue[]
 export function validatePriorityItems(items: unknown[]): PriorityItem[] {
   return items.filter(isValidPriorityItem);
 }
+
+// Constituent types
+export interface ConstituentRecord {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  politicalAffiliation: 'Democrat' | 'Republican' | 'Independent' | 'Other';
+  priorityIssues: string[];
+  optInEmail: boolean;
+  optInSMS: boolean;
+  hasEngaged: boolean;
+  createdAt: string;
+}
+
+export interface ConstituentStats {
+  totalConstituents: number;
+  optInEmailCount: number;
+  optInSMSCount: number;
+  engagementPercentage: number;
+}
+
+// Type guards for constituents
+export function isValidConstituentRecord(record: unknown): record is ConstituentRecord {
+  return (
+    typeof record === 'object' &&
+    record !== null &&
+    typeof (record as ConstituentRecord).id === 'string' &&
+    typeof (record as ConstituentRecord).firstName === 'string' &&
+    typeof (record as ConstituentRecord).lastName === 'string' &&
+    typeof (record as ConstituentRecord).email === 'string' &&
+    typeof (record as ConstituentRecord).phone === 'string' &&
+    ['Democrat', 'Republican', 'Independent', 'Other'].includes((record as ConstituentRecord).politicalAffiliation) &&
+    Array.isArray((record as ConstituentRecord).priorityIssues) &&
+    typeof (record as ConstituentRecord).optInEmail === 'boolean' &&
+    typeof (record as ConstituentRecord).optInSMS === 'boolean' &&
+    typeof (record as ConstituentRecord).hasEngaged === 'boolean' &&
+    typeof (record as ConstituentRecord).createdAt === 'string'
+  );
+}
