@@ -18,7 +18,7 @@ export function PriorityCard({ item, isDragging, onDragStart, onDragEnd }: Prior
     description: item.description,
     priority: item.priority,
     status: item.boardStatus === 'completed' ? 'resolved' : 
-            item.boardStatus === 'in-progress' ? 'in-progress' : 'new',
+            item.boardStatus === 'in-progress' ? 'in-progress' : undefined,
     type: item.type,
     source: item.source,
     createdAt: item.addedToBoardAt,

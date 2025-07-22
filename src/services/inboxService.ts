@@ -196,7 +196,7 @@ export const createIssueFromMessage = async (messageId: string, issueData: Parti
     title: issueData.title || message.subject,
     description: issueData.description || message.message,
     type: issueData.type || 'individual',
-    status: 'new',
+    status: undefined,
     source: message.source,
     priority: message.priority,
     constituent: {
