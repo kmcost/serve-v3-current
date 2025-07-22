@@ -64,24 +64,37 @@ export function UnifiedIssueCard({
   const [showRelated, setShowRelated] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   
-  // Handle different data types - only ConstituentIssue and PriorityItem have status/priority
-  const hasStatusAndPriority = 'status' in issue && 'priority' in issue;
-  const statusInfo = hasStatusAndPriority ? statusConfig[issue.status as keyof typeof statusConfig] : null;
-  const priorityInfo = hasStatusAndPriority ? priorityConfig[issue.priority as keyof typeof priorityConfig] : null;
+  // Type guards to safely access properties
+  const isConstituentIssue = (item: UnifiedIssueData): item is ConstituentIssue => 
+    'status' in item && 'priority' in item && 'type' in item;
   
-  // Handle different data types
-  const relatedIssues = 'relatedIssues' in issue ? getRelatedIssues(issue.id) : [];
+  const isPriorityItem = (item: UnifiedIssueData): item is PriorityItem =>
+    'boardStatus' in item;
+  
+  const isBasicIssue = (item: UnifiedIssueData): item is Issue =>
+    'supportPercentage' in item && !('status' in item);
+
+  // Safe property access
+  const statusInfo = isConstituentIssue(issue) ? statusConfig[issue.status as keyof typeof statusConfig] : null;
+  const priorityInfo = isConstituentIssue(issue) ? priorityConfig[issue.priority as keyof typeof priorityConfig] : null;
+  const supportPercentage = isBasicIssue(issue) ? issue.supportPercentage : 
+                           isConstituentIssue(issue) ? issue.supportPercentage : undefined;
+  const mentions = isConstituentIssue(issue) ? issue.mentions : undefined;
+  const constituent = isConstituentIssue(issue) ? issue.constituent : undefined;
+  const timeframe = isConstituentIssue(issue) ? issue.timeframe : undefined;
+  const issueType = isConstituentIssue(issue) ? issue.type : undefined;
+  
+  // Priority-specific fields
+  const assignee = isPriorityItem(issue) ? issue.assignee : undefined;
+  const estimatedDuration = isPriorityItem(issue) ? issue.estimatedDuration : undefined;
+  const publicNotes = isPriorityItem(issue) ? issue.publicNotes : undefined;
+  const addedToBoardAt = isPriorityItem(issue) ? issue.addedToBoardAt : undefined;
+  const completedAt = isPriorityItem(issue) ? issue.completedAt : undefined;
+  const boardStatus = isPriorityItem(issue) ? issue.boardStatus : undefined;
+  
+  // Related issues - only for ConstituentIssue types
+  const relatedIssues = isConstituentIssue(issue) ? getRelatedIssues(issue.id) : [];
   const hasRelatedIssues = relatedIssues.length > 0;
-  const supportPercentage = 'supportPercentage' in issue ? issue.supportPercentage : undefined;
-  const mentions = 'mentions' in issue ? issue.mentions : undefined;
-  const constituent = 'constituent' in issue ? issue.constituent : undefined;
-  const timeframe = 'timeframe' in issue ? issue.timeframe : undefined;
-  const assignee = 'assignee' in issue && issue.assignee ? issue.assignee : undefined;
-  const estimatedDuration = 'estimatedDuration' in issue && issue.estimatedDuration ? issue.estimatedDuration : undefined;
-  const publicNotes = 'publicNotes' in issue && issue.publicNotes ? issue.publicNotes : undefined;
-  const addedToBoardAt = 'addedToBoardAt' in issue ? issue.addedToBoardAt : undefined;
-  const completedAt = 'completedAt' in issue && issue.completedAt ? issue.completedAt : undefined;
-  const boardStatus = 'boardStatus' in issue ? issue.boardStatus : undefined;
 
   const handleSelect = (checked: boolean) => {
     onSelect?.(issue.id, checked);
@@ -116,11 +129,11 @@ export function UnifiedIssueCard({
     }
   };
 
-  // Different layouts based on variant
+  // Priorities variant - compact mobile-style layout
   if (variant === 'priorities') {
     return (
       <Card 
-        draggable={variant === 'priorities'}
+        draggable={true}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
         className={cn(
@@ -133,13 +146,13 @@ export function UnifiedIssueCard({
             <GripVertical className="h-4 w-4 text-gray-400 mt-1 flex-shrink-0" />
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-2">
-                {getTypeIcon('type' in issue ? issue.type : undefined)}
-                {hasStatusAndPriority && (
+                {getTypeIcon(issueType)}
+                {priorityInfo && (
                   <Badge 
                     variant="outline" 
-                    className={cn("text-xs", getPriorityColor(issue.priority))}
+                    className={cn("text-xs", getPriorityColor(isConstituentIssue(issue) ? issue.priority : 'low'))}
                   >
-                    {issue.priority}
+                    {isConstituentIssue(issue) ? issue.priority : 'low'}
                   </Badge>
                 )}
                 {boardStatus === 'completed' && (
@@ -299,12 +312,12 @@ export function UnifiedIssueCard({
       
       <CardContent className="space-y-4">
         <div className="flex items-center gap-6 text-sm text-muted-foreground">
-            <div className="flex items-center gap-1">
-              <Calendar className="h-4 w-4" />
-              <span>
-                {timeframe || ('createdAt' in issue ? new Date(issue.createdAt).toLocaleDateString() : 'N/A')}
-              </span>
-            </div>
+          <div className="flex items-center gap-1">
+            <Calendar className="h-4 w-4" />
+            <span>
+              {timeframe || (isConstituentIssue(issue) ? new Date(issue.createdAt).toLocaleDateString() : 'N/A')}
+            </span>
+          </div>
           
           {mentions && (
             <div className="flex items-center gap-1">
