@@ -322,26 +322,22 @@ const Settings = () => {
       </Card>
 
       {/* Delete Account Section */}
-      <Card className="border-red-200">
+      <Card>
         <CardHeader>
-          <div className="flex items-center space-x-2">
-            
-            <CardTitle className="text-red-900">Delete Account</CardTitle>
-          </div>
+          <CardTitle>Delete Account</CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-              <p className="text-sm text-red-800 font-medium mb-2">Warning: This action cannot be undone</p>
-              <p className="text-sm text-red-700">
-                Deleting your account will permanently remove all your data, including constituent feedback, 
-                poll responses, and connected data sources. This action cannot be reversed.
-              </p>
-            </div>
-            <Button variant="destructive">
-              Delete My Account
-            </Button>
+        <CardContent className="space-y-4">
+          <div>
+            <p className="font-medium text-foreground mb-2">
+              Permanently delete your account and all of its content.
+            </p>
+            <p className="text-sm text-muted-foreground">
+              This action is not reversible - proceed with caution
+            </p>
           </div>
+          <Button variant="destructive">
+            Delete Account
+          </Button>
         </CardContent>
       </Card>
 
