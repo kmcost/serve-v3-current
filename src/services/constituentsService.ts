@@ -11,7 +11,7 @@ export interface ConstituentRecord {
   hasEngaged: boolean;
   createdAt: string;
   age: '18-25' | '25-35' | '35-50' | '50+';
-  familyStatus: 'Parent/Guardian (Under 18)' | 'Not a parent/guardian' | 'Unknown';
+  familyStatus: 'Parent/Guardian' | 'Not a parent/guardian' | 'Unknown';
   ward: string;
   isBusinessOwner: boolean;
 }
@@ -38,7 +38,7 @@ const ageGroups: ConstituentRecord['age'][] = [
 ];
 
 const familyStatuses: ConstituentRecord['familyStatus'][] = [
-  'Parent/Guardian (Under 18)', 'Not a parent/guardian', 'Unknown'
+  'Parent/Guardian', 'Not a parent/guardian', 'Unknown'
 ];
 
 const wards = [

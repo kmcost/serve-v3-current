@@ -1,4 +1,3 @@
-
 import { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -8,6 +7,7 @@ import { Pagination, PaginationContent, PaginationItem, PaginationLink, Paginati
 import { Search, Plus, Users, Mail, MessageSquare, ArrowUpDown } from 'lucide-react';
 import { getConstituents, getConstituentStats, searchConstituents } from '@/services/constituentsService';
 import type { ConstituentRecord } from '@/types/core';
+import { ISSUE_COLORS } from '@/utils/issueColors';
 
 const RECORDS_PER_PAGE = 20;
 
@@ -63,11 +63,17 @@ export default function People() {
     const displayIssues = issues.slice(0, 3);
     return (
       <div className="flex flex-wrap gap-1">
-        {displayIssues.map((issue, index) => (
-          <Badge key={index} variant="secondary" className="text-xs whitespace-nowrap">
-            {issue}
-          </Badge>
-        ))}
+        {displayIssues.map((issue, index) => {
+          const colors = ISSUE_COLORS[issue] || { bg: 'bg-gray-100', text: 'text-gray-800' };
+          return (
+            <Badge 
+              key={index} 
+              className={`text-xs whitespace-nowrap ${colors.bg} ${colors.text} border-0`}
+            >
+              {issue}
+            </Badge>
+          );
+        })}
         {issues.length > 3 && (
           <Badge variant="outline" className="text-xs">
             +{issues.length - 3}
@@ -78,13 +84,19 @@ export default function People() {
   };
   
   const renderOptInStatus = (optIn: boolean) => (
-    <Badge variant={optIn ? "default" : "secondary"} className="text-xs">
+    <Badge 
+      variant={optIn ? "default" : "secondary"} 
+      className={`text-xs ${optIn ? 'bg-green-600 hover:bg-green-600/80' : ''}`}
+    >
       {optIn ? "Yes" : "No"}
     </Badge>
   );
 
   const renderBusinessOwner = (isBusinessOwner: boolean) => (
-    <Badge variant={isBusinessOwner ? "default" : "secondary"} className="text-xs">
+    <Badge 
+      variant={isBusinessOwner ? "default" : "secondary"} 
+      className={`text-xs ${isBusinessOwner ? 'bg-green-600 hover:bg-green-600/80' : ''}`}
+    >
       {isBusinessOwner ? "Yes" : "No"}
     </Badge>
   );
@@ -155,43 +167,72 @@ export default function People() {
           <TableHeader>
             <TableRow className="hover:bg-transparent">
               <TableHead className="whitespace-nowrap min-w-[200px]">
+                Name
+              </TableHead>
+              <TableHead className="whitespace-nowrap min-w-[100px]">
                 <Button
                   variant="ghost"
                   className="h-auto p-0 font-medium"
-                  onClick={() => handleSort('lastName')}
+                  onClick={() => handleSort('age')}
                 >
-                  Name
+                  Age
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
               </TableHead>
-              <TableHead className="whitespace-nowrap min-w-[100px]">Age</TableHead>
-              <TableHead className="whitespace-nowrap min-w-[220px]">Family Status</TableHead>
-              <TableHead className="whitespace-nowrap min-w-[120px]">Ward/District</TableHead>
+              <TableHead className="whitespace-nowrap min-w-[220px]">
+                <Button
+                  variant="ghost"
+                  className="h-auto p-0 font-medium"
+                  onClick={() => handleSort('familyStatus')}
+                >
+                  Family Status
+                  <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+              </TableHead>
+              <TableHead className="whitespace-nowrap min-w-[120px]">
+                <Button
+                  variant="ghost"
+                  className="h-auto p-0 font-medium"
+                  onClick={() => handleSort('ward')}
+                >
+                  Ward/District
+                  <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+              </TableHead>
               <TableHead className="whitespace-nowrap min-w-[250px]">Priority Issues</TableHead>
-              <TableHead className="whitespace-nowrap min-w-[150px]">
-                <Button
-                  variant="ghost"
-                  className="h-auto p-0 font-medium"
-                  onClick={() => handleSort('politicalAffiliation')}
-                >
-                  Political Affiliation
-                  <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-              </TableHead>
+              <TableHead className="whitespace-nowrap min-w-[150px]">Political Affiliation</TableHead>
               <TableHead className="whitespace-nowrap min-w-[150px]">Phone Number</TableHead>
-              <TableHead className="whitespace-nowrap min-w-[250px]">
+              <TableHead className="whitespace-nowrap min-w-[250px]">Email</TableHead>
+              <TableHead className="whitespace-nowrap min-w-[120px]">
                 <Button
                   variant="ghost"
                   className="h-auto p-0 font-medium"
-                  onClick={() => handleSort('email')}
+                  onClick={() => handleSort('isBusinessOwner')}
                 >
-                  Email
+                  Business Owner
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
               </TableHead>
-              <TableHead className="whitespace-nowrap min-w-[120px]">Business Owner</TableHead>
-              <TableHead className="whitespace-nowrap min-w-[120px]">Opt-In Phone</TableHead>
-              <TableHead className="whitespace-nowrap min-w-[120px]">Opt-In Email</TableHead>
+              <TableHead className="whitespace-nowrap min-w-[120px]">
+                <Button
+                  variant="ghost"
+                  className="h-auto p-0 font-medium"
+                  onClick={() => handleSort('optInSMS')}
+                >
+                  Opt-In Phone
+                  <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+              </TableHead>
+              <TableHead className="whitespace-nowrap min-w-[120px]">
+                <Button
+                  variant="ghost"
+                  className="h-auto p-0 font-medium"
+                  onClick={() => handleSort('optInEmail')}
+                >
+                  Opt-In Email
+                  <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
