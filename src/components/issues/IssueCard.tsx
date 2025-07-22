@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
@@ -22,6 +21,7 @@ interface IssueCardProps {
   onSelect?: (issueId: string, selected: boolean) => void;
   onMoveToPriorities?: (issueId: string) => void;
   showCheckbox?: boolean;
+  variant?: 'issues' | 'dashboard';
 }
 
 const statusConfig = {
@@ -42,7 +42,8 @@ export function IssueCard({
   isSelected = false, 
   onSelect, 
   onMoveToPriorities,
-  showCheckbox = false 
+  showCheckbox = false,
+  variant = 'issues'
 }: IssueCardProps) {
   const [showRelated, setShowRelated] = useState(false);
   
@@ -110,14 +111,26 @@ export function IssueCard({
           
           {/* Desktop: Button in top-right corner */}
           <div className="hidden md:block absolute top-4 right-4">
-            <Button 
-              onClick={handleMoveToPriorities}
-              size="sm"
-              className="gap-2"
-            >
-              <ArrowRight className="h-4 w-4" />
-              Move to Priorities
-            </Button>
+            {variant === 'dashboard' ? (
+              <Button 
+                asChild
+                variant="outline"
+                size="sm"
+              >
+                <Link to={`/issues/${issue.id}`}>
+                  View Details
+                </Link>
+              </Button>
+            ) : (
+              <Button 
+                onClick={handleMoveToPriorities}
+                size="sm"
+                className="gap-2"
+              >
+                <ArrowRight className="h-4 w-4" />
+                Move to Priorities
+              </Button>
+            )}
           </div>
         </div>
       </CardHeader>
@@ -175,14 +188,27 @@ export function IssueCard({
         
         {/* Mobile: Button at bottom of card */}
         <div className="md:hidden pt-2">
-          <Button 
-            onClick={handleMoveToPriorities}
-            size="sm"
-            className="gap-2 w-full"
-          >
-            <ArrowRight className="h-4 w-4" />
-            Move to Priorities
-          </Button>
+          {variant === 'dashboard' ? (
+            <Button 
+              asChild
+              variant="outline"
+              size="sm"
+              className="w-full"
+            >
+              <Link to={`/issues/${issue.id}`}>
+                View Details
+              </Link>
+            </Button>
+          ) : (
+            <Button 
+              onClick={handleMoveToPriorities}
+              size="sm"
+              className="gap-2 w-full"
+            >
+              <ArrowRight className="h-4 w-4" />
+              Move to Priorities
+            </Button>
+          )}
         </div>
       </CardContent>
     </Card>

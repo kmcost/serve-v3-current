@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { getValidatedIssues } from '@/services/mockData';
 import { ConstituentIssue } from '@/types/core';
 import { IssueCard } from '@/components/issues/IssueCard';
+
 export function ValidatedIssues() {
   const {
     data: issues = [],
@@ -15,6 +16,7 @@ export function ValidatedIssues() {
     queryKey: ['validated-issues'],
     queryFn: getValidatedIssues
   });
+
   if (isLoading) {
     return <Card>
         <CardHeader>
@@ -33,6 +35,7 @@ export function ValidatedIssues() {
         </CardContent>
       </Card>;
   }
+
   if (error) {
     return <Card>
         <CardHeader>
@@ -43,6 +46,7 @@ export function ValidatedIssues() {
         </CardContent>
       </Card>;
   }
+
   return <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
         <CardTitle className="text-xl">Top 5 Issues in Your Community</CardTitle>
@@ -58,6 +62,7 @@ export function ValidatedIssues() {
             <IssueCard 
               key={issue.id} 
               issue={issue}
+              variant="dashboard"
             />
           ))}
         </div>
