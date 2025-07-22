@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { getValidatedIssues } from '@/services/mockData';
 import { ConstituentIssue } from '@/types/core';
+import { IssueCard } from '@/components/issues/IssueCard';
 export function ValidatedIssues() {
   const {
     data: issues = [],
@@ -53,19 +54,12 @@ export function ValidatedIssues() {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {issues.slice(0, 5).map(issue => <div key={issue.id} className="space-y-2 p-3 rounded-lg border bg-card">
-              <div className="flex items-center justify-between">
-                <h3 className="font-medium text-foreground leading-tight">
-                  {issue.title}
-                </h3>
-                <span className="text-sm font-semibold text-primary">
-                  {issue.supportPercentage}% support
-                </span>
-              </div>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                {issue.description}
-              </p>
-            </div>)}
+          {issues.slice(0, 5).map(issue => (
+            <IssueCard 
+              key={issue.id} 
+              issue={issue}
+            />
+          ))}
         </div>
       </CardContent>
     </Card>;
