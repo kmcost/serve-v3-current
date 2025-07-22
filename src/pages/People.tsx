@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -113,29 +114,47 @@ export default function People() {
 
       {/* Statistics Cards */}
       <div className="grid gap-4 md:grid-cols-3">
-        <div className="bg-card rounded-lg border p-6">
-          <div className="flex items-center gap-2">
-            <Users className="h-4 w-4 text-muted-foreground" />
-            <h3 className="text-sm font-medium text-muted-foreground">Total Constituents</h3>
-          </div>
-          <p className="text-2xl font-bold text-foreground mt-2">{stats.totalConstituents.toLocaleString()}</p>
-        </div>
+        <Card>
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-blue-100 rounded-lg">
+                <Users className="h-5 w-5 text-blue-600" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Total Constituents</p>
+                <p className="text-2xl font-bold">{stats.totalConstituents.toLocaleString()}</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
         
-        <div className="bg-card rounded-lg border p-6">
-          <div className="flex items-center gap-2">
-            <Mail className="h-4 w-4 text-muted-foreground" />
-            <h3 className="text-sm font-medium text-muted-foreground">Opt-In Email Count</h3>
-          </div>
-          <p className="text-2xl font-bold text-foreground mt-2">{stats.optInEmailCount.toLocaleString()}</p>
-        </div>
+        <Card>
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-green-100 rounded-lg">
+                <Mail className="h-5 w-5 text-green-600" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Opt-In Email</p>
+                <p className="text-2xl font-bold">{stats.optInEmailCount.toLocaleString()}</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
         
-        <div className="bg-card rounded-lg border p-6">
-          <div className="flex items-center gap-2">
-            <MessageSquare className="h-4 w-4 text-muted-foreground" />
-            <h3 className="text-sm font-medium text-muted-foreground">Opt-In SMS Count</h3>
-          </div>
-          <p className="text-2xl font-bold text-foreground mt-2">{stats.optInSMSCount.toLocaleString()}</p>
-        </div>
+        <Card>
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-purple-100 rounded-lg">
+                <MessageSquare className="h-5 w-5 text-purple-600" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Opt-In SMS</p>
+                <p className="text-2xl font-bold">{stats.optInSMSCount.toLocaleString()}</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Search and Actions */}
