@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { ConstituentIssue } from '@/types/core';
 import { getRelatedIssues } from '@/services/mockData';
+import { formatRelativeTime } from '@/utils/dateUtils';
 import { cn } from '@/lib/utils';
 
 interface IssueCardProps {
@@ -147,7 +148,7 @@ export function IssueCard({
           <div className="flex items-center gap-1">
             <Calendar className="h-4 w-4" />
             <span>
-              {issue.timeframe || new Date(issue.createdAt).toLocaleDateString()}
+              {formatRelativeTime(issue.createdAt)}
             </span>
           </div>
           
