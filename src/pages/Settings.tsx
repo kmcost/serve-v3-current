@@ -265,10 +265,10 @@ const Settings = () => {
                         </p>}
                     </div>
                   </div>
-                  <div className="flex-shrink-0">
-                    {dataSource.connected ? <Button variant="outline" size="sm">
+                  <div className="w-full sm:w-auto">
+                    {dataSource.connected ? <Button variant="outline" size="sm" className="w-full sm:w-auto">
                         Disconnect
-                      </Button> : <Button variant="outline" size="sm" onClick={() => handleConnect(dataSource.id)}>
+                      </Button> : <Button variant="outline" size="sm" className="w-full sm:w-auto" onClick={() => handleConnect(dataSource.id)}>
                         Connect
                       </Button>}
                   </div>
