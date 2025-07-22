@@ -27,7 +27,6 @@ interface IssueCardProps {
 }
 
 const statusConfig = {
-  'new': { label: 'New', color: 'bg-yellow-100 text-yellow-800' },
   'in-progress': { label: 'In Progress', color: 'bg-blue-100 text-blue-800' },
   'resolved': { label: 'Resolved', color: 'bg-green-100 text-green-800' },
   'validated': { label: 'Validated', color: 'bg-purple-100 text-purple-800' }
@@ -51,6 +50,7 @@ export function IssueCard({
   
   const statusInfo = statusConfig[issue.status as keyof typeof statusConfig];
   const priorityInfo = priorityConfig[issue.priority as keyof typeof priorityConfig];
+  const isAIDetected = issue.source === 'ai-detected';
   
   const relatedIssues = getRelatedIssues(issue.id);
   const hasRelatedIssues = relatedIssues.length > 0;
@@ -85,6 +85,11 @@ export function IssueCard({
             </div>
             
             <div className="flex flex-wrap gap-2 mb-2">
+              {isAIDetected && (
+                <Badge className="bg-orange-100 text-orange-800 text-xs">
+                  AI Detected
+                </Badge>
+              )}
               {statusInfo && (
                 <Badge className={`${statusInfo.color} text-xs`}>
                   {statusInfo.label}

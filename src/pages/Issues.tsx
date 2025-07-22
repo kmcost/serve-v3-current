@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -15,7 +14,8 @@ import {
   TrendingUp,
   Users,
   MessageSquare,
-  Settings
+  Settings,
+  Bot
 } from 'lucide-react';
 import { IssueCard } from '@/components/issues/IssueCard';
 import { IssueFilters } from '@/components/issues/IssueFilters';
@@ -37,9 +37,9 @@ export default function Issues() {
     queryFn: getAllIssuesEnhanced,
   });
 
-  // Filter issues based on search and filters
+  // Filter and sort issues based on search and filters
   const filteredIssues = useMemo(() => {
-    return issues.filter(issue => {
+    const filtered = issues.filter(issue => {
       // Search filter
       if (searchTerm) {
         const searchLower = searchTerm.toLowerCase();
@@ -68,12 +68,19 @@ export default function Issues() {
 
       return true;
     });
+
+    // Sort by createdAt date (newest first)
+    return filtered.sort((a, b) => {
+      const dateA = new Date(a.createdAt);
+      const dateB = new Date(b.createdAt);
+      return dateB.getTime() - dateA.getTime();
+    });
   }, [issues, searchTerm, selectedSources, selectedStatuses, selectedPriorities]);
 
   // Calculate statistics
   const stats = useMemo(() => {
     const total = issues.length;
-    const newIssues = issues.filter(i => i.status === 'new').length;
+    const aiDetected = issues.filter(i => i.source === 'ai-detected').length;
     const inProgress = issues.filter(i => i.status === 'in-progress').length;
     const resolved = issues.filter(i => i.status === 'resolved').length;
     const validated = issues.filter(i => i.status === 'validated').length;
@@ -84,7 +91,7 @@ export default function Issues() {
     
     return {
       total,
-      newIssues,
+      aiDetected,
       inProgress,
       resolved,
       validated,
@@ -181,7 +188,7 @@ export default function Issues() {
         <div>
           <h1 className="text-2xl font-bold text-foreground">Issues</h1>
           <p className="text-muted-foreground">
-            {stats.total} total issues • {stats.newIssues} new • {stats.inProgress} in progress • {stats.resolved} resolved
+            {stats.total} total issues • {stats.aiDetected} AI detected • {stats.inProgress} in progress • {stats.resolved} resolved
           </p>
         </div>
         <div className="flex flex-col sm:flex-row gap-2">
@@ -214,12 +221,12 @@ export default function Issues() {
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-yellow-100 rounded-lg">
-                <AlertTriangle className="h-5 w-5 text-yellow-600" />
+              <div className="p-2 bg-orange-100 rounded-lg">
+                <Bot className="h-5 w-5 text-orange-600" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">New Issues</p>
-                <p className="text-2xl font-bold">{stats.newIssues}</p>
+                <p className="text-sm text-muted-foreground">AI Detected Issues</p>
+                <p className="text-2xl font-bold">{stats.aiDetected}</p>
               </div>
             </div>
           </CardContent>
