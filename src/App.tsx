@@ -26,7 +26,7 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
         <Router>
           <Routes>
             <Route path="/" element={<Layout><Outlet /></Layout>}>
