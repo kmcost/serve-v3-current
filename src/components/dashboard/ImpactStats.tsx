@@ -1,52 +1,41 @@
 import { Card, CardContent } from '@/components/ui/card';
-import { Users, TrendingUp, CheckCircle, Clock } from 'lucide-react';
+import { CheckCircle, Clock, FileText, Timer } from 'lucide-react';
 import { calculateImpactStats } from '@/services/statsService';
 
 const iconMap = {
-  Users,
-  TrendingUp,
   CheckCircle,
-  Clock
+  Clock,
+  FileText,
+  Timer
+};
+
+const colorMap = {
+  green: { bg: 'bg-green-100', text: 'text-green-600' },
+  blue: { bg: 'bg-blue-100', text: 'text-blue-600' },
+  orange: { bg: 'bg-orange-100', text: 'text-orange-600' },
+  purple: { bg: 'bg-purple-100', text: 'text-purple-600' }
 };
 
 export function ImpactStats() {
   const stats = calculateImpactStats();
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+    <div className="grid gap-4 md:grid-cols-4">
       {stats.map((stat, index) => {
         const IconComponent = iconMap[stat.icon as keyof typeof iconMap];
+        const colors = colorMap[stat.color as keyof typeof colorMap];
         
         return (
-          <Card key={index} className="hover:shadow-md transition-shadow">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
+          <Card key={index}>
+            <CardContent className="p-4">
+              <div className="flex items-center gap-3">
+                <div className={`p-2 ${colors.bg} rounded-lg`}>
+                  <IconComponent className={`h-5 w-5 ${colors.text}`} />
+                </div>
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">
-                    {stat.title}
-                  </p>
-                  <p className="text-2xl font-bold text-foreground">
-                    {stat.value}
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    {stat.description}
-                  </p>
+                  <p className="text-sm text-muted-foreground">{stat.title}</p>
+                  <p className="text-2xl font-bold">{stat.value}</p>
                 </div>
-                <div className="h-12 w-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                  <IconComponent className="h-6 w-6 text-primary" />
-                </div>
-              </div>
-              <div className="flex items-center mt-4">
-                <span className={`text-sm font-medium ${
-                  stat.trend === 'up' ? 'text-green-600' : 
-                  stat.trend === 'down' ? 'text-red-600' : 
-                  'text-muted-foreground'
-                }`}>
-                  {stat.change}
-                </span>
-                <span className="text-xs text-muted-foreground ml-2">
-                  from last period
-                </span>
               </div>
             </CardContent>
           </Card>
