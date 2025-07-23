@@ -50,45 +50,18 @@ export function PublicIssueView({ issue }: PublicIssueViewProps) {
 
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
-      {/* Header */}
-      <div className="space-y-4">
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Badge variant="outline" className="font-mono">
-            {issue.uniqueId}
+      {/* Status Badge - only show if status exists */}
+      {statusInfo && (
+        <div className="flex items-center gap-3">
+          <Badge className={`${statusInfo.color} gap-2`}>
+            {StatusIcon && <StatusIcon className="h-4 w-4" />}
+            {statusInfo.label}
           </Badge>
-          <span>•</span>
-          <div className="flex items-center gap-1">
-            <Calendar className="h-4 w-4" />
-            <span>Reported {formatRelativeTime(issue.createdAt)}</span>
-          </div>
-          {issue.location && (
-            <>
-              <span>•</span>
-              <div className="flex items-center gap-1">
-                <MapPin className="h-4 w-4" />
-                <span>{issue.location}</span>
-              </div>
-            </>
-          )}
+          <span className="text-sm text-muted-foreground">
+            {statusInfo.description}
+          </span>
         </div>
-        
-        <h1 className="text-3xl font-bold text-foreground">
-          {issue.title}
-        </h1>
-
-        {/* Status Badge */}
-        {statusInfo && (
-          <div className="flex items-center gap-3">
-            <Badge className={`${statusInfo.color} gap-2`}>
-              {StatusIcon && <StatusIcon className="h-4 w-4" />}
-              {statusInfo.label}
-            </Badge>
-            <span className="text-sm text-muted-foreground">
-              {statusInfo.description}
-            </span>
-          </div>
-        )}
-      </div>
+      )}
 
       {/* Main Content */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
