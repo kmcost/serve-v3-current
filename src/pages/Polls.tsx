@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Progress } from '@/components/ui/progress';
-import { Search } from 'lucide-react';
+import { Search, Plus, Filter } from 'lucide-react';
 import { pollData } from '@/data/pollData';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { QuestionInput } from '@/components/QuestionInput';
@@ -74,9 +74,19 @@ export default function Polls() {
     });
   return <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-foreground">Polls & Surveys</h1>
-        <p className="text-muted-foreground">Manage your constituent engagement</p>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-foreground">Polls & Surveys</h1>
+          <p className="text-muted-foreground">Manage your constituent engagement</p>
+        </div>
+        <div className="flex flex-col sm:flex-row gap-2">
+          <Link to="/polls/create">
+            <Button>
+              <Plus className="h-4 w-4 mr-2" />
+              Create Poll
+            </Button>
+          </Link>
+        </div>
       </div>
 
       {/* Question Input */}
@@ -85,10 +95,19 @@ export default function Polls() {
       {/* Active Outreach */}
       <ActiveOutreach />
 
-      {/* Search */}
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-        <Input placeholder="Search..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="pl-10" />
+      {/* Search and Filters */}
+      <div className="flex flex-col sm:flex-row gap-4">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+          <Input placeholder="Search..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="pl-10" />
+        </div>
+        
+        <div className="flex gap-2">
+          <Button variant="outline" className="gap-2">
+            <Filter className="h-4 w-4" />
+            Filters
+          </Button>
+        </div>
       </div>
 
       {/* Content */}

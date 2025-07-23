@@ -98,7 +98,7 @@ export function MessageFilters({
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
           <Input
-            placeholder="Search messages, constituents, or content..."
+            placeholder={`Search ${totalMessages} messages...`}
             value={searchTerm}
             onChange={(e) => onSearchChange(e.target.value)}
             className="pl-10"
@@ -133,15 +133,6 @@ export function MessageFilters({
         </div>
       </div>
 
-      {/* Results Count */}
-      <div className="text-sm text-muted-foreground">
-        Showing {filteredCount} of {totalMessages} messages
-        {hasActiveFilters && (
-          <span className="ml-2 text-primary">
-            • {totalMessages - filteredCount} filtered out
-          </span>
-        )}
-      </div>
 
       {/* Expandable Filters */}
       {showFilters && (

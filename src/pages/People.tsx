@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
-import { Search, Plus, Users, Mail, MessageSquare, ArrowUpDown } from 'lucide-react';
+import { Search, Plus, Users, Mail, MessageSquare, ArrowUpDown, Filter } from 'lucide-react';
 import { getConstituents, getConstituentStats, searchConstituents } from '@/services/constituentsService';
 import type { ConstituentRecord } from '@/types/core';
 import { ISSUE_COLORS } from '@/utils/issueColors';
@@ -105,11 +105,22 @@ export default function People() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-foreground">People</h1>
-        <p className="text-muted-foreground">
-          Manage and view your constituent database
-        </p>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-foreground">People</h1>
+          <p className="text-muted-foreground">
+            Manage and view your constituent database
+          </p>
+        </div>
+        <div className="flex flex-col sm:flex-row gap-2">
+          <Button variant="outline">
+            Create Segment
+          </Button>
+          <Button>
+            <Plus className="h-4 w-4 mr-2" />
+            Add Voter
+          </Button>
+        </div>
       </div>
 
       {/* Statistics Cards */}
@@ -157,9 +168,9 @@ export default function People() {
         </Card>
       </div>
 
-      {/* Search and Actions */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="relative flex-1 max-w-sm">
+      {/* Search and Filters */}
+      <div className="flex flex-col sm:flex-row gap-4">
+        <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
           <Input
             placeholder="Search by name, email, or phone..."
@@ -170,12 +181,9 @@ export default function People() {
         </div>
         
         <div className="flex gap-2">
-          <Button variant="outline">
-            Create Segment
-          </Button>
-          <Button>
-            <Plus className="h-4 w-4 mr-2" />
-            Add Voter
+          <Button variant="outline" className="gap-2">
+            <Filter className="h-4 w-4" />
+            Filters
           </Button>
         </div>
       </div>
