@@ -130,12 +130,13 @@ export function IssueCard({
           {variant === 'issues' && (
             <div className="hidden md:block absolute top-4 right-4">
               <Button 
-                onClick={handleMoveToPriorities}
+                asChild
+                variant="outline"
                 size="sm"
-                className="gap-2"
               >
-                <ArrowRight className="h-4 w-4" />
-                Move to Priorities
+                <Link to={`/issues/${issue.id}`}>
+                  View Details
+                </Link>
               </Button>
             </div>
           )}
@@ -208,12 +209,14 @@ export function IssueCard({
             </Button>
           ) : (
             <Button 
-              onClick={handleMoveToPriorities}
+              asChild
+              variant="outline"
               size="sm"
-              className="gap-2 w-full"
+              className="w-full"
             >
-              <ArrowRight className="h-4 w-4" />
-              Move to Priorities
+              <Link to={`/issues/${issue.id}`}>
+                View Details
+              </Link>
             </Button>
           )}
         </div>
