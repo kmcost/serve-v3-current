@@ -25,8 +25,6 @@ export function IssueTimeline({ timeline }: IssueTimelineProps) {
 
   return (
     <div className="space-y-6">
-      <h3 className="text-lg font-semibold text-foreground">Timeline</h3>
-      
       <div className="space-y-4">
         {sortedTimeline.map((event, index) => {
           const config = statusConfig[event.status as keyof typeof statusConfig];
