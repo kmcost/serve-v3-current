@@ -80,8 +80,8 @@ export default function Polls() {
           <p className="text-muted-foreground">Manage your constituent engagement</p>
         </div>
         <div className="flex flex-col sm:flex-row gap-2">
-          <Link to="/polls/create">
-            <Button>
+          <Link to="/polls/create" className="w-full sm:w-auto">
+            <Button className="w-full sm:w-auto">
               <Plus className="h-4 w-4 mr-2" />
               Create Poll
             </Button>
