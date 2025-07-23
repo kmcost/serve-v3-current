@@ -1,33 +1,18 @@
-
 import { useState, useEffect, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
-import { 
-  MessageSquare, 
-  Users, 
-  AlertTriangle,
-  Clock,
-  Mail,
-  Plus,
-  CheckCircle
-} from 'lucide-react';
+import { MessageSquare, Users, AlertTriangle, Clock, Mail, Plus, CheckCircle } from 'lucide-react';
 import { MessageCard } from '@/components/inbox/MessageCard';
 import { MessageFilters } from '@/components/inbox/MessageFilters';
 import { BulkMessageActions } from '@/components/inbox/BulkMessageActions';
 import { CreateIssueModal } from '@/components/inbox/CreateIssueModal';
-import { 
-  getEnhancedMessages, 
-  createIssueFromMessage, 
-  updateMessageStatus, 
-  bulkUpdateMessages 
-} from '@/services/inboxService';
+import { getEnhancedMessages, createIssueFromMessage, updateMessageStatus, bulkUpdateMessages } from '@/services/inboxService';
 import { EnhancedMessage } from '@/types/inbox';
 import { ConstituentIssue } from '@/types/core';
 import { toast } from '@/hooks/use-toast';
-
 export default function Inbox() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSources, setSelectedSources] = useState<string[]>([]);
@@ -37,11 +22,18 @@ export default function Inbox() {
   const [createIssueModal, setCreateIssueModal] = useState<{
     isOpen: boolean;
     message: EnhancedMessage | null;
-  }>({ isOpen: false, message: null });
-
-  const { data: messages = [], isLoading, error, refetch } = useQuery({
+  }>({
+    isOpen: false,
+    message: null
+  });
+  const {
+    data: messages = [],
+    isLoading,
+    error,
+    refetch
+  } = useQuery({
     queryKey: ['inbox-messages'],
-    queryFn: getEnhancedMessages,
+    queryFn: getEnhancedMessages
   });
 
   // Filter messages based on search and filters
@@ -50,11 +42,7 @@ export default function Inbox() {
       // Search filter
       if (searchTerm) {
         const searchLower = searchTerm.toLowerCase();
-        const matchesSearch = 
-          message.from.toLowerCase().includes(searchLower) ||
-          message.subject.toLowerCase().includes(searchLower) ||
-          message.message.toLowerCase().includes(searchLower) ||
-          message.email.toLowerCase().includes(searchLower);
+        const matchesSearch = message.from.toLowerCase().includes(searchLower) || message.subject.toLowerCase().includes(searchLower) || message.message.toLowerCase().includes(searchLower) || message.email.toLowerCase().includes(searchLower);
         if (!matchesSearch) return false;
       }
 
@@ -72,7 +60,6 @@ export default function Inbox() {
       if (selectedPriorities.length > 0 && !selectedPriorities.includes(message.priority)) {
         return false;
       }
-
       return true;
     });
   }, [messages, searchTerm, selectedSources, selectedStatuses, selectedPriorities]);
@@ -85,7 +72,6 @@ export default function Inbox() {
     const issuesCreated = messages.filter(m => m.status === 'issue-created').length;
     const highPriority = messages.filter(m => m.priority === 'high').length;
     const withRelatedIssues = messages.filter(m => m.relatedIssues && m.relatedIssues.length > 0).length;
-    
     return {
       total,
       unread,
@@ -95,36 +81,30 @@ export default function Inbox() {
       withRelatedIssues
     };
   }, [messages]);
-
   const handleSelectMessage = (messageId: string, selected: boolean) => {
-    setSelectedMessages(prev => 
-      selected 
-        ? [...prev, messageId]
-        : prev.filter(id => id !== messageId)
-    );
+    setSelectedMessages(prev => selected ? [...prev, messageId] : prev.filter(id => id !== messageId));
   };
-
   const handleSelectAll = (checked: boolean) => {
     setSelectedMessages(checked ? filteredMessages.map(m => m.id) : []);
   };
-
   const handleClearSelection = () => {
     setSelectedMessages([]);
   };
-
   const handleCreateIssue = (messageId: string) => {
     const message = messages.find(m => m.id === messageId);
     if (message) {
-      setCreateIssueModal({ isOpen: true, message });
+      setCreateIssueModal({
+        isOpen: true,
+        message
+      });
     }
   };
-
   const handleCreateIssueSubmit = async (messageId: string, issueData: Partial<ConstituentIssue>) => {
     try {
       await createIssueFromMessage(messageId, issueData);
       toast({
         title: "Issue created successfully",
-        description: "The message has been converted to a trackable issue",
+        description: "The message has been converted to a trackable issue"
       });
       refetch();
     } catch (error) {
@@ -135,7 +115,6 @@ export default function Inbox() {
       });
     }
   };
-
   const handleBulkCreateIssues = async (messageIds: string[]) => {
     const promises = messageIds.map(id => {
       const message = messages.find(m => m.id === id);
@@ -149,35 +128,34 @@ export default function Inbox() {
       }
       return Promise.resolve();
     });
-    
     await Promise.all(promises);
     refetch();
   };
-
   const handleBulkStatusUpdate = async (messageIds: string[], status: string) => {
-    await bulkUpdateMessages(messageIds, { status: status as any });
+    await bulkUpdateMessages(messageIds, {
+      status: status as any
+    });
     refetch();
   };
-
   if (isLoading) {
-    return (
-      <div className="space-y-6">
+    return <div className="space-y-6">
         <div className="animate-pulse">
           <div className="h-8 bg-muted rounded w-48 mb-2"></div>
           <div className="h-4 bg-muted rounded w-64"></div>
         </div>
         <div className="grid gap-4 md:grid-cols-4">
-          {Array.from({ length: 4 }, (_, i) => (
-            <Card key={i} className="animate-pulse">
+          {Array.from({
+          length: 4
+        }, (_, i) => <Card key={i} className="animate-pulse">
               <CardContent className="p-4">
                 <div className="h-16 bg-muted rounded"></div>
               </CardContent>
-            </Card>
-          ))}
+            </Card>)}
         </div>
         <div className="space-y-2">
-          {Array.from({ length: 8 }, (_, i) => (
-            <div key={i} className="animate-pulse border-b border-border p-4">
+          {Array.from({
+          length: 8
+        }, (_, i) => <div key={i} className="animate-pulse border-b border-border p-4">
               <div className="flex items-start gap-3">
                 <div className="w-2 h-2 bg-muted rounded-full mt-2"></div>
                 <div className="flex-1 space-y-2">
@@ -186,16 +164,12 @@ export default function Inbox() {
                   <div className="h-3 bg-muted rounded w-full"></div>
                 </div>
               </div>
-            </div>
-          ))}
+            </div>)}
         </div>
-      </div>
-    );
+      </div>;
   }
-
   if (error) {
-    return (
-      <div className="text-center py-12">
+    return <div className="text-center py-12">
         <AlertTriangle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
         <p className="text-lg font-medium text-muted-foreground">Unable to load messages</p>
         <p className="text-sm text-muted-foreground mb-4">
@@ -204,12 +178,9 @@ export default function Inbox() {
         <Button onClick={() => refetch()}>
           Try Again
         </Button>
-      </div>
-    );
+      </div>;
   }
-
-  return (
-    <div className="space-y-6">
+  return <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
@@ -222,7 +193,7 @@ export default function Inbox() {
           <Button className="gap-2 text-xs sm:text-sm">
             <Plus className="h-4 w-4" />
             <span className="hidden xs:inline">Compose Message</span>
-            <span className="xs:hidden">Compose</span>
+            <span className="xs:hidden text-sm">Compose</span>
           </Button>
         </div>
       </div>
@@ -287,42 +258,15 @@ export default function Inbox() {
       </div>
 
       {/* Filters */}
-      <MessageFilters
-        searchTerm={searchTerm}
-        onSearchChange={setSearchTerm}
-        selectedSources={selectedSources}
-        onSourcesChange={setSelectedSources}
-        selectedStatuses={selectedStatuses}
-        onStatusesChange={setSelectedStatuses}
-        selectedPriorities={selectedPriorities}
-        onPrioritiesChange={setSelectedPriorities}
-        totalMessages={messages.length}
-        filteredCount={filteredMessages.length}
-      />
+      <MessageFilters searchTerm={searchTerm} onSearchChange={setSearchTerm} selectedSources={selectedSources} onSourcesChange={setSelectedSources} selectedStatuses={selectedStatuses} onStatusesChange={setSelectedStatuses} selectedPriorities={selectedPriorities} onPrioritiesChange={setSelectedPriorities} totalMessages={messages.length} filteredCount={filteredMessages.length} />
 
       {/* Bulk Actions */}
-      <BulkMessageActions
-        selectedMessages={selectedMessages}
-        onClearSelection={handleClearSelection}
-        onBulkCreateIssues={handleBulkCreateIssues}
-        onBulkStatusUpdate={handleBulkStatusUpdate}
-      />
+      <BulkMessageActions selectedMessages={selectedMessages} onClearSelection={handleClearSelection} onBulkCreateIssues={handleBulkCreateIssues} onBulkStatusUpdate={handleBulkStatusUpdate} />
 
 
       {/* Messages List - Clean list design */}
       <div className="bg-card rounded-lg border">
-        {filteredMessages.length > 0 ? (
-          filteredMessages.map((message) => (
-            <MessageCard
-              key={message.id}
-              message={message}
-              isSelected={selectedMessages.includes(message.id)}
-              onSelect={handleSelectMessage}
-              onCreateIssue={handleCreateIssue}
-            />
-          ))
-        ) : (
-          <div className="text-center py-12">
+        {filteredMessages.length > 0 ? filteredMessages.map(message => <MessageCard key={message.id} message={message} isSelected={selectedMessages.includes(message.id)} onSelect={handleSelectMessage} onCreateIssue={handleCreateIssue} />) : <div className="text-center py-12">
             <MessageSquare className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
             <p className="text-lg font-medium text-muted-foreground">No messages found</p>
             <p className="text-sm text-muted-foreground mb-4">
@@ -332,19 +276,13 @@ export default function Inbox() {
               <Plus className="h-4 w-4" />
               Compose New Message
             </Button>
-          </div>
-        )}
+          </div>}
       </div>
 
       {/* Create Issue Modal */}
-      {createIssueModal.message && (
-        <CreateIssueModal
-          isOpen={createIssueModal.isOpen}
-          onClose={() => setCreateIssueModal({ isOpen: false, message: null })}
-          message={createIssueModal.message}
-          onCreateIssue={handleCreateIssueSubmit}
-        />
-      )}
-    </div>
-  );
+      {createIssueModal.message && <CreateIssueModal isOpen={createIssueModal.isOpen} onClose={() => setCreateIssueModal({
+      isOpen: false,
+      message: null
+    })} message={createIssueModal.message} onCreateIssue={handleCreateIssueSubmit} />}
+    </div>;
 }
