@@ -109,7 +109,7 @@ export function MessageFilters({
           <Button
             variant="outline"
             onClick={() => setShowFilters(!showFilters)}
-            className="gap-2"
+            className="gap-2 w-full sm:w-auto"
           >
             <Filter className="h-4 w-4" />
             Filters
