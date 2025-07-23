@@ -70,7 +70,7 @@ export function calculateImpactStats(): ImpactStat[] {
     },
     {
       title: "Response Time",
-      value: averageResponseHours < 24 ? `${averageResponseHours}h` : `${Math.round(averageResponseHours / 24)}d`,
+      value: "4 hours",
       icon: "Clock",
       color: "orange"
     },
