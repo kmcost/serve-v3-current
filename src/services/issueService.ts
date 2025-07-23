@@ -1,5 +1,5 @@
 
-import { ConstituentIssue, PriorityItem, TimelineEntry } from '@/types/core';
+import { ConstituentIssue, PriorityItem, StatusChange } from '@/types/core';
 import { 
   mockValidatedIssues, 
   mockTrendingIssues, 
@@ -45,14 +45,14 @@ export const updateIssue = async (issueId: string, updates: IssueUpdateData): Pr
   });
 };
 
-export const addTimelineEntry = async (issueId: string, entry: Omit<TimelineEntry, 'id'>): Promise<void> => {
+export const addTimelineEntry = async (issueId: string, entry: Omit<StatusChange, 'id'>): Promise<void> => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       const allIssues = [...mockValidatedIssues, ...mockTrendingIssues, ...mockIndividualIssues, ...mockPriorityItems];
       const issue = allIssues.find(i => i.id === issueId);
       
       if (issue) {
-        const newEntry: TimelineEntry = {
+        const newEntry: StatusChange = {
           ...entry,
           id: Date.now().toString()
         };
@@ -100,7 +100,7 @@ export const revertFromPriorities = async (priorityId: string): Promise<Constitu
         // Add timeline entry for revert
         regularIssue.timeline.push({
           id: Date.now().toString(),
-          status: 'reverted',
+          status: 'reviewed',
           timestamp: new Date().toISOString(),
           changedBy: 'Admin',
           notes: 'Reverted from priorities board'

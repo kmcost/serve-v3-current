@@ -98,7 +98,7 @@ export function AdminIssueView({
     
     try {
       await addTimelineEntry(issue.id, {
-        status: 'note',
+        status: 'reviewed',
         timestamp: new Date().toISOString(),
         changedBy: 'Admin',
         notes: newTimelineNote
