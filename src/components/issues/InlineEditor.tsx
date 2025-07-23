@@ -40,9 +40,9 @@ export function InlineTextEditor({
   };
 
   if (isEditing) {
-    return (
-      <div className="space-y-2">
-        {multiline ? (
+    if (multiline) {
+      return (
+        <div className="space-y-2">
           <Textarea
             value={editValue}
             onChange={(e) => setEditValue(e.target.value)}
@@ -50,22 +50,32 @@ export function InlineTextEditor({
             className={className}
             rows={4}
           />
-        ) : (
-          <Input
-            value={editValue}
-            onChange={(e) => setEditValue(e.target.value)}
-            placeholder={placeholder}
-            className={className}
-          />
-        )}
-        <div className="flex gap-2">
-          <Button size="sm" onClick={handleSave}>
-            <Check className="h-4 w-4" />
-          </Button>
-          <Button size="sm" variant="outline" onClick={handleCancel}>
-            <X className="h-4 w-4" />
-          </Button>
+          <div className="flex gap-2">
+            <Button size="sm" onClick={handleSave}>
+              <Check className="h-4 w-4" />
+            </Button>
+            <Button size="sm" variant="outline" onClick={handleCancel}>
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
+      );
+    }
+    
+    return (
+      <div className="flex gap-2 items-center">
+        <Input
+          value={editValue}
+          onChange={(e) => setEditValue(e.target.value)}
+          placeholder={placeholder}
+          className={`flex-1 ${className}`}
+        />
+        <Button size="sm" onClick={handleSave}>
+          <Check className="h-4 w-4" />
+        </Button>
+        <Button size="sm" variant="outline" onClick={handleCancel}>
+          <X className="h-4 w-4" />
+        </Button>
       </div>
     );
   }
@@ -104,19 +114,21 @@ export function InlineSelectEditor({
 
   if (isEditing) {
     return (
-      <div className="space-y-2">
-        <Select value={value} onValueChange={handleSave}>
-          <SelectTrigger className={className}>
-            <SelectValue placeholder={placeholder} />
-          </SelectTrigger>
-          <SelectContent>
-            {options.map(option => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+      <div className="flex gap-2 items-center">
+        <div className="flex-1">
+          <Select value={value} onValueChange={handleSave}>
+            <SelectTrigger className={className}>
+              <SelectValue placeholder={placeholder} />
+            </SelectTrigger>
+            <SelectContent className="bg-background border border-border shadow-lg z-50">
+              {options.map(option => (
+                <SelectItem key={option.value} value={option.value}>
+                  {option.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
         <Button size="sm" variant="outline" onClick={() => setIsEditing(false)}>
           <X className="h-4 w-4" />
         </Button>

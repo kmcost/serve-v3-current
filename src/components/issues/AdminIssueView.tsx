@@ -140,16 +140,7 @@ export function AdminIssueView({
       <Card>
         <CardContent className="p-6">
           <div className="space-y-4">
-            {/* Editable Title */}
-            <div>
-              <label className="text-sm font-medium text-muted-foreground">Title</label>
-              <InlineTextEditor
-                value={issue.title}
-                onSave={(value) => handleFieldUpdate('title', value)}
-                className="text-2xl font-bold"
-                placeholder="Enter issue title..."
-              />
-            </div>
+            <h2 className="text-lg font-semibold">Issue Details</h2>
 
             {/* Status and Priority */}
             <div className="grid grid-cols-2 gap-4">
