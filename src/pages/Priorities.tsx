@@ -44,6 +44,11 @@ const Priorities = () => {
         </div>
         <div className="flex flex-col sm:flex-row gap-2">
           <PublicBoardPreview items={priorityItems} />
+          <Link to="/website">
+            <Button variant="outline">
+              View Public Board
+            </Button>
+          </Link>
           <Link to="/issues">
             <Button className="gap-2 w-full sm:w-auto">
               <Plus className="h-4 w-4" />
