@@ -53,9 +53,7 @@ const Priorities = () => {
       </div>
 
       {/* Public Notice Banner */}
-      <Card className="bg-blue-50 border-blue-200">
-        
-      </Card>
+      
 
       {/* Quick Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
