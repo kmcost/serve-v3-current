@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from 'next-themes';
 import { Toaster } from '@/components/ui/toaster';
+import { TooltipProvider } from '@/components/ui/tooltip';
 import { UserRoleProvider } from '@/contexts/UserRoleContext';
 import Layout from '@/components/Layout';
 
@@ -27,8 +28,9 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-        <Router>
-          <UserRoleProvider>
+        <TooltipProvider>
+          <Router>
+            <UserRoleProvider>
             <Routes>
               <Route path="/" element={<Layout><Outlet /></Layout>}>
                 <Route index element={<Dashboard />} />
@@ -51,6 +53,7 @@ function App() {
           </UserRoleProvider>
         </Router>
         <Toaster />
+      </TooltipProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );
