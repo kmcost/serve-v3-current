@@ -27,14 +27,14 @@ interface AdminIssueViewProps {
 }
 
 const statusOptions = [
-  { value: '', label: 'No Status' },
+  { value: 'none', label: 'No Status' },
   { value: 'in-progress', label: 'In Progress' },
   { value: 'resolved', label: 'Resolved' },
   { value: 'validated', label: 'Validated' }
 ];
 
 const priorityOptions = [
-  { value: '', label: 'No Priority' },
+  { value: 'none', label: 'No Priority' },
   { value: 'low', label: 'Low' },
   { value: 'medium', label: 'Medium' },
   { value: 'high', label: 'High' }
@@ -156,18 +156,18 @@ export function AdminIssueView({
               <div>
                 <label className="text-sm font-medium text-muted-foreground">Status</label>
                 <InlineSelectEditor
-                  value={issue.status || ''}
+                  value={issue.status || 'none'}
                   options={statusOptions}
-                  onSave={(value) => handleFieldUpdate('status', value)}
+                  onSave={(value) => handleFieldUpdate('status', value === 'none' ? undefined : value)}
                   placeholder="Select status..."
                 />
               </div>
               <div>
                 <label className="text-sm font-medium text-muted-foreground">Priority</label>
                 <InlineSelectEditor
-                  value={issue.priority || ''}
+                  value={issue.priority || 'none'}
                   options={priorityOptions}
-                  onSave={(value) => handleFieldUpdate('priority', value)}
+                  onSave={(value) => handleFieldUpdate('priority', value === 'none' ? undefined : value)}
                   placeholder="Select priority..."
                 />
               </div>
