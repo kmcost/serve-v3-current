@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -6,25 +5,13 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
-import { 
-  Plus, 
-  BarChart3, 
-  AlertTriangle,
-  CheckCircle,
-  Clock,
-  TrendingUp,
-  Users,
-  MessageSquare,
-  Settings,
-  Bot
-} from 'lucide-react';
+import { Plus, BarChart3, AlertTriangle, CheckCircle, Clock, TrendingUp, Users, MessageSquare, Settings, Bot } from 'lucide-react';
 import { IssueCard } from '@/components/issues/IssueCard';
 import { IssueFilters } from '@/components/issues/IssueFilters';
 import { BulkActions } from '@/components/issues/BulkActions';
 import { getAllIssuesEnhanced, moveIssuesToPriorities } from '@/services/mockData';
 import { ConstituentIssue } from '@/types/core';
 import { toast } from '@/hooks/use-toast';
-
 export default function Issues() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSources, setSelectedSources] = useState<string[]>([]);
@@ -32,10 +19,14 @@ export default function Issues() {
   const [selectedPriorities, setSelectedPriorities] = useState<string[]>([]);
   const [selectedIssues, setSelectedIssues] = useState<string[]>([]);
   const [bulkSelectMode, setBulkSelectMode] = useState(false);
-
-  const { data: issues = [], isLoading, error, refetch } = useQuery({
+  const {
+    data: issues = [],
+    isLoading,
+    error,
+    refetch
+  } = useQuery({
     queryKey: ['all-issues'],
-    queryFn: getAllIssuesEnhanced,
+    queryFn: getAllIssuesEnhanced
   });
 
   // Filter and sort issues based on search and filters
@@ -44,11 +35,7 @@ export default function Issues() {
       // Search filter
       if (searchTerm) {
         const searchLower = searchTerm.toLowerCase();
-        const matchesSearch = 
-          issue.title.toLowerCase().includes(searchLower) ||
-          issue.description.toLowerCase().includes(searchLower) ||
-          issue.constituent?.name.toLowerCase().includes(searchLower) ||
-          issue.constituent?.email.toLowerCase().includes(searchLower);
+        const matchesSearch = issue.title.toLowerCase().includes(searchLower) || issue.description.toLowerCase().includes(searchLower) || issue.constituent?.name.toLowerCase().includes(searchLower) || issue.constituent?.email.toLowerCase().includes(searchLower);
         if (!matchesSearch) return false;
       }
 
@@ -82,7 +69,6 @@ export default function Issues() {
           if (!issue.priority || !selectedPriorities.includes(issue.priority)) return false;
         }
       }
-
       return true;
     });
 
@@ -101,11 +87,9 @@ export default function Issues() {
     const inProgress = issues.filter(i => i.status === 'in-progress').length;
     const resolved = issues.filter(i => i.status === 'resolved').length;
     const validated = issues.filter(i => i.status === 'validated').length;
-    
     const highPriority = issues.filter(i => i.priority === 'high').length;
     const communityIssues = issues.filter(i => i.type === 'community').length;
     const individualIssues = issues.filter(i => i.type === 'individual').length;
-    
     return {
       total,
       aiDetected,
@@ -117,58 +101,47 @@ export default function Issues() {
       individualIssues
     };
   }, [issues]);
-
   const handleSelectIssue = (issueId: string, selected: boolean) => {
-    setSelectedIssues(prev => 
-      selected 
-        ? [...prev, issueId]
-        : prev.filter(id => id !== issueId)
-    );
+    setSelectedIssues(prev => selected ? [...prev, issueId] : prev.filter(id => id !== issueId));
   };
-
   const handleSelectAll = (checked: boolean) => {
     setSelectedIssues(checked ? filteredIssues.map(i => i.id) : []);
   };
-
   const handleClearSelection = () => {
     setSelectedIssues([]);
     setBulkSelectMode(false);
   };
-
   const handleMoveToPriorities = async (issueIds: string[]) => {
     await moveIssuesToPriorities(issueIds);
     refetch();
   };
-
   const handleStatusChange = async (issueIds: string[], status: string) => {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 500));
     refetch();
   };
-
   const handleSingleMoveToPriorities = (issueId: string) => {
     handleMoveToPriorities([issueId]);
   };
-
   if (isLoading) {
-    return (
-      <div className="space-y-6">
+    return <div className="space-y-6">
         <div className="animate-pulse">
           <div className="h-8 bg-muted rounded w-48 mb-2"></div>
           <div className="h-4 bg-muted rounded w-64"></div>
         </div>
         <div className="grid gap-4 md:grid-cols-4">
-          {Array.from({ length: 4 }, (_, i) => (
-            <Card key={i} className="animate-pulse">
+          {Array.from({
+          length: 4
+        }, (_, i) => <Card key={i} className="animate-pulse">
               <CardContent className="p-4">
                 <div className="h-16 bg-muted rounded"></div>
               </CardContent>
-            </Card>
-          ))}
+            </Card>)}
         </div>
         <div className="space-y-4">
-          {Array.from({ length: 6 }, (_, i) => (
-            <Card key={i} className="animate-pulse">
+          {Array.from({
+          length: 6
+        }, (_, i) => <Card key={i} className="animate-pulse">
               <CardContent className="p-6">
                 <div className="space-y-3">
                   <div className="h-6 bg-muted rounded w-3/4"></div>
@@ -176,16 +149,12 @@ export default function Issues() {
                   <div className="h-4 bg-muted rounded w-2/3"></div>
                 </div>
               </CardContent>
-            </Card>
-          ))}
+            </Card>)}
         </div>
-      </div>
-    );
+      </div>;
   }
-
   if (error) {
-    return (
-      <div className="text-center py-12">
+    return <div className="text-center py-12">
         <AlertTriangle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
         <p className="text-lg font-medium text-muted-foreground">Unable to load issues</p>
         <p className="text-sm text-muted-foreground mb-4">
@@ -194,12 +163,9 @@ export default function Issues() {
         <Button onClick={() => refetch()}>
           Try Again
         </Button>
-      </div>
-    );
+      </div>;
   }
-
-  return (
-    <div className="space-y-6">
+  return <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
@@ -209,11 +175,7 @@ export default function Issues() {
           </p>
         </div>
         <div className="flex flex-col sm:flex-row gap-2">
-          <Button
-            variant="outline"
-            onClick={() => setBulkSelectMode(!bulkSelectMode)}
-            className="gap-2 text-xs sm:text-sm"
-          >
+          <Button variant="outline" onClick={() => setBulkSelectMode(!bulkSelectMode)} className="gap-2 text-xs sm:text-sm">
             <Settings className="h-4 w-4" />
             <span className="hidden xs:inline">{bulkSelectMode ? 'Cancel Selection' : 'Select Multiple'}</span>
             <span className="xs:hidden">{bulkSelectMode ? 'Cancel' : 'Select'}</span>
@@ -228,7 +190,7 @@ export default function Issues() {
           <Button className="gap-2 text-xs sm:text-sm">
             <Plus className="h-4 w-4" />
             <span className="hidden xs:inline">Create Issue</span>
-            <span className="xs:hidden">Create</span>
+            <span className="xs:hidden">Create Issue</span>
           </Button>
         </div>
       </div>
@@ -293,66 +255,33 @@ export default function Issues() {
       </div>
 
       {/* Filters */}
-      <IssueFilters
-        searchTerm={searchTerm}
-        onSearchChange={setSearchTerm}
-        selectedSources={selectedSources}
-        onSourcesChange={setSelectedSources}
-        selectedStatuses={selectedStatuses}
-        onStatusesChange={setSelectedStatuses}
-        selectedPriorities={selectedPriorities}
-        onPrioritiesChange={setSelectedPriorities}
-        totalIssues={issues.length}
-        filteredCount={filteredIssues.length}
-      />
+      <IssueFilters searchTerm={searchTerm} onSearchChange={setSearchTerm} selectedSources={selectedSources} onSourcesChange={setSelectedSources} selectedStatuses={selectedStatuses} onStatusesChange={setSelectedStatuses} selectedPriorities={selectedPriorities} onPrioritiesChange={setSelectedPriorities} totalIssues={issues.length} filteredCount={filteredIssues.length} />
 
       {/* Bulk Actions */}
-      <BulkActions
-        selectedIssues={selectedIssues}
-        onClearSelection={handleClearSelection}
-        onMoveToPriorities={handleMoveToPriorities}
-        onStatusChange={handleStatusChange}
-      />
+      <BulkActions selectedIssues={selectedIssues} onClearSelection={handleClearSelection} onMoveToPriorities={handleMoveToPriorities} onStatusChange={handleStatusChange} />
 
       {/* Bulk Select All */}
-      {bulkSelectMode && filteredIssues.length > 0 && (
-        <Card className="bg-muted/30">
+      {bulkSelectMode && filteredIssues.length > 0 && <Card className="bg-muted/30">
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <Checkbox
-                checked={selectedIssues.length === filteredIssues.length}
-                onCheckedChange={handleSelectAll}
-              />
+              <Checkbox checked={selectedIssues.length === filteredIssues.length} onCheckedChange={handleSelectAll} />
               <span className="text-sm font-medium">
                 Select all {filteredIssues.length} issues
               </span>
-              {selectedIssues.length > 0 && (
-                <Badge variant="secondary">
+              {selectedIssues.length > 0 && <Badge variant="secondary">
                   {selectedIssues.length} selected
-                </Badge>
-              )}
+                </Badge>}
             </div>
           </CardContent>
-        </Card>
-      )}
+        </Card>}
 
       {/* Issues List */}
       <div className="space-y-4">
-        {filteredIssues.map((issue) => (
-          <IssueCard
-            key={issue.id}
-            issue={issue}
-            isSelected={selectedIssues.includes(issue.id)}
-            onSelect={handleSelectIssue}
-            onMoveToPriorities={handleSingleMoveToPriorities}
-            showCheckbox={bulkSelectMode}
-          />
-        ))}
+        {filteredIssues.map(issue => <IssueCard key={issue.id} issue={issue} isSelected={selectedIssues.includes(issue.id)} onSelect={handleSelectIssue} onMoveToPriorities={handleSingleMoveToPriorities} showCheckbox={bulkSelectMode} />)}
       </div>
 
       {/* No Results */}
-      {filteredIssues.length === 0 && !isLoading && (
-        <div className="text-center py-12">
+      {filteredIssues.length === 0 && !isLoading && <div className="text-center py-12">
           <AlertTriangle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
           <p className="text-lg font-medium text-muted-foreground">No issues found</p>
           <p className="text-sm text-muted-foreground mb-4">
@@ -362,8 +291,6 @@ export default function Issues() {
             <Plus className="h-4 w-4" />
             Create New Issue
           </Button>
-        </div>
-      )}
-    </div>
-  );
+        </div>}
+    </div>;
 }
