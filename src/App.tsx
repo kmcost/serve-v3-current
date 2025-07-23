@@ -37,13 +37,14 @@ function App() {
                 <Route path="priorities" element={<Priorities />} />
                 <Route path="polls" element={<Polls />} />
                 <Route path="polls/create" element={<CreatePoll />} />
+                <Route path="polls/edit" element={<CreatePoll />} />
+                <Route path="polls/ai-recommendations" element={<AIRecommendations />} />
                 <Route path="polls/:id" element={<PollDetail />} />
                 <Route path="people" element={<People />} />
                 <Route path="inbox" element={<Inbox />} />
                 <Route path="inbox/:id" element={<MessageDetail />} />
                 <Route path="settings" element={<Settings />} />
                 <Route path="website" element={<WebsitePreview />} />
-                <Route path="ai-recommendations" element={<AIRecommendations />} />
                 <Route path="*" element={<NotFound />} />
               </Route>
             </Routes>
