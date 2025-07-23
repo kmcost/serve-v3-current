@@ -103,7 +103,7 @@ export default function Polls() {
         </div>
         
         <div className="flex gap-2">
-          <Button variant="outline" className="gap-2">
+          <Button variant="outline" className="gap-2 w-full sm:w-auto">
             <Filter className="h-4 w-4" />
             Filters
           </Button>
