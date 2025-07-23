@@ -178,7 +178,7 @@ export default function Issues() {
           <Button className="gap-2 text-xs sm:text-sm">
             <Plus className="h-4 w-4" />
             <span className="hidden xs:inline">Create Issue</span>
-            <span className="xs:hidden">Create Issue</span>
+            <span className="xs:hidden text-sm">Create Issue</span>
           </Button>
         </div>
       </div>
