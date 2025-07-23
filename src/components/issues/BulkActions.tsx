@@ -4,14 +4,14 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { 
   ArrowRight, 
-  Check, 
   X, 
-  MoreHorizontal,
   CheckCircle,
   Clock,
   AlertCircle
 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { addIssueToPriorities } from '@/services/mockData';
+import { updateIssue } from '@/services/issueService';
 
 interface BulkActionsProps {
   selectedIssues: string[];
@@ -51,7 +51,11 @@ export function BulkActions({
   const handleStatusChange = async (status: string) => {
     setIsLoading(true);
     try {
-      await onStatusChange(selectedIssues, status);
+      // Update each selected issue
+      await Promise.all(
+        selectedIssues.map(issueId => updateIssue(issueId, { status }))
+      );
+      
       toast({
         title: "Status updated",
         description: `${selectedIssues.length} issue${selectedIssues.length !== 1 ? 's' : ''} marked as ${status}`,

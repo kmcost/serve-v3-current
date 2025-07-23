@@ -1,8 +1,8 @@
-
 import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from 'next-themes';
 import { Toaster } from '@/components/ui/toaster';
+import { UserRoleProvider } from '@/contexts/UserRoleContext';
 import Layout from '@/components/Layout';
 
 // Pages
@@ -28,24 +28,26 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
         <Router>
-          <Routes>
-            <Route path="/" element={<Layout><Outlet /></Layout>}>
-              <Route index element={<Dashboard />} />
-              <Route path="issues" element={<Issues />} />
-              <Route path="issues/:id" element={<IssueDetail />} />
-              <Route path="priorities" element={<Priorities />} />
-              <Route path="polls" element={<Polls />} />
-              <Route path="polls/create" element={<CreatePoll />} />
-              <Route path="polls/:id" element={<PollDetail />} />
-              <Route path="people" element={<People />} />
-              <Route path="inbox" element={<Inbox />} />
-              <Route path="inbox/:id" element={<MessageDetail />} />
-              <Route path="settings" element={<Settings />} />
-              <Route path="website" element={<WebsitePreview />} />
-              <Route path="ai-recommendations" element={<AIRecommendations />} />
-              <Route path="*" element={<NotFound />} />
-            </Route>
-          </Routes>
+          <UserRoleProvider>
+            <Routes>
+              <Route path="/" element={<Layout><Outlet /></Layout>}>
+                <Route index element={<Dashboard />} />
+                <Route path="issues" element={<Issues />} />
+                <Route path="issues/:id" element={<IssueDetail />} />
+                <Route path="priorities" element={<Priorities />} />
+                <Route path="polls" element={<Polls />} />
+                <Route path="polls/create" element={<CreatePoll />} />
+                <Route path="polls/:id" element={<PollDetail />} />
+                <Route path="people" element={<People />} />
+                <Route path="inbox" element={<Inbox />} />
+                <Route path="inbox/:id" element={<MessageDetail />} />
+                <Route path="settings" element={<Settings />} />
+                <Route path="website" element={<WebsitePreview />} />
+                <Route path="ai-recommendations" element={<AIRecommendations />} />
+                <Route path="*" element={<NotFound />} />
+              </Route>
+            </Routes>
+          </UserRoleProvider>
         </Router>
         <Toaster />
       </ThemeProvider>

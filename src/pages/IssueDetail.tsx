@@ -2,18 +2,19 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { Card, CardContent } from '@/components/ui/card';
 import { AlertTriangle } from 'lucide-react';
-import { IssueDetailHeader } from '@/components/issues/IssueDetailHeader';
-import { IssueTimeline } from '@/components/issues/IssueTimeline';
-import { IssueDetailActions } from '@/components/issues/IssueDetailActions';
 import { getIssueById, addIssueToPriorities, updatePriorityItemStatus } from '@/services/mockData';
 import { ConstituentIssue, PriorityItem } from '@/types/core';
 import { toast } from '@/hooks/use-toast';
+import { useUserRole } from '@/contexts/UserRoleContext';
+import { AdminIssueView } from '@/components/issues/AdminIssueView';
+import { PublicIssueView } from '@/components/issues/PublicIssueView';
+import { IssueDetailHeader } from '@/components/issues/IssueDetailHeader';
 
 export default function IssueDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { isAdmin, isPublic } = useUserRole();
   
   const { data: issue, isLoading, error, refetch } = useQuery({
     queryKey: ['issue', id],
@@ -73,18 +74,10 @@ export default function IssueDetail() {
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-6">
-            <Card className="animate-pulse">
-              <CardContent className="p-6">
-                <div className="h-32 bg-muted rounded"></div>
-              </CardContent>
-            </Card>
+            <div className="h-32 bg-muted rounded animate-pulse"></div>
           </div>
           <div className="space-y-6">
-            <Card className="animate-pulse">
-              <CardContent className="p-6">
-                <div className="h-24 bg-muted rounded"></div>
-              </CardContent>
-            </Card>
+            <div className="h-24 bg-muted rounded animate-pulse"></div>
           </div>
         </div>
       </div>
@@ -111,54 +104,22 @@ export default function IssueDetail() {
 
   return (
     <div className="space-y-6">
-      <IssueDetailHeader issue={issue} onBack={handleBack} />
+      {/* Header - only show for admin view */}
+      {isAdmin && (
+        <IssueDetailHeader issue={issue} onBack={handleBack} />
+      )}
       
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Main Content */}
-        <div className="lg:col-span-2 space-y-6">
-          {/* Description */}
-          <Card>
-            <CardContent className="p-6">
-              <div className="space-y-4">
-                <h2 className="text-lg font-semibold text-foreground">Description</h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  {issue.description}
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Timeline */}
-          <Card>
-            <CardContent className="p-6">
-              <IssueTimeline timeline={issue.timeline} />
-            </CardContent>
-          </Card>
-
-          {/* Priority Item Public Notes */}
-          {'publicNotes' in issue && issue.publicNotes && (
-            <Card>
-              <CardContent className="p-6">
-                <div className="space-y-4">
-                  <h2 className="text-lg font-semibold text-foreground">Public Notes</h2>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {issue.publicNotes}
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-        </div>
-
-        {/* Sidebar */}
-        <div className="space-y-6">
-          <IssueDetailActions 
-            issue={issue}
-            onMoveToPriorities={handleMoveToPriorities}
-            onUpdateStatus={handleUpdateStatus}
-          />
-        </div>
-      </div>
+      {/* Role-based content */}
+      {isAdmin ? (
+        <AdminIssueView 
+          issue={issue}
+          onMoveToPriorities={handleMoveToPriorities}
+          onUpdateStatus={handleUpdateStatus}
+          onRefetch={refetch}
+        />
+      ) : (
+        <PublicIssueView issue={issue} />
+      )}
     </div>
   );
 }
