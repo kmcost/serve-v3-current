@@ -31,7 +31,7 @@ export function WebsiteHero({
           {/* Call to Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button size="lg" onClick={() => onNavigate('contact')} className="min-w-48 h-12 text-base font-medium">
-              Send a Message
+              Send Message
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
             
