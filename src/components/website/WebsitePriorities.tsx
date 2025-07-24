@@ -91,11 +91,8 @@ export function WebsitePriorities() {
   return <div className="space-y-8">
       {/* Section Header */}
       <div className="text-center">
-        <h2 className="text-3xl font-bold text-foreground mb-4">Our Current Priorities</h2>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
-          Track our progress on community issues with full transparency. 
-          See what we're working on and what we've accomplished.
-        </p>
+        <h2 className="text-3xl font-bold text-foreground mb-4">Current Priorities</h2>
+        <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">Track progress on community issues with full transparency. See what I am working on and what I have accomplished.</p>
       </div>
 
       {/* Segmented Control */}
