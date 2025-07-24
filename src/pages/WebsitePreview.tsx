@@ -1,16 +1,13 @@
-
 import { useRef } from 'react';
 import { WebsiteHeader } from '@/components/website/WebsiteHeader';
 import { WebsiteHero } from '@/components/website/WebsiteHero';
 import { WebsiteContactForm } from '@/components/website/WebsiteContactForm';
 import { WebsitePriorities } from '@/components/website/WebsitePriorities';
-
 const WebsitePreview = () => {
   const aboutRef = useRef<HTMLDivElement>(null);
   const issuesRef = useRef<HTMLDivElement>(null);
   const contactRef = useRef<HTMLDivElement>(null);
   const prioritiesRef = useRef<HTMLDivElement>(null);
-
   const handleNavigate = (section: string) => {
     const refs = {
       about: aboutRef,
@@ -18,18 +15,15 @@ const WebsitePreview = () => {
       contact: contactRef,
       priorities: prioritiesRef
     };
-
     const targetRef = refs[section as keyof typeof refs];
     if (targetRef?.current) {
-      targetRef.current.scrollIntoView({ 
+      targetRef.current.scrollIntoView({
         behavior: 'smooth',
         block: 'start'
       });
     }
   };
-
-  return (
-    <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-background">
       {/* Header */}
       <WebsiteHeader onNavigate={handleNavigate} />
       
@@ -40,9 +34,7 @@ const WebsitePreview = () => {
       <section ref={aboutRef} className="py-16 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-foreground mb-4">About Sarah</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Coming soon: Detailed biography and background information.
-          </p>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Sarah is an advocate for local communities, small businesses and smart economics. As president of a chamber of commerce for 5 years, Sarah has supported strong small business policies that help local economies flourish. A state leader for the White House and board member of national organizations such as Main Street Alliance, Sarah has extensive experience in working across the aisle to pass legislation that improves the daily lives of real people just like you.</p>
         </div>
       </section>
       
@@ -87,8 +79,6 @@ const WebsitePreview = () => {
           </p>
         </div>
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default WebsitePreview;
