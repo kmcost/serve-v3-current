@@ -1,14 +1,12 @@
-
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Users } from 'lucide-react';
-
 interface WebsiteHeroProps {
   onNavigate: (section: string) => void;
 }
-
-export function WebsiteHero({ onNavigate }: WebsiteHeroProps) {
-  return (
-    <section className="bg-gradient-to-b from-primary/5 to-background py-16 sm:py-24">
+export function WebsiteHero({
+  onNavigate
+}: WebsiteHeroProps) {
+  return <section className="bg-gradient-to-b from-primary/5 to-background py-16 sm:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           {/* Candidate Photo Placeholder */}
@@ -32,26 +30,14 @@ export function WebsiteHero({ onNavigate }: WebsiteHeroProps) {
 
           {/* Call to Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button 
-              size="lg" 
-              onClick={() => onNavigate('contact')}
-              className="min-w-48 h-12 text-base font-medium"
-            >
+            <Button size="lg" onClick={() => onNavigate('contact')} className="min-w-48 h-12 text-base font-medium">
               Send a Message
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
             
-            <Button 
-              variant="outline" 
-              size="lg"
-              onClick={() => onNavigate('priorities')}
-              className="min-w-48 h-12 text-base font-medium"
-            >
-              View Our Priorities
-            </Button>
+            <Button variant="outline" size="lg" onClick={() => onNavigate('priorities')} className="min-w-48 h-12 text-base font-medium">View Priorities</Button>
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 }
