@@ -52,7 +52,26 @@ export function ValidatedIssues() {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {issues.slice(0, 5).map(issue => <IssueCard key={issue.id} issue={issue} variant="dashboard" />)}
+          {issues.slice(0, 5).map(issue => (
+            <div key={issue.id} className="space-y-3 p-3 rounded-lg border bg-card">
+              <div className="space-y-1">
+                <h3 className="font-medium text-foreground leading-tight">
+                  {issue.title}
+                </h3>
+                <p className="text-xs text-muted-foreground">
+                  {issue.supportPercentage}% community support
+                </p>
+              </div>
+              <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
+                {issue.description}
+              </p>
+              <Button asChild variant="outline" size="sm" className="w-full">
+                <Link to={`/issues/${issue.id}`}>
+                  Take Action
+                </Link>
+              </Button>
+            </div>
+          ))}
         </div>
       </CardContent>
     </Card>;
