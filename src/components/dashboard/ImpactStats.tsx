@@ -112,22 +112,13 @@ export function ImpactStats() {
       </div>
       
       {/* Performance Summary */}
-      <Card className="bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-950/20 dark:to-blue-950/20 border-green-200 dark:border-green-800">
+      <Card className="bg-white dark:bg-card border-border">
         <CardContent className="p-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                <span className="font-semibold text-foreground">Overall Performance:</span>
-              </div>
-              <Badge className="bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400 border-0">
-                Above Average
-              </Badge>
-            </div>
-            <div className="text-right">
-              <p className="text-sm text-muted-foreground">Rank: Top 25%</p>
-              <p className="text-xs text-muted-foreground">among GoodParty.org officials</p>
-            </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full bg-green-500"></div>
+            <span className="text-foreground">You're performing</span>
+            <span className="font-semibold text-foreground">Above Average</span>
+            <span className="text-foreground">compared to other representatives</span>
           </div>
         </CardContent>
       </Card>
