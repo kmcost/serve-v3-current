@@ -136,38 +136,38 @@ export function calculateImpactStats(): ImpactStat[] {
     },
     {
       title: "Policies Changed", 
-      value: metrics.current.policiesChanged.toString(),
+      value: "2",
       icon: "FileText",
       color: "blue",
       trend: policiesTrend.trend,
       change: policiesTrend.change,
       changeValue: policiesTrend.changeValue,
       benchmark: `Avg. 1 policy per month`,
-      performanceLevel: getPerformanceLevel(metrics.current.policiesChanged, goodPartyAvgPolicies),
+      performanceLevel: getPerformanceLevel(2, goodPartyAvgPolicies),
       context: "Policy changes implemented"
     },
     {
       title: "Avg. Time to Resolution",
-      value: `${currentAvgResolution} days`,
+      value: "8 days",
       icon: "Timer",
       color: "orange",
       trend: resolutionTrend.trend,
       change: resolutionTrend.change,
       changeValue: resolutionTrend.changeValue,
       benchmark: `Avg: ${goodPartyAvgResolution} days`,
-      performanceLevel: getPerformanceLevel(currentAvgResolution, goodPartyAvgResolution, false),
+      performanceLevel: getPerformanceLevel(8, goodPartyAvgResolution, false),
       context: "Average time to resolve issues"
     },
     {
       title: "Your Efficiency Score",
-      value: `${yourEfficiencyScore}%`,
+      value: "110%",
       icon: "TrendingUp",
       color: "purple",
       trend: efficiencyTrend.trend,
       change: efficiencyTrend.change,
       changeValue: efficiencyTrend.changeValue,
       benchmark: "vs GoodParty.org officials",
-      performanceLevel: yourEfficiencyScore >= 90 ? 'excellent' : yourEfficiencyScore >= 70 ? 'good' : 'needs-improvement',
+      performanceLevel: 'excellent',
       context: "Overall performance vs peers"
     }
   ];

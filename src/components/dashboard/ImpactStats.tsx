@@ -88,7 +88,7 @@ export function ImpactStats() {
                   
                   {/* Main Value */}
                   <div className="space-y-1">
-                    <p className="text-2xl sm:text-3xl font-bold text-foreground">{stat.value}</p>
+                    <p className="text-2xl sm:text-3xl font-black text-foreground">{stat.value}</p>
                     <p className="text-xs sm:text-sm text-muted-foreground">{stat.benchmark}</p>
                   </div>
                   
