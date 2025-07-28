@@ -99,7 +99,7 @@ export function ImpactStats() {
                       <span className={`text-sm font-medium ${trendColor}`}>
                         {stat.change}
                       </span>
-                      <span className="text-xs text-muted-foreground">vs last month</span>
+                      <span className="text-xs text-muted-foreground">over 30 days</span>
                     </div>
                     <Badge variant="secondary" className={`text-xs ${performance.color} border-0`}>
                       {performance.badge}
