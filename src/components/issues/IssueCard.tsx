@@ -146,28 +146,30 @@ export function IssueCard({
       </CardHeader>
       
       <CardContent className="space-y-4">
-        <div className="flex items-center gap-6 text-sm text-muted-foreground">
-          <div className="flex items-center gap-1">
-            <Calendar className="h-4 w-4" />
-            <span>
-              {formatRelativeTime(issue.createdAt)}
-            </span>
+        {variant !== 'dashboard' && (
+          <div className="flex items-center gap-6 text-sm text-muted-foreground">
+            <div className="flex items-center gap-1">
+              <Calendar className="h-4 w-4" />
+              <span>
+                {formatRelativeTime(issue.createdAt)}
+              </span>
+            </div>
+            
+            {issue.type === 'trending' && issue.mentions && (
+              <div className="flex items-center gap-1">
+                <MessageSquare className="h-4 w-4" />
+                <span>{issue.mentions} mentions</span>
+              </div>
+            )}
+            
+            {issue.type === 'community' && issue.supportPercentage && (
+              <div className="flex items-center gap-1">
+                <Users className="h-4 w-4" />
+                <span>{issue.supportPercentage}% support</span>
+              </div>
+            )}
           </div>
-          
-          {issue.type === 'trending' && issue.mentions && (
-            <div className="flex items-center gap-1">
-              <MessageSquare className="h-4 w-4" />
-              <span>{issue.mentions} mentions</span>
-            </div>
-          )}
-          
-          {issue.type === 'community' && issue.supportPercentage && (
-            <div className="flex items-center gap-1">
-              <Users className="h-4 w-4" />
-              <span>{issue.supportPercentage}% support</span>
-            </div>
-          )}
-        </div>
+        )}
         
         {hasRelatedIssues && (
           <div className="border-t pt-3">
