@@ -103,7 +103,7 @@ export function calculateImpactStats(): ImpactStat[] {
 
   const issuesTrend = { trend: 'up' as const, change: '75%', changeValue: 3 };
   const policiesTrend = getTrend(metrics.current.policiesChanged, metrics.previous.policiesChanged);
-  const efficiencyTrend = getTrend(yourEfficiencyScore, previousEfficiencyScore);
+  const efficiencyTrend = { trend: 'up' as const, change: '100%', changeValue: yourEfficiencyScore - previousEfficiencyScore };
   
   // For resolution time, lower is better, so we invert the trend
   const resolutionTrend = currentAvgResolution < previousAvgResolution 
