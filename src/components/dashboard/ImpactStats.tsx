@@ -84,7 +84,7 @@ export function ImpactStats() {
                   </div>
                   
                   {/* Benchmark */}
-                  <p className="text-xs sm:text-sm text-muted-foreground pl-9 sm:pl-10">{stat.benchmark}</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground">{stat.benchmark}</p>
                   
                   {/* Trend and Performance */}
                   <div className="flex items-center justify-between flex-wrap gap-2">
