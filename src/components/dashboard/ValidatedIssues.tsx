@@ -47,9 +47,7 @@ export function ValidatedIssues() {
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
         <CardTitle className="text-xl">Top 5 Community Priorities</CardTitle>
         <Button asChild size="sm">
-          <Link to="/issues">
-            Take Action
-          </Link>
+          
         </Button>
       </CardHeader>
       <CardContent>
