@@ -1,6 +1,5 @@
 import { ValidatedIssues } from '@/components/dashboard/ValidatedIssues';
 import { TrendingIssues } from '@/components/dashboard/TrendingIssues';
-import { IndividualIssues } from '@/components/dashboard/IndividualIssues';
 import { ImpactStats } from '@/components/dashboard/ImpactStats';
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
@@ -30,7 +29,6 @@ export default function Dashboard() {
       <div className="space-y-6">
         <ValidatedIssues />
         <TrendingIssues />
-        <IndividualIssues />
       </div>
     </div>;
 }
