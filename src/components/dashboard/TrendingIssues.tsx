@@ -51,9 +51,7 @@ export function TrendingIssues() {
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
         <CardTitle className="text-xl">Trending New Issues</CardTitle>
         <Button asChild size="sm">
-          <Link to="/issues">
-            View All
-          </Link>
+          
         </Button>
       </CardHeader>
       <CardContent>
