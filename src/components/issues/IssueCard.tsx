@@ -208,7 +208,7 @@ export function IssueCard({
               className="w-full"
             >
               <Link to={`/issues/${issue.id}`}>
-                View Details
+                Take Action
               </Link>
             </Button>
           ) : (
