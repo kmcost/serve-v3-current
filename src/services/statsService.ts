@@ -85,7 +85,7 @@ export function calculateImpactStats(): ImpactStat[] {
   const metrics = calculatePeriodMetrics();
   
   // Current performance metrics
-  const currentAvgResolution = 7; // 7 days average
+  const currentAvgResolution = 8; // 8 days average
   const previousAvgResolution = 9; // Previous was 9 days
   const goodPartyAvgResolution = 12; // GoodParty.org average is 12 days
   
