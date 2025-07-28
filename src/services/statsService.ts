@@ -90,7 +90,7 @@ export function calculateImpactStats(): ImpactStat[] {
   const goodPartyAvgResolution = 12; // GoodParty.org average is 12 days
   
   // GoodParty.org benchmarks
-  const goodPartyAvgIssues = 8; // Average issues resolved by GoodParty.org officials
+  const goodPartyAvgIssues = 4; // Average issues resolved by GoodParty.org officials
   const goodPartyAvgPolicies = 3; // Average policies changed by GoodParty.org officials
   
   // Calculate performance score (your efficiency vs GoodParty.org average)
@@ -129,8 +129,8 @@ export function calculateImpactStats(): ImpactStat[] {
       trend: issuesTrend.trend,
       change: issuesTrend.change,
       changeValue: issuesTrend.changeValue,
-      benchmark: `Avg: ${goodPartyAvgIssues}`,
-      performanceLevel: getPerformanceLevel(8, goodPartyAvgIssues),
+      benchmark: `Avg. 4 issues/month across GoodParty.org`,
+      performanceLevel: getPerformanceLevel(8, 4),
       context: "Issues resolved this month"
     },
     {
