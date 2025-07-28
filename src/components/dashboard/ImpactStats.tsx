@@ -62,7 +62,6 @@ const performanceLevelMap = {
 export function ImpactStats() {
   const stats = calculateImpactStats();
   const isMobile = useIsMobile();
-  
   return <div className="space-y-3 sm:space-y-4">
       {/* Stats Grid */}
       <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
@@ -78,9 +77,7 @@ export function ImpactStats() {
                   {/* Header with Title and Performance Badge */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className={`p-1.5 sm:p-2 ${colors.bg} rounded-lg`}>
-                        <IconComponent className={`h-5 w-5 sm:h-4 sm:w-4 ${colors.text}`} />
-                      </div>
+                      
                       <p className="text-sm font-medium text-foreground truncate">{stat.title}</p>
                     </div>
                     <div className={`w-2 h-2 rounded-full ${performance.indicator} flex-shrink-0`}></div>
