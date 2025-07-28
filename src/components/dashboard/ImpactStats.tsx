@@ -75,7 +75,7 @@ export function ImpactStats() {
         return <Card key={index} className={`border-l-4 ${colors.border} hover:shadow-md transition-shadow relative`}>
               <CardContent className="p-3 sm:p-4">
                 <div className="space-y-2 sm:space-y-3">
-                  {/* Performance Badge */}
+                  {/* Header with Title and Performance Badge */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <div className={`p-1.5 sm:p-2 ${colors.bg} rounded-lg`}>
@@ -86,11 +86,8 @@ export function ImpactStats() {
                     <div className={`w-2 h-2 rounded-full ${performance.indicator} flex-shrink-0`}></div>
                   </div>
                   
-                  {/* Main Value */}
-                  <div className="space-y-1">
-                    <p className="text-2xl sm:text-3xl font-black text-foreground">{stat.value}</p>
-                    <p className="text-xs sm:text-sm text-muted-foreground">{stat.benchmark}</p>
-                  </div>
+                  {/* Benchmark */}
+                  <p className="text-xs sm:text-sm text-muted-foreground pl-9 sm:pl-10">{stat.benchmark}</p>
                   
                   {/* Trend and Performance */}
                   <div className="flex items-center justify-between flex-wrap gap-2">

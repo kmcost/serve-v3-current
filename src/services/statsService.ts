@@ -123,7 +123,7 @@ export function calculateImpactStats(): ImpactStat[] {
 
   return [
     {
-      title: "Issues Resolved",
+      title: "8 Issues Resolved",
       value: "8",
       icon: "CheckCircle",
       color: "green",
@@ -135,7 +135,7 @@ export function calculateImpactStats(): ImpactStat[] {
       context: "Issues resolved this month"
     },
     {
-      title: "Policies Changed", 
+      title: "2 Policies Changed", 
       value: "2",
       icon: "FileText",
       color: "blue",
@@ -147,7 +147,7 @@ export function calculateImpactStats(): ImpactStat[] {
       context: "Policy changes implemented"
     },
     {
-      title: "Avg. Time to Resolution",
+      title: "8 Days to Resolution",
       value: "8 days",
       icon: "Timer",
       color: "orange",
@@ -159,7 +159,7 @@ export function calculateImpactStats(): ImpactStat[] {
       context: "Average time to resolve issues"
     },
     {
-      title: "Your Efficiency Score",
+      title: "110% Efficiency Score",
       value: "110%",
       icon: "TrendingUp",
       color: "purple",
