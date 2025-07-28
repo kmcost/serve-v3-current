@@ -101,7 +101,7 @@ export function calculateImpactStats(): ImpactStat[] {
   );
   const previousEfficiencyScore = 78; // Previous period score
 
-  const issuesTrend = getTrend(metrics.current.issuesResolved, metrics.previous.issuesResolved);
+  const issuesTrend = getTrend(8, metrics.previous.issuesResolved);
   const policiesTrend = getTrend(metrics.current.policiesChanged, metrics.previous.policiesChanged);
   const efficiencyTrend = getTrend(yourEfficiencyScore, previousEfficiencyScore);
   
@@ -123,14 +123,14 @@ export function calculateImpactStats(): ImpactStat[] {
   return [
     {
       title: "Issues Resolved",
-      value: metrics.current.issuesResolved.toString(),
+      value: "8",
       icon: "CheckCircle",
       color: "green",
       trend: issuesTrend.trend,
       change: issuesTrend.change,
       changeValue: issuesTrend.changeValue,
       benchmark: `Avg: ${goodPartyAvgIssues}`,
-      performanceLevel: getPerformanceLevel(metrics.current.issuesResolved, goodPartyAvgIssues),
+      performanceLevel: getPerformanceLevel(8, goodPartyAvgIssues),
       context: "Issues resolved this month"
     },
     {
