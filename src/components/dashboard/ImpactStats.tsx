@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { CheckCircle, Clock, FileText, Timer, TrendingUp, TrendingDown, ArrowUp, ArrowDown, Minus } from 'lucide-react';
 import { calculateImpactStats } from '@/services/statsService';
+import { useIsMobile } from '@/hooks/use-mobile';
 const iconMap = {
   CheckCircle,
   Clock,
@@ -60,12 +61,11 @@ const performanceLevelMap = {
 };
 export function ImpactStats() {
   const stats = calculateImpactStats();
-  return <div className="space-y-4">
-      {/* Header */}
-      
-
+  const isMobile = useIsMobile();
+  
+  return <div className="space-y-3 sm:space-y-4">
       {/* Stats Grid */}
-      <div className="grid gap-4 md:grid-cols-4">
+      <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat, index) => {
         const IconComponent = iconMap[stat.icon as keyof typeof iconMap];
         const colors = colorMap[stat.color as keyof typeof colorMap];
@@ -73,35 +73,35 @@ export function ImpactStats() {
         const trendColor = trendColorMap[stat.trend];
         const performance = performanceLevelMap[stat.performanceLevel];
         return <Card key={index} className={`border-l-4 ${colors.border} hover:shadow-md transition-shadow relative`}>
-              <CardContent className="p-4">
-                <div className="space-y-3">
+              <CardContent className="p-3 sm:p-4">
+                <div className="space-y-2 sm:space-y-3">
                   {/* Performance Badge */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className={`p-2 ${colors.bg} rounded-lg`}>
-                        <IconComponent className={`h-4 w-4 ${colors.text}`} />
+                      <div className={`p-1.5 sm:p-2 ${colors.bg} rounded-lg`}>
+                        <IconComponent className={`h-5 w-5 sm:h-4 sm:w-4 ${colors.text}`} />
                       </div>
-                      <p className="text-sm font-medium text-foreground">{stat.title}</p>
+                      <p className="text-sm font-medium text-foreground truncate">{stat.title}</p>
                     </div>
-                    <div className={`w-2 h-2 rounded-full ${performance.indicator}`}></div>
+                    <div className={`w-2 h-2 rounded-full ${performance.indicator} flex-shrink-0`}></div>
                   </div>
                   
                   {/* Main Value */}
                   <div className="space-y-1">
-                    <p className="text-3xl font-bold text-foreground">{stat.value}</p>
-                    <p className="text-xs text-muted-foreground">{stat.benchmark}</p>
+                    <p className="text-2xl sm:text-3xl font-bold text-foreground">{stat.value}</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">{stat.benchmark}</p>
                   </div>
                   
                   {/* Trend and Performance */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1">
-                      <TrendIcon className={`h-3 w-3 ${trendColor}`} />
+                  <div className="flex items-center justify-between flex-wrap gap-2">
+                    <div className="flex items-center gap-1 min-w-0">
+                      <TrendIcon className={`h-3 w-3 ${trendColor} flex-shrink-0`} />
                       <span className={`text-sm font-medium ${trendColor}`}>
                         {stat.change}
                       </span>
-                      <span className="text-xs text-muted-foreground">over 30 days</span>
+                      <span className="text-xs text-muted-foreground hidden sm:inline">over 30 days</span>
                     </div>
-                    <Badge variant="secondary" className={`text-xs ${performance.color} border-0`}>
+                    <Badge variant="secondary" className={`text-xs ${performance.color} border-0 flex-shrink-0`}>
                       {performance.badge}
                     </Badge>
                   </div>
@@ -113,12 +113,12 @@ export function ImpactStats() {
       
       {/* Performance Summary */}
       <Card className="bg-white dark:bg-card border-border">
-        <CardContent className="p-4">
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-green-500"></div>
-            <span className="text-foreground">You're performing</span>
-            <span className="font-semibold text-foreground">Above Average</span>
-            <span className="text-foreground">compared to other representatives</span>
+        <CardContent className="p-3 sm:p-4">
+          <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
+            <div className="w-3 h-3 rounded-full bg-green-500 flex-shrink-0"></div>
+            <span className="text-sm sm:text-base text-foreground">You're performing</span>
+            <span className="font-semibold text-sm sm:text-base text-foreground">Above Average</span>
+            <span className="text-sm sm:text-base text-foreground">compared to other representatives</span>
           </div>
         </CardContent>
       </Card>
