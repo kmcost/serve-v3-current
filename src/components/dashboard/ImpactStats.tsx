@@ -71,7 +71,7 @@ export function ImpactStats() {
         const TrendIcon = trendIconMap[stat.trend];
         const trendColor = trendColorMap[stat.trend];
         const performance = performanceLevelMap[stat.performanceLevel];
-        return <Card key={index} className={`border-l-4 ${colors.border} hover:shadow-md transition-shadow relative`}>
+        return <Card key={index} className="hover:shadow-md transition-shadow relative">
               <CardContent className="p-3 sm:p-4">
                 <div className="space-y-2 sm:space-y-3">
                   {/* Header with Title and Performance Badge */}
