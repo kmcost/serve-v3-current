@@ -93,24 +93,26 @@ export function IssueCard({
               </Link>
             </div>
             
-            <div className="flex flex-wrap gap-2 mb-2">
-              {isAIDetected && (
-                <Badge className="bg-orange-100 text-orange-800 text-xs">
-                  AI Detected
-                </Badge>
-              )}
-              {statusInfo && (
-                <Badge className={`${statusInfo.color} text-xs`}>
-                  {statusInfo.label}
-                </Badge>
-              )}
-              {/* Only show priority badge if issue is NOT new (>= 7 days old) */}
-              {!isNew && priorityInfo && (
-                <Badge className={`${priorityInfo.color} text-xs`}>
-                  {priorityInfo.label} Priority
-                </Badge>
-              )}
-            </div>
+            {variant !== 'dashboard' && (
+              <div className="flex flex-wrap gap-2 mb-2">
+                {isAIDetected && (
+                  <Badge className="bg-orange-100 text-orange-800 text-xs">
+                    AI Detected
+                  </Badge>
+                )}
+                {statusInfo && (
+                  <Badge className={`${statusInfo.color} text-xs`}>
+                    {statusInfo.label}
+                  </Badge>
+                )}
+                {/* Only show priority badge if issue is NOT new (>= 7 days old) */}
+                {!isNew && priorityInfo && (
+                  <Badge className={`${priorityInfo.color} text-xs`}>
+                    {priorityInfo.label} Priority
+                  </Badge>
+                )}
+              </div>
+            )}
             
             <p className="text-sm text-muted-foreground line-clamp-3 mb-3">
               {issue.description}
