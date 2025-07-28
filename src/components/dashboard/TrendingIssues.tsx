@@ -68,7 +68,7 @@ export function TrendingIssues() {
               <p className="text-sm text-muted-foreground leading-relaxed">
                 {issue.description}
               </p>
-              <Button onClick={() => handleValidateClick(issue)} variant="outline" size="sm" className="w-full">
+              <Button onClick={() => handleValidateClick(issue)} size="sm" className="w-full">
                 Validate with Poll
               </Button>
             </div>)}
