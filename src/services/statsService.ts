@@ -1,3 +1,4 @@
+
 import { mockValidatedIssues, mockTrendingIssues, mockIndividualIssues, mockPriorityItems } from './mockData';
 
 export interface ImpactStat {
@@ -146,18 +147,6 @@ export function calculateImpactStats(): ImpactStat[] {
       context: "Policy changes implemented"
     },
     {
-      title: "Your Efficiency Score",
-      value: `${yourEfficiencyScore}%`,
-      icon: "TrendingUp",
-      color: "purple",
-      trend: efficiencyTrend.trend,
-      change: efficiencyTrend.change,
-      changeValue: efficiencyTrend.changeValue,
-      benchmark: "vs GoodParty.org officials",
-      performanceLevel: yourEfficiencyScore >= 90 ? 'excellent' : yourEfficiencyScore >= 70 ? 'good' : 'needs-improvement',
-      context: "Overall performance vs peers"
-    },
-    {
       title: "Avg. Time to Resolution",
       value: `${currentAvgResolution} days`,
       icon: "Timer",
@@ -168,6 +157,18 @@ export function calculateImpactStats(): ImpactStat[] {
       benchmark: `Avg: ${goodPartyAvgResolution} days`,
       performanceLevel: getPerformanceLevel(currentAvgResolution, goodPartyAvgResolution, false),
       context: "Average time to resolve issues"
+    },
+    {
+      title: "Your Efficiency Score",
+      value: `${yourEfficiencyScore}%`,
+      icon: "TrendingUp",
+      color: "purple",
+      trend: efficiencyTrend.trend,
+      change: efficiencyTrend.change,
+      changeValue: efficiencyTrend.changeValue,
+      benchmark: "vs GoodParty.org officials",
+      performanceLevel: yourEfficiencyScore >= 90 ? 'excellent' : yourEfficiencyScore >= 70 ? 'good' : 'needs-improvement',
+      context: "Overall performance vs peers"
     }
   ];
 }
