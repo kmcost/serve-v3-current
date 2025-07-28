@@ -8,6 +8,9 @@ export interface ImpactStat {
   trend: 'up' | 'down' | 'neutral';
   change: string;
   changeValue: number;
+  benchmark?: string;
+  performanceLevel: 'excellent' | 'good' | 'needs-improvement';
+  context?: string;
 }
 
 function calculatePeriodMetrics() {
@@ -81,20 +84,26 @@ function getTrend(current: number, previous: number): { trend: 'up' | 'down' | '
 export function calculateImpactStats(): ImpactStat[] {
   const metrics = calculatePeriodMetrics();
   
-  // Calculate current metrics
-  const currentResolutionTime = 4; // Average 4 hours (mock data)
-  const previousResolutionTime = 6; // Previous period was 6 hours
-  
+  // Current performance metrics
   const currentAvgResolution = 7; // 7 days average
   const previousAvgResolution = 9; // Previous was 9 days
+  const goodPartyAvgResolution = 12; // GoodParty.org average is 12 days
   
-  // GoodParty.org benchmark average (mock data)
-  const goodPartyAverage = 85; // 85% efficiency score
-  const previousGoodPartyAverage = 82; // Previous was 82%
+  // GoodParty.org benchmarks
+  const goodPartyAvgIssues = 8; // Average issues resolved by GoodParty.org officials
+  const goodPartyAvgPolicies = 3; // Average policies changed by GoodParty.org officials
+  
+  // Calculate performance score (your efficiency vs GoodParty.org average)
+  const yourEfficiencyScore = Math.round(
+    ((metrics.current.issuesResolved / Math.max(goodPartyAvgIssues, 1)) * 0.4 +
+     (metrics.current.policiesChanged / Math.max(goodPartyAvgPolicies, 1)) * 0.4 +
+     (goodPartyAvgResolution / Math.max(currentAvgResolution, 1)) * 0.2) * 100
+  );
+  const previousEfficiencyScore = 78; // Previous period score
 
   const issuesTrend = getTrend(metrics.current.issuesResolved, metrics.previous.issuesResolved);
   const policiesTrend = getTrend(metrics.current.policiesChanged, metrics.previous.policiesChanged);
-  const goodPartyTrend = getTrend(goodPartyAverage, previousGoodPartyAverage);
+  const efficiencyTrend = getTrend(yourEfficiencyScore, previousEfficiencyScore);
   
   // For resolution time, lower is better, so we invert the trend
   const resolutionTrend = currentAvgResolution < previousAvgResolution 
@@ -102,6 +111,14 @@ export function calculateImpactStats(): ImpactStat[] {
     : currentAvgResolution > previousAvgResolution 
     ? { trend: 'down' as const, change: `+${Math.round(((currentAvgResolution - previousAvgResolution) / previousAvgResolution) * 100)}%`, changeValue: currentAvgResolution - previousAvgResolution }
     : { trend: 'neutral' as const, change: '0%', changeValue: 0 };
+
+  // Performance level calculation
+  const getPerformanceLevel = (value: number, benchmark: number, higherIsBetter: boolean = true): 'excellent' | 'good' | 'needs-improvement' => {
+    const ratio = higherIsBetter ? value / benchmark : benchmark / value;
+    if (ratio >= 1.2) return 'excellent';
+    if (ratio >= 0.8) return 'good';
+    return 'needs-improvement';
+  };
 
   return [
     {
@@ -111,7 +128,10 @@ export function calculateImpactStats(): ImpactStat[] {
       color: "green",
       trend: issuesTrend.trend,
       change: issuesTrend.change,
-      changeValue: issuesTrend.changeValue
+      changeValue: issuesTrend.changeValue,
+      benchmark: `Avg: ${goodPartyAvgIssues}`,
+      performanceLevel: getPerformanceLevel(metrics.current.issuesResolved, goodPartyAvgIssues),
+      context: "Issues resolved this month"
     },
     {
       title: "Policies Changed", 
@@ -120,16 +140,22 @@ export function calculateImpactStats(): ImpactStat[] {
       color: "blue",
       trend: policiesTrend.trend,
       change: policiesTrend.change,
-      changeValue: policiesTrend.changeValue
+      changeValue: policiesTrend.changeValue,
+      benchmark: `Avg: ${goodPartyAvgPolicies}`,
+      performanceLevel: getPerformanceLevel(metrics.current.policiesChanged, goodPartyAvgPolicies),
+      context: "Policy changes implemented"
     },
     {
-      title: "GoodParty.org Average",
-      value: `${goodPartyAverage}%`,
+      title: "Your Efficiency Score",
+      value: `${yourEfficiencyScore}%`,
       icon: "TrendingUp",
       color: "purple",
-      trend: goodPartyTrend.trend,
-      change: goodPartyTrend.change,
-      changeValue: goodPartyTrend.changeValue
+      trend: efficiencyTrend.trend,
+      change: efficiencyTrend.change,
+      changeValue: efficiencyTrend.changeValue,
+      benchmark: "vs GoodParty.org officials",
+      performanceLevel: yourEfficiencyScore >= 90 ? 'excellent' : yourEfficiencyScore >= 70 ? 'good' : 'needs-improvement',
+      context: "Overall performance vs peers"
     },
     {
       title: "Avg. Time to Resolution",
@@ -138,7 +164,10 @@ export function calculateImpactStats(): ImpactStat[] {
       color: "orange",
       trend: resolutionTrend.trend,
       change: resolutionTrend.change,
-      changeValue: resolutionTrend.changeValue
+      changeValue: resolutionTrend.changeValue,
+      benchmark: `Avg: ${goodPartyAvgResolution} days`,
+      performanceLevel: getPerformanceLevel(currentAvgResolution, goodPartyAvgResolution, false),
+      context: "Average time to resolve issues"
     }
   ];
 }

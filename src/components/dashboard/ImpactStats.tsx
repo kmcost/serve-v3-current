@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { CheckCircle, Clock, FileText, Timer, TrendingUp, TrendingDown, ArrowUp, ArrowDown, Minus } from 'lucide-react';
 import { calculateImpactStats } from '@/services/statsService';
 
@@ -29,6 +30,24 @@ const trendColorMap = {
   neutral: 'text-muted-foreground'
 };
 
+const performanceLevelMap = {
+  excellent: { 
+    badge: 'Excellent', 
+    color: 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400',
+    indicator: 'bg-green-500'
+  },
+  good: { 
+    badge: 'Good', 
+    color: 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400',
+    indicator: 'bg-blue-500'
+  },
+  'needs-improvement': { 
+    badge: 'Needs Focus', 
+    color: 'bg-orange-100 text-orange-800 dark:bg-orange-900/20 dark:text-orange-400',
+    indicator: 'bg-orange-500'
+  }
+};
+
 export function ImpactStats() {
   const stats = calculateImpactStats();
 
@@ -47,37 +66,41 @@ export function ImpactStats() {
           const colors = colorMap[stat.color as keyof typeof colorMap];
           const TrendIcon = trendIconMap[stat.trend];
           const trendColor = trendColorMap[stat.trend];
+          const performance = performanceLevelMap[stat.performanceLevel];
           
           return (
-            <Card key={index} className={`border-l-4 ${colors.border} hover:shadow-md transition-shadow`}>
+            <Card key={index} className={`border-l-4 ${colors.border} hover:shadow-md transition-shadow relative`}>
               <CardContent className="p-4">
                 <div className="space-y-3">
-                  {/* Top row - Icon and Title */}
-                  <div className="flex items-center gap-3">
-                    <div className={`p-2 ${colors.bg} rounded-lg`}>
-                      <IconComponent className={`h-5 w-5 ${colors.text}`} />
+                  {/* Performance Badge */}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className={`p-2 ${colors.bg} rounded-lg`}>
+                        <IconComponent className={`h-4 w-4 ${colors.text}`} />
+                      </div>
+                      <p className="text-sm font-medium text-foreground">{stat.title}</p>
                     </div>
-                    <div className="flex-1">
-                      <p className="text-sm text-muted-foreground font-medium">{stat.title}</p>
-                    </div>
+                    <div className={`w-2 h-2 rounded-full ${performance.indicator}`}></div>
                   </div>
                   
-                  {/* Value and Trend */}
-                  <div className="flex items-end justify-between">
-                    <div>
-                      <p className="text-2xl font-bold text-foreground">{stat.value}</p>
-                    </div>
-                    <div className="flex items-center gap-1 text-sm">
-                      <TrendIcon className={`h-4 w-4 ${trendColor}`} />
-                      <span className={`font-medium ${trendColor}`}>
+                  {/* Main Value */}
+                  <div className="space-y-1">
+                    <p className="text-3xl font-bold text-foreground">{stat.value}</p>
+                    <p className="text-xs text-muted-foreground">{stat.benchmark}</p>
+                  </div>
+                  
+                  {/* Trend and Performance */}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-1">
+                      <TrendIcon className={`h-3 w-3 ${trendColor}`} />
+                      <span className={`text-sm font-medium ${trendColor}`}>
                         {stat.change}
                       </span>
+                      <span className="text-xs text-muted-foreground">vs last month</span>
                     </div>
-                  </div>
-                  
-                  {/* Period indicator */}
-                  <div className="text-xs text-muted-foreground">
-                    vs previous 30 days
+                    <Badge variant="secondary" className={`text-xs ${performance.color} border-0`}>
+                      {performance.badge}
+                    </Badge>
                   </div>
                 </div>
               </CardContent>
@@ -87,15 +110,22 @@ export function ImpactStats() {
       </div>
       
       {/* Performance Summary */}
-      <Card className="bg-muted/30">
-        <CardContent className="p-4 text-center">
-          <div className="flex items-center justify-center gap-2 text-sm">
-            <div className="flex items-center gap-1">
-              <div className="w-2 h-2 rounded-full bg-green-500"></div>
-              <span className="text-muted-foreground">You're performing</span>
+      <Card className="bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-950/20 dark:to-blue-950/20 border-green-200 dark:border-green-800">
+        <CardContent className="p-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                <span className="font-semibold text-foreground">Overall Performance:</span>
+              </div>
+              <Badge className="bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400 border-0">
+                Above Average
+              </Badge>
             </div>
-            <span className="font-semibold text-green-600 dark:text-green-400">Above Average</span>
-            <span className="text-muted-foreground">compared to other representatives</span>
+            <div className="text-right">
+              <p className="text-sm text-muted-foreground">Rank: Top 25%</p>
+              <p className="text-xs text-muted-foreground">among GoodParty.org officials</p>
+            </div>
           </div>
         </CardContent>
       </Card>
