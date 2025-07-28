@@ -91,7 +91,7 @@ export function calculateImpactStats(): ImpactStat[] {
   
   // GoodParty.org benchmarks
   const goodPartyAvgIssues = 6; // Average issues resolved by GoodParty.org officials
-  const goodPartyAvgPolicies = 3; // Average policies changed by GoodParty.org officials
+  const goodPartyAvgPolicies = 1; // Average policies changed by GoodParty.org officials
   
   // Calculate performance score (your efficiency vs GoodParty.org average)
   const yourEfficiencyScore = Math.round(
@@ -141,7 +141,7 @@ export function calculateImpactStats(): ImpactStat[] {
       trend: policiesTrend.trend,
       change: policiesTrend.change,
       changeValue: policiesTrend.changeValue,
-      benchmark: `Avg: ${goodPartyAvgPolicies}`,
+      benchmark: `Avg. 1 policy per month`,
       performanceLevel: getPerformanceLevel(metrics.current.policiesChanged, goodPartyAvgPolicies),
       context: "Policy changes implemented"
     },
