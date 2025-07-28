@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { getValidatedIssues } from '@/services/mockData';
 import { ConstituentIssue } from '@/types/core';
 import { IssueCard } from '@/components/issues/IssueCard';
-
 export function ValidatedIssues() {
   const {
     data: issues = [],
@@ -16,7 +15,6 @@ export function ValidatedIssues() {
     queryKey: ['validated-issues'],
     queryFn: getValidatedIssues
   });
-
   if (isLoading) {
     return <Card>
         <CardHeader>
@@ -35,7 +33,6 @@ export function ValidatedIssues() {
         </CardContent>
       </Card>;
   }
-
   if (error) {
     return <Card>
         <CardHeader>
@@ -46,10 +43,9 @@ export function ValidatedIssues() {
         </CardContent>
       </Card>;
   }
-
   return <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-        <CardTitle className="text-xl">Top 5 Issues in Your Community</CardTitle>
+        <CardTitle className="text-xl">Top 5 Community Priorities</CardTitle>
         <Button asChild size="sm">
           <Link to="/issues">
             Take Action
@@ -58,13 +54,7 @@ export function ValidatedIssues() {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {issues.slice(0, 5).map(issue => (
-            <IssueCard 
-              key={issue.id} 
-              issue={issue}
-              variant="dashboard"
-            />
-          ))}
+          {issues.slice(0, 5).map(issue => <IssueCard key={issue.id} issue={issue} variant="dashboard" />)}
         </div>
       </CardContent>
     </Card>;
