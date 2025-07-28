@@ -62,7 +62,7 @@ export function ValidatedIssues() {
                   {issue.supportPercentage}% community support
                 </p>
               </div>
-              <Button asChild variant="outline" size="sm" className="w-full">
+              <Button asChild size="sm" className="w-full">
                 <Link to={`/issues/${issue.id}`}>
                   Take Action
                 </Link>
