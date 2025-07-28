@@ -78,7 +78,7 @@ export function ImpactStats() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       
-                      <p className="text-sm font-medium text-foreground truncate">{stat.title}</p>
+                      <p className="text-sm font-bold text-primary truncate">{stat.title}</p>
                     </div>
                     <div className={`w-2 h-2 rounded-full ${performance.indicator} flex-shrink-0`}></div>
                   </div>
