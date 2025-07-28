@@ -66,16 +66,16 @@ function calculatePeriodMetrics() {
 
 function getTrend(current: number, previous: number): { trend: 'up' | 'down' | 'neutral', change: string, changeValue: number } {
   if (previous === 0) {
-    return { trend: current > 0 ? 'up' : 'neutral', change: current > 0 ? `+${current}` : '0', changeValue: current };
+    return { trend: current > 0 ? 'up' : 'neutral', change: current > 0 ? `${current}` : '0', changeValue: current };
   }
   
   const changeValue = current - previous;
   const changePercent = Math.round((changeValue / previous) * 100);
   
   if (changeValue > 0) {
-    return { trend: 'up', change: `+${changePercent}%`, changeValue };
+    return { trend: 'up', change: `${changePercent}%`, changeValue };
   } else if (changeValue < 0) {
-    return { trend: 'down', change: `${changePercent}%`, changeValue };
+    return { trend: 'down', change: `${Math.abs(changePercent)}%`, changeValue };
   } else {
     return { trend: 'neutral', change: '0%', changeValue: 0 };
   }
@@ -101,15 +101,15 @@ export function calculateImpactStats(): ImpactStat[] {
   );
   const previousEfficiencyScore = 78; // Previous period score
 
-  const issuesTrend = { trend: 'up' as const, change: '+75%', changeValue: 3 };
+  const issuesTrend = { trend: 'up' as const, change: '75%', changeValue: 3 };
   const policiesTrend = getTrend(metrics.current.policiesChanged, metrics.previous.policiesChanged);
   const efficiencyTrend = getTrend(yourEfficiencyScore, previousEfficiencyScore);
   
   // For resolution time, lower is better, so we invert the trend
   const resolutionTrend = currentAvgResolution < previousAvgResolution 
-    ? { trend: 'up' as const, change: `-${Math.round(((previousAvgResolution - currentAvgResolution) / previousAvgResolution) * 100)}%`, changeValue: currentAvgResolution - previousAvgResolution }
+    ? { trend: 'up' as const, change: `${Math.round(((previousAvgResolution - currentAvgResolution) / previousAvgResolution) * 100)}%`, changeValue: currentAvgResolution - previousAvgResolution }
     : currentAvgResolution > previousAvgResolution 
-    ? { trend: 'down' as const, change: `+${Math.round(((currentAvgResolution - previousAvgResolution) / previousAvgResolution) * 100)}%`, changeValue: currentAvgResolution - previousAvgResolution }
+    ? { trend: 'down' as const, change: `${Math.round(((currentAvgResolution - previousAvgResolution) / previousAvgResolution) * 100)}%`, changeValue: currentAvgResolution - previousAvgResolution }
     : { trend: 'neutral' as const, change: '0%', changeValue: 0 };
 
   // Performance level calculation
